@@ -1,26 +1,32 @@
 <template>
-  <div class="navbar" id="menu" :style="{height: navHeight}">
+  <div class="navbar" id="menu" :style="{ height: navHeight }">
     <v-layout
       row
       justify-space-around
       align-center
       class="nav-layout hidden-sm-and-down"
     >
-
       <v-flex xs2 sm2 m2 lg2 class="logo-flex">
         <router-link to="/" style="text-decoration: none;">
           <div class="yan-logo">
             <h2>
-              Yani<span style="font-size: 30px;position: relative;left: 1px;color: white;">c</span><span style="color:white;">:\</span>
-              <v-icon style="font-size: 17px;" color="#fff">fas fa-terminal</v-icon>
+              Yani<span
+                style="font-size: 30px;position: relative;left: 1px;color: white;"
+                >c</span
+              ><span style="color:white;">:\</span>
+              <v-icon style="font-size: 17px;" color="#fff"
+                >fas fa-terminal</v-icon
+              >
             </h2>
           </div>
         </router-link>
       </v-flex>
 
       <v-flex xs8 sm8 m8 lg8 class="menu-flex">
-
-        <div @click="$vuetify.goTo('#about', options)" style="text-decoration: none;cursor: pointer;">
+        <div
+          @click="$vuetify.goTo('#about', options)"
+          style="text-decoration: none;cursor: pointer;"
+        >
           <div class="menu-item">
             <span>Aboute</span>
             <v-icon style="font-size: 18px;" class="">
@@ -43,23 +49,32 @@
           </div>
         </router-link>
 
-        <div @click="$vuetify.goTo('#contact', options)" style="text-decoration: none;cursor: pointer;">
+        <div
+          @click="$vuetify.goTo('#contact', options)"
+          style="text-decoration: none;cursor: pointer;"
+        >
           <div class="menu-item">
             <span>Contact</span>
             <v-icon style="font-size: 18px;" class="">fas fa-envelope</v-icon>
           </div>
         </div>
 
-        <a href="https://www.github.com/assignon" target="_blank" style="text-decoration: none;">
+        <a
+          href="https://www.github.com/assignon"
+          target="_blank"
+          style="text-decoration: none;"
+        >
           <div class="menu-item">
-<!--            <span>Github</span>-->
-            <v-icon style="font-size: 25px; color:#fff" class="">fab fa-github</v-icon>
+            <!--            <span>Github</span>-->
+            <v-icon style="font-size: 25px; color:#fff" class=""
+              >fab fa-github</v-icon
+            >
           </div>
         </a>
       </v-flex>
     </v-layout>
 
-<!--- -- ------------------------------------------ bar menu ------------------------------------------------------------->
+    <!--- -- ------------------------------------------ bar menu ------------------------------------------------------------->
     <v-layout
       row
       justify-space-around
@@ -67,31 +82,60 @@
       style="z-index: 10; display: none"
       class="scroll-nav-layout hidden-sm-and-down animated"
     >
-      <v-flex xs2 sm2 m2 lg2 class="logo-flex" v-if="$router.currentRoute.name != 'Home'">
+      <v-flex
+        xs2
+        sm2
+        m2
+        lg2
+        class="logo-flex"
+        v-if="$router.currentRoute.name != 'Home'"
+      >
         <router-link to="/" style="text-decoration: none;">
           <div class="yan-logo">
             <h2>
-              Yani<span style="font-size: 30px;position: relative;left: 1px;color: #f99138;">c</span><span style="color:#f99138;">:\</span>
-              <v-icon style="font-size: 17px;" color="#f99138">fas fa-terminal</v-icon>
+              Yani<span
+                style="font-size: 30px;position: relative;left: 1px;color: #f99138;"
+                >c</span
+              ><span style="color:#f99138;">:\</span>
+              <v-icon style="font-size: 17px;" color="#f99138"
+                >fas fa-terminal</v-icon
+              >
             </h2>
           </div>
         </router-link>
       </v-flex>
 
-      <v-flex xs2 sm2 m2 lg2 class="logo-flex" v-if="$router.currentRoute.name == 'Home'">
-        <div @click="$vuetify.goTo(0, options)" style="text-decoration: none;cursor: pointer;">
+      <v-flex
+        xs2
+        sm2
+        m2
+        lg2
+        class="logo-flex"
+        v-if="$router.currentRoute.name == 'Home'"
+      >
+        <div
+          @click="$vuetify.goTo(0, options)"
+          style="text-decoration: none;cursor: pointer;"
+        >
           <div class="yan-logo">
             <h2>
-              Yani<span style="font-size: 30px;position: relative;left: 1px;color: #f99138;">c</span><span style="color:#f99138;">:\</span>
-              <v-icon style="font-size: 17px;" color="#f99138">fas fa-terminal</v-icon>
+              Yani<span
+                style="font-size: 30px;position: relative;left: 1px;color: #f99138;"
+                >c</span
+              ><span style="color:#f99138;">:\</span>
+              <v-icon style="font-size: 17px;" color="#f99138"
+                >fas fa-terminal</v-icon
+              >
             </h2>
           </div>
         </div>
       </v-flex>
 
       <v-flex xs8 sm8 m8 lg8 class="menu-flex">
-
-        <div @click="$vuetify.goTo('#about', options)" style="text-decoration: none;cursor: pointer;">
+        <div
+          @click="$vuetify.goTo('#about', options)"
+          style="text-decoration: none;cursor: pointer;"
+        >
           <div class="menu-item">
             <span>Aboute</span>
             <v-icon style="font-size: 18px;" class="">
@@ -114,17 +158,26 @@
           </div>
         </router-link>
 
-        <div @click="$vuetify.goTo('#contact', options)" style="text-decoration: none;cursor: pointer;">
+        <div
+          @click="$vuetify.goTo('#contact', options)"
+          style="text-decoration: none;cursor: pointer;"
+        >
           <div class="menu-item">
             <span>Contact</span>
             <v-icon style="font-size: 18px;" class="">fas fa-envelope</v-icon>
           </div>
         </div>
 
-        <a href="https://www.github.com/assignon" target="_blank" style="text-decoration: none;">
+        <a
+          href="https://www.github.com/assignon"
+          target="_blank"
+          style="text-decoration: none;"
+        >
           <div class="menu-item">
-<!--            <span>Github</span>-->
-            <v-icon style="font-size: 25px; color:#fff" class="">fab fa-github</v-icon>
+            <!--            <span>Github</span>-->
+            <v-icon style="font-size: 25px; color:#fff" class=""
+              >fab fa-github</v-icon
+            >
           </div>
         </a>
       </v-flex>
@@ -139,13 +192,13 @@
     >
       <v-flex xs9 md9 class="burgermenu-flex">
         <v-icon
-          @click.stop="drawer = !drawer, animateMeuItems()"
+          @click.stop="(drawer = !drawer), animateMeuItems()"
           class=""
           style="color: #333333;margin-left:20px;"
-          medium>
-          fas fa-bars
-        </v-icon
+          medium
         >
+          fas fa-bars
+        </v-icon>
         <h2
           class="ml-3 font-weight-bold"
           style="color:rgb(139,83,255);font-style: italic;"
@@ -153,7 +206,6 @@
           Yanick-Dev
         </h2>
       </v-flex>
-
     </v-layout>
 
     <v-navigation-drawer
@@ -166,7 +218,10 @@
     >
       <div class="mobile-menu-flex mt-5" style="">
         <router-link to="/" style="text-decoration: none;">
-          <div class="mobile-menu-item animated" syle="position: relative; left:-10px;">
+          <div
+            class="mobile-menu-item animated"
+            syle="position: relative; left:-10px;"
+          >
             <span class="ml-1 mt-1">Accueille</span>
             <v-icon medium style="" class="">home</v-icon>
           </div>
@@ -194,13 +249,10 @@
 </template>
 
 <script>
-
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
 export default {
   name: "navbar",
-  components: {
-
-  },
+  components: {},
   data() {
     return {
       activeBtn: 0,
@@ -209,9 +261,10 @@ export default {
       drawer: false,
       duration: 400,
       offset: 0,
-      easing: 'easeInOutCubic',
+      easing: "easeInOutCubic",
       easings: Object.keys(easings),
-      navHeight: this.$router.currentRoute.name == 'Home' ? "100px" : "50px"
+      // navHeight: this.$router.currentRoute.name == 'Home' ? "100px" : "50px"
+      navHeight: "70px",
     };
   },
 
@@ -220,23 +273,22 @@ export default {
   },
 
   computed: {
-    target () {
-        const value = this[this.type]
-        if (!isNaN(value)) return Number(value)
-        else return value
+    target() {
+      const value = this[this.type];
+      if (!isNaN(value)) return Number(value);
+      else return value;
     },
 
-    options () {
-        return {
-          duration: this.duration,
-          offset: this.offset,
-          easing: this.easing,
-        }
-    }
+    options() {
+      return {
+        duration: this.duration,
+        offset: this.offset,
+        easing: this.easing,
+      };
+    },
   },
 
   methods: {
-
     menuScrollAnimation() {
       let scrollValue = document.documentElement.scrollTop;
       let scrollNavLayout = document.querySelector(".scroll-nav-layout");
@@ -277,7 +329,7 @@ export default {
     //   this.$store.state.cartDrawer = true
     //   // this.$store.commit('showModal', {modalId:'cartModal',top: '100px'})
     // }
-  }
+  },
 };
 </script>
 
@@ -313,7 +365,7 @@ export default {
   width: auto;
   height: 100%;
 }
-.yan-logo{
+.yan-logo {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
@@ -327,8 +379,8 @@ export default {
   /*background-size: contain;*/
 }
 
-.yan-logo h2{
-  color: #00FF8E;
+.yan-logo h2 {
+  color: #00ff8e;
 }
 
 /*.scroll-yan-logo{*/
@@ -341,7 +393,7 @@ export default {
 /*}*/
 
 .nav-layout .menu-flex {
-   /*width: 70%;*/
+  /*width: 70%;*/
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -376,15 +428,15 @@ export default {
   font-weight: bold;
 }
 
-.menu-flex .menu-item .v-icon{
+.menu-flex .menu-item .v-icon {
   color: white;
 }
 
 .menu-flex .menu-item:hover span {
-  color: #00FF8E;
+  color: #00ff8e;
 }
 .menu-flex .menu-item:hover .v-icon {
-  color: #00FF8E;
+  color: #00ff8e;
 }
 .scroll-nav-layout {
   width: 100%;
@@ -458,13 +510,12 @@ export default {
 }
 
 .mobile-menu-item:hover span {
-  color: #8B53FF;
+  color: #8b53ff;
 }
 
 .mobile-menu-item:hover .v-icon {
-  color: #8B53FF;
+  color: #8b53ff;
 }
-
 
 @media only screen and (max-width: 500px) {
   .navbar {
