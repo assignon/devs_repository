@@ -26,3 +26,9 @@ class WorksSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = ('name', 'image', 'prog_lang',
                   'work_type', 'description', 'tags', 'added_on',)
+
+
+class DescriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Description
+        fields = ('description, menu')

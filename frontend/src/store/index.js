@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 
 import work from "./modules/work";
+import description from "./modules/description";
 
 Vue.use(Vuex);
 
@@ -93,5 +94,6 @@ export default new Vuex.Store({
 
   modules: {
     work: work,
+    description: description,
   },
 });

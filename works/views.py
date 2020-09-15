@@ -19,7 +19,7 @@ from rest_framework.status import (
 )
 
 from works.models import Works, Description, Tags
-from works.serializers import WorksSerializer
+from works.serializers import WorksSerializer, DescriptionSerializer
 
 
 class Works_view(viewsets.ModelViewSet):
@@ -43,3 +43,20 @@ class Works_view(viewsets.ModelViewSet):
         # serializer = self.get_serializer_class()(works)
         return Response(serializers.serialize('json', works))
         # return Response(serializer.data)
+
+
+class Description_view(viewsets.ModelViewSet):
+    queryset = Description.objects.all()
+    serializer_class = DescriptionSerializer
+    permission_classes = [AllowAny]
+
+    @csrf_exempt
+    @action(methods=['get'], detail=False)
+    def work_desc(self, request):
+        work_name = request.query_params.get('work_name')
+        # get description id with work name
+        description_id = Works.objects.get(name=work_name).description_id
+        # get description by id
+        description = Description.objects.get(id=description_id)
+        return Response([{'description': description.description, 'menu': description.menu}])
+        # return Response('hallo')

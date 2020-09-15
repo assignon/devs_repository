@@ -1,22 +1,14 @@
 <template>
   <div class="navbar" id="menu" :style="{ height: navHeight }">
-    <v-layout
-      row
-      justify-space-around
-      align-center
-      class="nav-layout hidden-sm-and-down"
-    >
+    <v-layout row justify-space-around align-center class="nav-layout hidden-sm-and-down">
       <v-flex xs2 sm2 m2 lg2 class="logo-flex">
         <router-link to="/" style="text-decoration: none;">
           <div class="yan-logo">
             <h2>
-              Yani<span
-                style="font-size: 30px;position: relative;left: 1px;color: white;"
-                >c</span
-              ><span style="color:white;">:\</span>
-              <v-icon style="font-size: 17px;" color="#fff"
-                >fas fa-terminal</v-icon
-              >
+              Yani
+              <span style="font-size: 30px;position: relative;left: 1px;color: white;">c</span>
+              <span style="color:white;">:\</span>
+              <v-icon style="font-size: 17px;" color="#fff">fas fa-terminal</v-icon>
             </h2>
           </div>
         </router-link>
@@ -29,23 +21,21 @@
         >
           <div class="menu-item">
             <span>Aboute</span>
-            <v-icon style="font-size: 18px;" class="">
-              fas fa-address-card
-            </v-icon>
+            <v-icon style="font-size: 18px;" class>fas fa-address-card</v-icon>
           </div>
         </div>
 
         <router-link to="/skills" style="text-decoration: none;">
           <div class="menu-item">
             <span>Skills</span>
-            <v-icon style="font-size: 18px;" class="">fas fa-cogs</v-icon>
+            <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon>
           </div>
         </router-link>
 
         <router-link to="/works" style="text-decoration: none;">
           <div class="menu-item">
             <span>Works</span>
-            <v-icon style="font-size: 18px;" class="">fas fa-eye</v-icon>
+            <v-icon style="font-size: 18px;" class>fas fa-folder</v-icon>
           </div>
         </router-link>
 
@@ -55,20 +45,14 @@
         >
           <div class="menu-item">
             <span>Contact</span>
-            <v-icon style="font-size: 18px;" class="">fas fa-envelope</v-icon>
+            <v-icon style="font-size: 18px;" class>fas fa-envelope</v-icon>
           </div>
         </div>
 
-        <a
-          href="https://www.github.com/assignon"
-          target="_blank"
-          style="text-decoration: none;"
-        >
+        <a href="https://www.github.com/assignon" target="_blank" style="text-decoration: none;">
           <div class="menu-item">
             <!--            <span>Github</span>-->
-            <v-icon style="font-size: 25px; color:#fff" class=""
-              >fab fa-github</v-icon
-            >
+            <v-icon style="font-size: 25px; color:#fff" class>fab fa-github</v-icon>
           </div>
         </a>
       </v-flex>
@@ -82,50 +66,27 @@
       style="z-index: 10; display: none"
       class="scroll-nav-layout hidden-sm-and-down animated"
     >
-      <v-flex
-        xs2
-        sm2
-        m2
-        lg2
-        class="logo-flex"
-        v-if="$router.currentRoute.name != 'Home'"
-      >
+      <v-flex xs2 sm2 m2 lg2 class="logo-flex" v-if="$router.currentRoute.name != 'Home'">
         <router-link to="/" style="text-decoration: none;">
           <div class="yan-logo">
             <h2>
-              Yani<span
-                style="font-size: 30px;position: relative;left: 1px;color: #f99138;"
-                >c</span
-              ><span style="color:#f99138;">:\</span>
-              <v-icon style="font-size: 17px;" color="#f99138"
-                >fas fa-terminal</v-icon
-              >
+              Yani
+              <span style="font-size: 30px;position: relative;left: 1px;color: #f99138;">c</span>
+              <span style="color:#f99138;">:\</span>
+              <v-icon style="font-size: 17px;" color="#f99138">fas fa-terminal</v-icon>
             </h2>
           </div>
         </router-link>
       </v-flex>
 
-      <v-flex
-        xs2
-        sm2
-        m2
-        lg2
-        class="logo-flex"
-        v-if="$router.currentRoute.name == 'Home'"
-      >
-        <div
-          @click="$vuetify.goTo(0, options)"
-          style="text-decoration: none;cursor: pointer;"
-        >
+      <v-flex xs2 sm2 m2 lg2 class="logo-flex" v-if="$router.currentRoute.name == 'Home'">
+        <div @click="$vuetify.goTo(0, options)" style="text-decoration: none;cursor: pointer;">
           <div class="yan-logo">
             <h2>
-              Yani<span
-                style="font-size: 30px;position: relative;left: 1px;color: #f99138;"
-                >c</span
-              ><span style="color:#f99138;">:\</span>
-              <v-icon style="font-size: 17px;" color="#f99138"
-                >fas fa-terminal</v-icon
-              >
+              Yani
+              <span style="font-size: 30px;position: relative;left: 1px;color: #f99138;">c</span>
+              <span style="color:#f99138;">:\</span>
+              <v-icon style="font-size: 17px;" color="#f99138">fas fa-terminal</v-icon>
             </h2>
           </div>
         </div>
@@ -138,23 +99,21 @@
         >
           <div class="menu-item">
             <span>Aboute</span>
-            <v-icon style="font-size: 18px;" class="">
-              fas fa-address-card
-            </v-icon>
+            <v-icon style="font-size: 18px;" class>fas fa-address-card</v-icon>
           </div>
         </div>
 
         <router-link to="/skills" style="text-decoration: none;">
           <div class="menu-item">
             <span>Skills</span>
-            <v-icon style="font-size: 18px;" class="">fas fa-cogs</v-icon>
+            <v-icon style="font-size: 18px;" class>fas fa-cogs</v-icon>
           </div>
         </router-link>
 
         <router-link to="/works" style="text-decoration: none;">
           <div class="menu-item">
             <span>Works</span>
-            <v-icon style="font-size: 18px;" class="">fas fa-eye</v-icon>
+            <v-icon style="font-size: 18px;" class>fas fa-eye</v-icon>
           </div>
         </router-link>
 
@@ -164,20 +123,14 @@
         >
           <div class="menu-item">
             <span>Contact</span>
-            <v-icon style="font-size: 18px;" class="">fas fa-envelope</v-icon>
+            <v-icon style="font-size: 18px;" class>fas fa-envelope</v-icon>
           </div>
         </div>
 
-        <a
-          href="https://www.github.com/assignon"
-          target="_blank"
-          style="text-decoration: none;"
-        >
+        <a href="https://www.github.com/assignon" target="_blank" style="text-decoration: none;">
           <div class="menu-item">
             <!--            <span>Github</span>-->
-            <v-icon style="font-size: 25px; color:#fff" class=""
-              >fab fa-github</v-icon
-            >
+            <v-icon style="font-size: 25px; color:#fff" class>fab fa-github</v-icon>
           </div>
         </a>
       </v-flex>
@@ -193,53 +146,37 @@
       <v-flex xs9 md9 class="burgermenu-flex">
         <v-icon
           @click.stop="(drawer = !drawer), animateMeuItems()"
-          class=""
+          class
           style="color: #333333;margin-left:20px;"
           medium
-        >
-          fas fa-bars
-        </v-icon>
+        >fas fa-bars</v-icon>
         <h2
           class="ml-3 font-weight-bold"
           style="color:rgb(139,83,255);font-style: italic;"
-        >
-          Yanick-Dev
-        </h2>
+        >Yanick-Dev</h2>
       </v-flex>
     </v-layout>
 
-    <v-navigation-drawer
-      v-model="drawer"
-      fixed
-      top
-      height="100vh"
-      temporary
-      class="nav-drawer"
-    >
-      <div class="mobile-menu-flex mt-5" style="">
+    <v-navigation-drawer v-model="drawer" fixed top height="100vh" temporary class="nav-drawer">
+      <div class="mobile-menu-flex mt-5" style>
         <router-link to="/" style="text-decoration: none;">
-          <div
-            class="mobile-menu-item animated"
-            syle="position: relative; left:-10px;"
-          >
+          <div class="mobile-menu-item animated" syle="position: relative; left:-10px;">
             <span class="ml-1 mt-1">Accueille</span>
-            <v-icon medium style="" class="">home</v-icon>
+            <v-icon medium style class>home</v-icon>
           </div>
         </router-link>
 
         <router-link to="/about" style="text-decoration: none;">
           <div class="mobile-menu-item animated">
             <span>About</span>
-            <v-icon style="font-size: 20px;" class=""
-              >fas fa-address-card</v-icon
-            >
+            <v-icon style="font-size: 20px;" class>fas fa-address-card</v-icon>
           </div>
         </router-link>
 
         <router-link to="/contact" style="text-decoration: none;">
           <div class="mobile-menu-item animated">
             <span>Contact</span>
-            <v-icon style="font-size: 20px;" class="">fas fa-envelope</v-icon>
+            <v-icon style="font-size: 20px;" class>fas fa-envelope</v-icon>
           </div>
         </router-link>
       </div>
@@ -264,7 +201,7 @@ export default {
       easing: "easeInOutCubic",
       easings: Object.keys(easings),
       // navHeight: this.$router.currentRoute.name == 'Home' ? "100px" : "50px"
-      navHeight: "70px",
+      navHeight: "70px"
     };
   },
 
@@ -283,9 +220,9 @@ export default {
       return {
         duration: this.duration,
         offset: this.offset,
-        easing: this.easing,
+        easing: this.easing
       };
-    },
+    }
   },
 
   methods: {
@@ -301,7 +238,7 @@ export default {
         scrollNavLayout.style.display = "none";
         scrollNavLayout.style.opacity = "0";
       }
-    },
+    }
 
     // get in the db the count of the products added to the cart
     // productNumber() {
@@ -329,7 +266,7 @@ export default {
     //   this.$store.state.cartDrawer = true
     //   // this.$store.commit('showModal', {modalId:'cartModal',top: '100px'})
     // }
-  },
+  }
 };
 </script>
 
@@ -343,6 +280,7 @@ export default {
   /*margin-bottom: 30px;*/
   border: 1px solid #16032c;
   background-color: #16032c;
+  z-index: 5;
 }
 .nav-layout {
   width: 100%;
