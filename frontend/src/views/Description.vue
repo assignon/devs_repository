@@ -3,9 +3,13 @@
     <v-layout row justify-center align-center class="desc-layout">
       <v-flex xs10 sm10 md2 lg2 xl2 class="desc-side-flex">
         <div class="menu-container">
-          <!-- <ul>
-            <li v-for="(item, i) in splitToArray(desc[0].menu)" :key="i">{{item}}</li>
-          </ul>-->
+          <router-link to="/works" style="text-decoration: none;">
+            <div class="back-to-container animated fadeInUp">
+              <v-icon color="#16032c">fas fa-chevron-left</v-icon>
+              <p>Works</p>
+            </div>
+          </router-link>
+
           <v-list rounded>
             <!-- <v-subheader>REPORTS</v-subheader> -->
             <v-list-item-group v-model="descMenu" color="#41b883">
@@ -26,11 +30,22 @@
               </v-list-item>
             </v-list-item-group>
           </v-list>
+
+          <div class="related-works animated fadeInUp" @click.stop="drawer = !drawer">
+            <v-btn rounded large color="#42b883" dark outlined class="related-works-btn">
+              <!-- <v-icon color="#42b883 pl-3">fas fa-folder</v-icon> -->
+              Related Works
+            </v-btn>
+          </div>
         </div>
       </v-flex>
 
       <!-- <v-flex xs10 sm10 md10 lg10 xl10 class="desc-content-flex">{{desc[0].description}}</v-flex> -->
       <v-flex xs10 sm10 md10 lg10 xl10 class="desc-content-flex">
+        <div class="desc-content-header">
+          <h2>Work Description</h2>
+          <v-divider width="5%" color="#16032c" style></v-divider>
+        </div>
         <div id="install">
           <h2>Install</h2>
           <p>
@@ -99,6 +114,15 @@
           </p>
         </div>
       </v-flex>
+
+      <v-navigation-drawer
+        absolute
+        v-model="drawer"
+        temporary
+        right
+        class="works-drawer"
+        width="50%"
+      ></v-navigation-drawer>
     </v-layout>
   </div>
 </template>
@@ -112,12 +136,13 @@ export default {
   data() {
     return {
       workName: this.$route.params.name,
-      descMenu: 1, //v-list model
+      descMenu: 0, //v-list model
       // scrolling options
       duration: 400,
       offset: 50,
       easing: "easeInOutCubic",
-      easings: Object.keys(easings)
+      easings: Object.keys(easings),
+      drawer: false // related works drawer model
     };
   },
 
@@ -206,40 +231,67 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  background-color: #f5f5f5;
+  /* background-color: #f5f5f5; */
 }
 .menu-container {
   width: 15%;
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: flex-start;
   background-color: #f5f5f5;
   position: fixed;
   top: 0px;
   left: 0px;
 }
+.back-to-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  position: relative;
+  top: 50px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+.back-to-container p {
+  font-size: 16px;
+  text-align: left;
+  margin: auto;
+  margin-left: 10px;
+  font-weight: bold;
+  color: #16032c;
+}
 .theme--light.v-sheet {
   background-color: #f5f5f5;
-  margin-top: 120px;
+  /* margin-top: 120px; */
 }
-.menu-container ul {
+.related-works {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
-  margin-top: 120px;
-  /* margin-left: 30px; */
+  align-items: center;
+  /* position: relative;
+  top: 100px; */
+  margin-left: 20px;
+  cursor: pointer;
 }
-.menu-container ul li {
-  list-style: none;
-  font-size: 17px;
-  font-weight: bold;
-  margin-bottom: 50px;
+.related-works-btn {
+  font-size: 16px;
   text-transform: capitalize;
+}
+.related-works p {
+  font-size: 16px;
+  text-align: left;
+  margin: auto;
+  margin-left: 10px;
+  font-weight: bold;
+  color: #16032c;
 }
 .desc-content-flex {
   height: auto;
@@ -247,7 +299,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 70px;
+  /* margin-top: 70px; */
 }
 .desc-content-flex div {
   width: 70%;
@@ -258,6 +310,14 @@ export default {
   align-items: flex-start;
   margin-bottom: 20px;
 }
+.desc-content-flex .desc-content-header {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .desc-content-flex div h2 {
   text-align: left;
   margin-bottom: 10px;
@@ -266,5 +326,8 @@ export default {
   text-align: left;
   font-size: 16px;
   width: 70%;
+}
+.works-drawer {
+  width: 50%;
 }
 </style>

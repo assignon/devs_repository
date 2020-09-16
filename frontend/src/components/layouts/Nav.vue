@@ -113,7 +113,7 @@
         <router-link to="/works" style="text-decoration: none;">
           <div class="menu-item">
             <span>Works</span>
-            <v-icon style="font-size: 18px;" class>fas fa-eye</v-icon>
+            <v-icon style="font-size: 18px;" class>fas fa-folder</v-icon>
           </div>
         </router-link>
 
