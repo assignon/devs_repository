@@ -1,7 +1,7 @@
 <template>
   <div class="works-core">
     <v-layout column align-center class="works-layout">
-      <v-flex xs12 sm12 md8 lg10 xl10 class="filter-flex mb-5">
+      <v-flex xs12 sm12 md8 lg10 xl10 class="filter-flex">
         <div class="works-head">
           <div class="works-titel">
             <!-- <h2 class>My Works</h2>
@@ -13,24 +13,74 @@
                 class="search-project"
                 @keyup.enter="searchWorks()"
               />
-              <v-icon
-                style="position:relative;right:20px;cursor:pointer;font-size:18px;"
-                class="animated bounceIn"
-              >fas fa-question</v-icon>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <div
+                    class="question-icon-container"
+                    v-bind="attrs"
+                    v-on="on"
+                    @click.stop="searchDialog = true"
+                  >
+                    <v-icon
+                      style="cursor:pointer;font-size:18px;"
+                      class="animated bounceIn"
+                    >fas fa-question</v-icon>
+                  </div>
+                </template>
+                <span>How to use the search</span>
+              </v-tooltip>
             </div>
 
-            <v-icon medium v-if="desc" class="ml-3 animated bounceIn">fas fa-sort-amount-up</v-icon>
-            <v-icon medium v-if="!desc" class="ml-3 animated bounceIn">fas fa-sort-amount-down</v-icon>
-            <v-icon medium class="ml-3 animated bounceIn">fas fa-filter</v-icon>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  medium
+                  v-if="desc"
+                  class="ml-3 animated bounceIn"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="desc = false, orderByAsc()"
+                >fas fa-sort-amount-up</v-icon>
+              </template>
+              <span>old to newest</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  medium
+                  v-if="desc == false"
+                  class="ml-3 animated bounceIn"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="desc = true, orderByDesc()"
+                >fas fa-sort-amount-down</v-icon>
+              </template>
+              <span>newest to old</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  medium
+                  class="ml-3 animated bounceIn"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="filtersVisible = !filtersVisible"
+                >fas fa-filter</v-icon>
+              </template>
+              <span>filter</span>
+            </v-tooltip>
           </div>
         </div>
       </v-flex>
 
       <v-flex xs12 sm12 md8 lg10 xl10 class="pl-flex animated" v-if="filtersVisible">
         <v-radio-group v-model="filter" row>
-          <div class="pl-container" v-for="(progLang, i) in progLangs" :key="i">
-            <v-radio label :color="progLang.color" :value="progLang.icon"></v-radio>
-            <v-icon medium>fab fa-{{ progLang.icon }}</v-icon>
+          <div class="pl-container ml-5" v-for="(progLang, i) in progLangs" :key="i">
+            <!-- <v-radio label :color="progLang.color" :value="progLang.icon"></v-radio> -->
+            <v-checkbox v-model="selected" class label :value="progLang.icon"></v-checkbox>
+            <v-icon medium>{{ progLang.icon }}</v-icon>
           </div>
         </v-radio-group>
       </v-flex>
@@ -92,6 +142,12 @@
       <!-- <v-flex 12 xs sm12 md8 lg10 xl10 class="pagination-flex">
         <v-pagination v-model="page" :length="1" :total-visible="7"></v-pagination>
       </v-flex>-->
+      <v-dialog v-model="searchDialog" max-width="500px">
+        <div
+          class="search-dialog-container"
+          style="background-color: white;"
+        >hallo there, you wanna kwon how you can use the search field?</div>
+      </v-dialog>
     </v-layout>
   </div>
 </template>
@@ -109,11 +165,13 @@ export default {
       page: 9, // pagination
       filter: "plFilter", // radio input model
       filtersVisible: false, // check if the radio iput div display is none orr not
+      searchDialog: false, // search explaination dialog model
+      selected: [], // selected checkboxes
       progLangs: [
-        { icon: "python", color: "black" },
-        { icon: "php", color: "black" },
-        { icon: "vuejs", color: "black" },
-        { icon: "terminal", color: "black" }
+        { icon: "fab fa-python", color: "black" },
+        { icon: "fab fa-php", color: "black" },
+        { icon: "fab fa-vuejs", color: "black" },
+        { icon: "fas fa-terminal", color: "black" }
       ],
       projects: [
         {
@@ -181,7 +239,7 @@ export default {
   },
 
   created() {
-    this.allWorks();
+    this.allWorks("default");
     // let arr = this.$store.dispatch("splitToArray", "project,fields,work_type");
     console.log(this.splitToArray("project"));
   },
@@ -225,11 +283,11 @@ export default {
       return arr;
     },
 
-    allWorks() {
+    allWorks(orderBy) {
       let self = this;
       this.$store.dispatch("work/allWorks", {
         url: "works/all_works",
-        params: {},
+        params: { order_by: orderBy },
         callback: function(data) {
           console.log(JSON.parse(data));
           self.$store.getters["work/setWorks"](JSON.parse(data));
@@ -239,6 +297,14 @@ export default {
 
     searchWorks() {
       console.log("hallo there");
+    },
+
+    orderByAsc() {
+      this.allWorks("asc");
+    },
+
+    orderByDesc() {
+      this.allWorks("desc");
     }
   }
 };
@@ -306,6 +372,15 @@ export default {
   font-weight: bold;
   color: #16032c;
 }
+.question-icon-container {
+  width: 7%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.question-icon-container .v-icon:hover {
+  color: #54bf8e;
+}
 .filter {
   width: 50%;
   height: auto;
@@ -328,7 +403,10 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+}
+.pl-container .v-radio {
+  margin-right: 0px;
 }
 .works-flex {
   width: 80%;
@@ -338,7 +416,7 @@ export default {
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
-  margin-top: 70px;
+  margin-top: 80px;
 }
 .works-container {
   width: 300px;
@@ -399,5 +477,14 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+.search-dialog-container {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  padding: 20px;
 }
 </style>

@@ -36,8 +36,13 @@ class Works_view(viewsets.ModelViewSet):
         Args:
             request ([get]): [get works]
         """
-        # user_id = request.query_params.get('userId')
-        works = Works.objects.all().order_by('-pk')
+        order_by = request.query_params.get('order_by')
+        if order_by == 'default':
+            works = Works.objects.all().order_by('-pk')
+        elif order_by == 'asc':
+            works = Works.objects.all().order_by('pk')
+        else:
+            works = Works.objects.all().order_by('-pk')
         # works = self.get_queryset()
 
         # serializer = self.get_serializer_class()(works)
