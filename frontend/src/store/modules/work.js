@@ -4,6 +4,7 @@ export default {
   namespaced: true,
   state: {
     worksArr: [], // array contains all works get from the DB
+    searchArr: [], // array content founded works on search
   },
 
   getters: {
@@ -23,6 +24,22 @@ export default {
     getWorks: (state) => {
       return state.worksArr;
     },
+    setSearchesWorks: (state) => (data) => {
+      if (state.searchArr.length == 0) {
+        data.forEach((item) => {
+          state.searchArr.push(item);
+        });
+      } else {
+        state.searchArr = [];
+        data.forEach((item) => {
+          state.searchArr.push(item);
+        });
+      }
+      return state.searchArr;
+    },
+    getSearchedWorks: (state) => {
+      return state.searchArr
+    }
   },
 
   mutations: {
