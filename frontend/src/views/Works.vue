@@ -11,8 +11,6 @@
                 type="search"
                 placeholder="search..."
                 class="search-project"
-                @focusin="startSearch()"
-                @focusout="searchMode = false"
                 @keyup.enter="searchWorks()"
               />
               <v-tooltip bottom>
@@ -87,15 +85,59 @@
         </v-radio-group>
       </v-flex>
 
-      <WorksTemp :works="works" v-if="searchMode == false"/>
-      <div v-if="searchMode">
-
-        <div class="nothing-founded" v-if="foundedWorks.length == 0">
-          <v-icon large>fas fa-</v-icon>
-          <h2>No works founded</h2>
+      <!-- <div class="works-container"> -->
+      <v-flex xs10 sm10 md4 lg4 xl4 class="works-flex">
+        <div
+          class="works-container animated fadeInUp"
+          :style="{animationDelay: i*0.3+'s',}"
+          v-for="(project, i) in works"
+          :key="i"
+          @click.stop="$router.push(`/work/${project.fields.name}`)"
+        >
+          <div
+            class="works-img"
+            :style="{ backgroundImage: `url(${require(`../../../media/${project.fields.image}`)})` }"
+          >
+            <div class="prog-langs-container pt-3">
+              <img
+                class="prog-langs"
+                :src="require(`../../../media/prog_langs/${progicon}.svg`)"
+                v-for="(progicon, pi) in splitToArray(project.fields.prog_lang)"
+                :key="pi"
+                alt
+              />
+              <!-- <div
+                class="prog-langs"
+                v-for="(progicon, pi) in splitToArray(project.fields.prog_lang)"
+                :key="pi"
+                :style="{ backgroundImage: `url(${require(`../../../media/prog_langs/${progicon}.svg`)})` }"
+              ></div>-->
+            </div>
+          </div>
+          <div class="works-name">
+            <h4 class="mb1">{{ project.fields.name }}</h4>
+            <v-divider width="10%" color="#fff" style></v-divider>
+            <div class="type-icon mt-2">
+              <v-tooltip
+                bottom
+                v-for="(typeicon, ti) in splitToArray(project.fields.work_type)"
+                :key="ti"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-icon
+                    style="font-size:15px;color:white;"
+                    class="ml-2 mr-2"
+                    v-bind="attrs"
+                    v-on="on"
+                  >fas fa-{{ typeicon }}</v-icon>
+                </template>
+                <span></span>
+              </v-tooltip>
+            </div>
+          </div>
         </div>
-        <WorksTemp :works="foundedWorks"/>
-      </div>
+      </v-flex>
+      <!-- </div> -->
 
       <!-- <v-flex 12 xs sm12 md8 lg10 xl10 class="pagination-flex">
         <v-pagination v-model="page" :length="1" :total-visible="7"></v-pagination>
@@ -113,7 +155,6 @@
 <script>
 // import snackBar from "../../components/modals/snackBar";
 import { mapGetters } from "vuex";
-import WorksTemp from "../components/layouts/WorksTemp"
 export default {
   name: "Works",
 
@@ -126,7 +167,6 @@ export default {
       filtersVisible: false, // check if the radio iput div display is none orr not
       searchDialog: false, // search explaination dialog model
       selected: [], // selected checkboxes
-      searchMode: false, // when user is searching
       progLangs: [
         { icon: "fab fa-python", color: "black" },
         { icon: "fab fa-php", color: "black" },
@@ -135,89 +175,66 @@ export default {
       ],
       projects: [
         {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-          prog_lang: ["python", "vuejs"],
+          img: require("../assets/projects/test.jpg"),
+          progIcon: ["python", "vuejs"],
           name: "Co2ok",
-          work_type: ["globe-africa"]
-          }
+          typeIcon: ["globe-africa"]
         },
         {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-          prog_lang: ["vuejs"],
+          img: require("../assets/projects/test.jpg"),
+          progIcon: ["vuejs"],
           name: "Define Shipping",
-          work_type: ["mobile", "globe-africa"]
-          }
+          typeIcon: ["mobile", "globe-africa"]
         },
         {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-          prog_lang: ["php"],
+          img: require("../assets/projects/test.jpg"),
+          progIcon: ["php"],
           name: "Podium De Flux",
-          work_type: ["globe-africa"]
-          }
+          typeIcon: ["globe-africa"]
         },
         {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-          prog_lang: ["python"],
+          img: require("../assets/projects/test.jpg"),
+          progIcon: ["python"],
           name: "Project Creator",
-          work_type: ["terminal"]
-          }
+          typeIcon: ["terminal"]
         },
         {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-          prog_lang: ["python", "vuejs"],
+          img: require("../assets/projects/test.jpg"),
+          progIcon: ["python", "vuejs"],
           name: "Co2ok",
-          work_type: ["mobile", "terminal", "globe-africa"]
-          }
+          typeIcon: ["mobile", "terminal", "globe-africa"]
         },
         {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-          prog_lang: ["python", "vuejs"],
+          img: require("../assets/projects/test.jpg"),
+          progIcon: ["python", "vuejs"],
           name: "Co2ok",
-          work_type: ["mobile", "terminal", "globe-africa"]
-          }
+          typeIcon: ["mobile", "terminal", "globe-africa"]
         },
         {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-          prog_lang: ["python", "vuejs"],
+          img: require("../assets/projects/test.jpg"),
+          progIcon: ["python", "vuejs"],
           name: "Co2ok",
-          work_type: ["mobile", "terminal", "globe-africa"]
-          }
+          typeIcon: ["mobile", "terminal", "globe-africa"]
         },
         {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-          prog_lang: ["python", "vuejs"],
+          img: require("../assets/projects/test.jpg"),
+          progIcon: ["python", "vuejs"],
           name: "Co2ok",
-          work_type: ["mobile", "terminal", "globe-africa"]
-          }
+          typeIcon: ["mobile", "terminal", "globe-africa"]
         },
         {
-          fields: {
-            image: "works/test.jpg",
-          prog_lang: "python,vuejs",
+          img: require("../assets/projects/test.jpg"),
+          progIcon: ["python", "vuejs"],
           name: "Co2ok",
-          work_type: "mobile,terminal,globe-africa"
-          }
+          typeIcon: ["mobile", "terminal", "globe-africa"]
         }
       ]
     };
   },
 
-  components: {
-    WorksTemp: WorksTemp
-  },
-
   computed: {
     ...mapGetters({
-      works: "work/getWorks",
-      foundedWorks: "work/getSearchedWorks",
+      works: "work/getWorks"
     })
   },
 
@@ -276,12 +293,6 @@ export default {
           self.$store.getters["work/setWorks"](JSON.parse(data));
         }
       });
-    },
-
-    startSearch(){
-      this.searchMode = true
-      // document.querySelector('.works-flex').innerHTML = "<h2>hallo there am searching</h2>"
-      console.log('waiting....')
     },
 
     searchWorks() {
@@ -397,76 +408,76 @@ export default {
 .pl-container .v-radio {
   margin-right: 0px;
 }
-/*.works-flex {*/
-/*  width: 80%;*/
-/*  height: auto;*/
-/*  display: flex;*/
-/*  flex-direction: row;*/
-/*  flex-wrap: wrap;*/
-/*  justify-content: space-around;*/
-/*  align-items: center;*/
-/*  margin-top: 80px;*/
-/*}*/
-/*.works-container {*/
-/*  width: 300px;*/
-/*  height: 300px;*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  justify-content: flex-start;*/
-/*  align-items: center;*/
-/*  border: 2px solid #16032c;*/
-/*  background-color: #16032c;*/
-/*  border-radius: 5px;*/
-/*  margin-bottom: 45px;*/
-/*  cursor: pointer;*/
-/*}*/
-/*.works-container:hover {*/
-/*  transition: transform 0.2s linear 0s;*/
-/*  transform: scale(0.9, 0.9);*/
-/*}*/
-/*.works-img {*/
-/*  width: 100%;*/
-/*  height: 80%;*/
-/*  background-repeat: no-repeat;*/
-/*  background-position: center;*/
-/*  background-size: cover;*/
-/*  border-radius: 3px;*/
-/*}*/
-/*.prog-langs-container {*/
-/*  width: 95%;*/
-/*  height: auto;*/
-/*  display: flex;*/
-/*  flex-direction: row;*/
-/*  justify-content: flex-end;*/
-/*  align-items: center;*/
-/*}*/
-/*.prog-langs {*/
-/*  width: 30px;*/
-/*  height: 30px;*/
-/*  !* background-repeat: no-repeat;*/
-/*  background-position: center;*/
-/*  background-size: cover; *!*/
-/*}*/
-/*.works-name {*/
-/*  width: 100%;*/
-/*  height: 20%;*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  justify-content: center;*/
-/*  align-items: center;*/
-/*}*/
-/*.works-name h4 {*/
-/*  text-align: center;*/
-/*  color: white;*/
-/*}*/
-/*.type-icon {*/
-/*  width: 100%;*/
-/*  height: auto;*/
-/*  display: flex;*/
-/*  flex-direction: row;*/
-/*  justify-content: center;*/
-/*  align-items: center;*/
-/*}*/
+.works-flex {
+  width: 80%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 80px;
+}
+.works-container {
+  width: 300px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  border: 2px solid #16032c;
+  background-color: #16032c;
+  border-radius: 5px;
+  margin-bottom: 45px;
+  cursor: pointer;
+}
+.works-container:hover {
+  transition: transform 0.2s linear 0s;
+  transform: scale(0.9, 0.9);
+}
+.works-img {
+  width: 100%;
+  height: 80%;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  border-radius: 3px;
+}
+.prog-langs-container {
+  width: 95%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+.prog-langs {
+  width: 30px;
+  height: 30px;
+  /* background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; */
+}
+.works-name {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.works-name h4 {
+  text-align: center;
+  color: white;
+}
+.type-icon {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
 .search-dialog-container {
   width: 100%;
   height: auto;
