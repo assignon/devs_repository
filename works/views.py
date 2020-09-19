@@ -21,7 +21,7 @@ from rest_framework.status import (
 from works.models import Works, Description, Tags
 from works.serializers import WorksSerializer, DescriptionSerializer
 import re
-import datetime
+from datetime import datetime
 
 
 class SearchPattern():
@@ -54,17 +54,28 @@ class SearchPattern():
 
         regex = [
             # year-month-day
-            {'date': 'ymd', "re": "([1-9]{4})(-|/)([0-9]{1})(-|/)([0-9]{1})"},
+            {'date': 'ymd', "re": "([1-9]{4}),([0-9]{2}),([0-9]{2})"},
             # year-month
-            {'date': 'ym', "re": "([1-9]{4})(-|/)([0-9]{1})(-|/)"},
+            {'date': 'ym', "re": "([1-9]{4}),([0-9]{1})"},
             {'date': 'y', "re": "([1-9]{4})"},  # year
             {'date': 'm', "re": "([0-9]{1})"},  # month
         ]
         # date_type = None
-        for reg in regex:
-            match = re.search(reg['re'], date)
-            if match != None:
-                date_type = reg['date']
+        # for reg in regex:
+        #     match = re.findall(reg['re'], date)
+        #     if match:
+        #         date_type = reg['date']
+        #     else:
+        #         data_type = 'None'
+        i = 0
+        while i < len(regex):
+            match = re.findall(regex[i]['re'], date)
+            if match:
+                date_type = regex[i]['date']
+                break
+            i += 1
+        else:
+            date_type = None
         return date_type
 
     def pattern_recognizer(self, query):
@@ -146,7 +157,7 @@ class SearchPattern():
         Args:
             query (string): user search query or queries]
         """
-        works = Works.objects.filter(tags=query)
+        works = Works.objects.filter(tags__icontains=query)
         return serializers.serialize('json', works)
 
     def search_by_words(self, words):
@@ -160,20 +171,17 @@ class SearchPattern():
             words (array): user search query or queries]
         """
 
-        queryset = ""
-        queryset_arr = []
+        works_data = []
         for word in words:
-            qs = f'Q(tags__icontains={word}) | '
-            queryset_arr.append(qs)
+            works = Works.objects.all().filter(
+                tags__icontains=word)
+            works_data.extend(works)
+        # remove duplcated works
+        rm_duplicate = list(dict.fromkeys(works_data))
 
-        for q in queryset_arr:
-            queryset += q
-            # works = Works.objects.all().filter(tags__in=words)
-        qset = f'{Q(tags__icontains="website")} | {Q(tags__icontains="cli")} | {Q(tags__icontains="pwa")}'
-        works = Works.objects.all().filter(qset)
-        return serializers.serialize('json', works)
+        return serializers.serialize('json', rm_duplicate)
 
-    def search_by_equal(self, date, words):
+    def search_by_equal(self, date):
         """
         search by = date
         pattern:
@@ -183,19 +191,22 @@ class SearchPattern():
         """
 
         date_regex = self.date_re(date)
-        if date_regex == 'ymd':  # year-month-day date format
-            works = Works.objects.filter(
-                added_on__date=datetime.date(date))
-        elif date_regex == 'ym':  # year-month date format
-            year, month = date.split("-")
-            works = Works.objects.filter(
-                Q(added_on__year=year) & Q(added_on__month=month))
-        elif date_regex == "y":  # year date format
-            works = Works.objects.filter(added_on__year=date)
-        else:  # month date format
-            works = Works.objects.filter(added_on__month=date)
-        # pub_date__gte=datetime.date(2005, 1, 30)
+        # if date_regex == 'ymd':  # year-month-day date format
+        #     works = Works.objects.filter(
+        #         added_on__date=datetime.date(date))
+        # elif date_regex == 'ym':  # year-month date format
+        #     year, month = date.split("-")
+        #     works = Works.objects.filter(
+        #         Q(added_on__year=year) & Q(added_on__month=month))
+        # elif date_regex == "y":  # year date format
+        #     works = Works.objects.filter(added_on__year=date)
+        # else:  # month date format
+        #     works = Works.objects.filter(added_on__month=date)
+        works = Works.objects.filter(
+            added_on__year=date)
+        print(date)
         return serializers.serialize('json', works)
+        # return date_regex
 
     def search_by_gt(self, date):
         """
