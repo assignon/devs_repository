@@ -11,8 +11,9 @@
                 type="search"
                 placeholder="search..."
                 class="search-project"
+                v-model="searchQuery"
                 @focusin="startSearch()"
-                @focusout="searchMode = false"
+                @focusout="searchMode = false, searchEnter = false"
                 @keyup.enter="searchWorks()"
               />
               <v-tooltip bottom>
@@ -87,14 +88,19 @@
         </v-radio-group>
       </v-flex>
 
-      <WorksTemp :works="works" v-if="searchMode == false"/>
-      <div v-if="searchMode">
-
-        <div class="nothing-founded" v-if="foundedWorks.length == 0">
-          <v-icon large>fas fa-</v-icon>
-          <h2>No works founded</h2>
+      <WorksTemp :works="works" v-if="searchMode == false" />
+      <div v-if="searchMode" class="nothing-founded-container">
+        <div class="nothing-founded" v-if="foundedWorks.length == 0 && searchEnter">
+          <img src="../assets/projects/not-found.svg" alt class="animated fadeInUp" />
+          <h2 class="animated fadeInUp" style="animation-delay:0.5s;">No works founded</h2>
         </div>
-        <WorksTemp :works="foundedWorks"/>
+
+        <div class="focus-in" v-if="searchEnter == false">
+          <WaitingLoader />
+          <h2 class="animated fadeInUp" style="animation-delay:0.5s;">Waiting for your query</h2>
+        </div>
+
+        <WorksTemp :works="foundedWorks" v-if="foundedWorks.length != 0" />
       </div>
 
       <!-- <v-flex 12 xs sm12 md8 lg10 xl10 class="pagination-flex">
@@ -113,7 +119,8 @@
 <script>
 // import snackBar from "../../components/modals/snackBar";
 import { mapGetters } from "vuex";
-import WorksTemp from "../components/layouts/WorksTemp"
+import WorksTemp from "../components/layouts/WorksTemp";
+import WaitingLoader from "../components/loaders/Waiting.loader";
 export default {
   name: "Works",
 
@@ -127,6 +134,8 @@ export default {
       searchDialog: false, // search explaination dialog model
       selected: [], // selected checkboxes
       searchMode: false, // when user is searching
+      searchEnter: false, // when the user hit enter key to search works
+      searchQuery: "", // search field value
       progLangs: [
         { icon: "fab fa-python", color: "black" },
         { icon: "fab fa-php", color: "black" },
@@ -137,73 +146,73 @@ export default {
         {
           fields: {
             image: require("../assets/projects/test.jpg"),
-          prog_lang: ["python", "vuejs"],
-          name: "Co2ok",
-          work_type: ["globe-africa"]
+            prog_lang: ["python", "vuejs"],
+            name: "Co2ok",
+            work_type: ["globe-africa"]
           }
         },
         {
           fields: {
             image: require("../assets/projects/test.jpg"),
-          prog_lang: ["vuejs"],
-          name: "Define Shipping",
-          work_type: ["mobile", "globe-africa"]
+            prog_lang: ["vuejs"],
+            name: "Define Shipping",
+            work_type: ["mobile", "globe-africa"]
           }
         },
         {
           fields: {
             image: require("../assets/projects/test.jpg"),
-          prog_lang: ["php"],
-          name: "Podium De Flux",
-          work_type: ["globe-africa"]
+            prog_lang: ["php"],
+            name: "Podium De Flux",
+            work_type: ["globe-africa"]
           }
         },
         {
           fields: {
             image: require("../assets/projects/test.jpg"),
-          prog_lang: ["python"],
-          name: "Project Creator",
-          work_type: ["terminal"]
+            prog_lang: ["python"],
+            name: "Project Creator",
+            work_type: ["terminal"]
           }
         },
         {
           fields: {
             image: require("../assets/projects/test.jpg"),
-          prog_lang: ["python", "vuejs"],
-          name: "Co2ok",
-          work_type: ["mobile", "terminal", "globe-africa"]
+            prog_lang: ["python", "vuejs"],
+            name: "Co2ok",
+            work_type: ["mobile", "terminal", "globe-africa"]
           }
         },
         {
           fields: {
             image: require("../assets/projects/test.jpg"),
-          prog_lang: ["python", "vuejs"],
-          name: "Co2ok",
-          work_type: ["mobile", "terminal", "globe-africa"]
+            prog_lang: ["python", "vuejs"],
+            name: "Co2ok",
+            work_type: ["mobile", "terminal", "globe-africa"]
           }
         },
         {
           fields: {
             image: require("../assets/projects/test.jpg"),
-          prog_lang: ["python", "vuejs"],
-          name: "Co2ok",
-          work_type: ["mobile", "terminal", "globe-africa"]
+            prog_lang: ["python", "vuejs"],
+            name: "Co2ok",
+            work_type: ["mobile", "terminal", "globe-africa"]
           }
         },
         {
           fields: {
             image: require("../assets/projects/test.jpg"),
-          prog_lang: ["python", "vuejs"],
-          name: "Co2ok",
-          work_type: ["mobile", "terminal", "globe-africa"]
+            prog_lang: ["python", "vuejs"],
+            name: "Co2ok",
+            work_type: ["mobile", "terminal", "globe-africa"]
           }
         },
         {
           fields: {
             image: "works/test.jpg",
-          prog_lang: "python,vuejs",
-          name: "Co2ok",
-          work_type: "mobile,terminal,globe-africa"
+            prog_lang: "python,vuejs",
+            name: "Co2ok",
+            work_type: "mobile,terminal,globe-africa"
           }
         }
       ]
@@ -211,13 +220,14 @@ export default {
   },
 
   components: {
-    WorksTemp: WorksTemp
+    WorksTemp: WorksTemp,
+    WaitingLoader: WaitingLoader
   },
 
   computed: {
     ...mapGetters({
       works: "work/getWorks",
-      foundedWorks: "work/getSearchedWorks",
+      foundedWorks: "work/getSearchedWorks"
     })
   },
 
@@ -267,6 +277,11 @@ export default {
     },
 
     allWorks(orderBy) {
+      /*
+        get all works from the DB
+        params:
+          orderBy: [str]: [define the order of the data (ex: default=desc, desc, asc)]
+      */
       let self = this;
       this.$store.dispatch("work/allWorks", {
         url: "works/all_works",
@@ -278,21 +293,36 @@ export default {
       });
     },
 
-    startSearch(){
-      this.searchMode = true
-      // document.querySelector('.works-flex').innerHTML = "<h2>hallo there am searching</h2>"
-      console.log('waiting....')
+    startSearch() {
+      // when search field focus in
+      this.searchMode = true;
     },
 
     searchWorks() {
-      console.log("hallo there");
+      /* when enter key hited */
+      let self = this;
+      this.searchEnter = true;
+      // empty search field
+      document.querySelector(".search-project").value = "";
+      // send request
+      this.$store.dispatch("work/searchWorks", {
+        url: "works/search_works",
+        params: { query: self.searchQuery },
+        callback: function(data) {
+          console.log(JSON.parse(data));
+          // push founded works data to setSearchedWorks array
+          self.$store.getters["work/setSearchedWorks"](JSON.parse(data));
+        }
+      });
     },
 
     orderByAsc() {
+      // get works order by ascending
       this.allWorks("asc");
     },
 
     orderByDesc() {
+      // get works order by descending
       this.allWorks("desc");
     }
   }
@@ -396,6 +426,31 @@ export default {
 }
 .pl-container .v-radio {
   margin-right: 0px;
+}
+.nothing-founded-container {
+  width: 100%;
+  height: 75vh;
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: center;
+  align-items: center;
+}
+.nothing-founded,
+.focus-in {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.nothing-founded img {
+  width: 70px;
+  height: 70px;
+}
+.focus-in h2 {
+  position: relative;
+  bottom: -40px;
 }
 /*.works-flex {*/
 /*  width: 80%;*/

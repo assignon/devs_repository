@@ -24,7 +24,7 @@ export default {
     getWorks: (state) => {
       return state.worksArr;
     },
-    setSearchesWorks: (state) => (data) => {
+    setSearchedWorks: (state) => (data) => {
       if (state.searchArr.length == 0) {
         data.forEach((item) => {
           state.searchArr.push(item);
@@ -38,8 +38,8 @@ export default {
       return state.searchArr;
     },
     getSearchedWorks: (state) => {
-      return state.searchArr
-    }
+      return state.searchArr;
+    },
   },
 
   mutations: {
@@ -92,6 +92,15 @@ export default {
 
   actions: {
     allWorks({ commit, rootState }, payload) {
+      commit("getAxiosCall", {
+        url: payload.url,
+        params: payload.params,
+        callback: payload.callback,
+        host: rootState.HOST,
+      });
+    },
+
+    searchWorks({ commit, rootState }, payload) {
       commit("getAxiosCall", {
         url: payload.url,
         params: payload.params,
