@@ -88,7 +88,13 @@
         </v-radio-group>
       </v-flex>
 
-      <WorksTemp :works="works" v-if="searchMode == false" />
+      <WorksTemp
+        :works="works"
+        h="300px"
+        w="300px"
+        :reload="false"
+        v-if="searchMode == false && foundedWorks.length == 0"
+      />
       <div v-if="searchMode" class="nothing-founded-container">
         <div class="nothing-founded" v-if="foundedWorks.length == 0 && searchEnter">
           <img src="../assets/projects/not-found.svg" alt class="animated fadeInUp" />
@@ -100,8 +106,16 @@
           <h2 class="animated fadeInUp" style="animation-delay:0.5s;">Waiting for your query</h2>
         </div>
 
-        <WorksTemp :works="foundedWorks" v-if="foundedWorks.length != 0" />
+        <!-- <WorksTemp :works="foundedWorks" v-if="foundedWorks.length != 0" /> -->
       </div>
+
+      <WorksTemp
+        :works="foundedWorks"
+        h="300px"
+        w="300px"
+        :reload="false"
+        v-if="foundedWorks.length != 0 || searchEnter"
+      />
 
       <!-- <v-flex 12 xs sm12 md8 lg10 xl10 class="pagination-flex">
         <v-pagination v-model="page" :length="1" :total-visible="7"></v-pagination>
@@ -233,6 +247,7 @@ export default {
 
   created() {
     this.allWorks("default");
+    this.$store.getters["work/getSearchedWorks"].length = 0;
     // let arr = this.$store.dispatch("splitToArray", "project,fields,work_type");
     console.log(this.splitToArray("project"));
   },
@@ -295,6 +310,7 @@ export default {
 
     startSearch() {
       // when search field focus in
+      this.$store.getters["work/getSearchedWorks"].length = 0;
       this.searchMode = true;
     },
 
@@ -310,6 +326,9 @@ export default {
         params: { query: self.searchQuery },
         callback: function(data) {
           console.log(JSON.parse(data));
+          if (self.$store.getters["work/getSearchedWorks"].length == 0) {
+            self.searchMode = false;
+          }
           // push founded works data to setSearchedWorks array
           self.$store.getters["work/setSearchedWorks"](JSON.parse(data));
         }

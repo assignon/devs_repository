@@ -22,6 +22,7 @@ from works.models import Works, Description, Tags
 from works.serializers import WorksSerializer, DescriptionSerializer
 import re
 from datetime import datetime
+import codecs
 
 
 class SearchPattern():
@@ -391,6 +392,34 @@ class Works_view(viewsets.ModelViewSet):
         response = pattern.pattern_recognizer(search_query)
         return Response(response)
 
+    @csrf_exempt
+    @action(methods=['get'], detail=False)
+    def related_works(self, request):
+        """
+        get work related works
+        Args:
+            request (get): [get works base on current work tags]
+
+        Returns:
+            [json]: [works objects data]
+        """
+        work_name = request.query_params.get('work_name')  # current work name
+        related_works_data = []
+        # get current work tags
+        current_work_tags = Works.objects.get(name=work_name).tags
+        tags = current_work_tags.split(",")  # split tags into array
+
+        for tag in tags:
+            # filter works on tags and exclude the current work
+            works_related = Works.objects.exclude(name=work_name).filter(
+                tags__icontains=tag)
+            related_works_data.extend(works_related)
+
+        # remove duplcated works
+        rm_duplicate = list(dict.fromkeys(related_works_data))
+
+        return Response(serializers.serialize('json', rm_duplicate))
+
 
 class Description_view(viewsets.ModelViewSet):
     queryset = Description.objects.all()
@@ -400,10 +429,19 @@ class Description_view(viewsets.ModelViewSet):
     @csrf_exempt
     @action(methods=['get'], detail=False)
     def work_desc(self, request):
+        """
+         get current work description from DB
+
+        Args:
+            request ([get]): [get description]
+        """
         work_name = request.query_params.get('work_name')
         # get description id with work name
         description_id = Works.objects.get(name=work_name).description_id
         # get description by id
         description = Description.objects.get(id=description_id)
+        description_file = codecs.open(description.description, "r", "utf-8")
+        # print(file.read())
+
         return Response([{'description': description.description, 'menu': description.menu}])
         # return Response('hallo')

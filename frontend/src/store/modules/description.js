@@ -20,6 +20,7 @@ export default {
       }
       return state.descriptionArr;
     },
+
     getDesc: (state) => {
       return state.descriptionArr;
     },

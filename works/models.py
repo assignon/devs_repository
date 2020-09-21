@@ -14,7 +14,8 @@ class Description(models.Model):
     Args:
         models ([type]): [description]
     """
-    description = models.TextField()
+    # description = models.TextField()
+    description = models.FileField(upload_to='work_descriptions')
     menu = models.CharField(max_length=155)
 
     # def __str__(self):

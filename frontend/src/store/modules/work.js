@@ -5,6 +5,7 @@ export default {
   state: {
     worksArr: [], // array contains all works get from the DB
     searchArr: [], // array content founded works on search
+    relatedWorksArr: [], // array contains related works
   },
 
   getters: {
@@ -24,6 +25,7 @@ export default {
     getWorks: (state) => {
       return state.worksArr;
     },
+
     setSearchedWorks: (state) => (data) => {
       if (state.searchArr.length == 0) {
         data.forEach((item) => {
@@ -39,6 +41,23 @@ export default {
     },
     getSearchedWorks: (state) => {
       return state.searchArr;
+    },
+
+    setRelatedWorks: (state) => (data) => {
+      if (state.relatedWorksArr.length == 0) {
+        data.forEach((item) => {
+          state.relatedWorksArr.push(item);
+        });
+      } else {
+        state.relatedWorksArr = [];
+        data.forEach((item) => {
+          state.relatedWorksArr.push(item);
+        });
+      }
+      return state.relatedWorksArr;
+    },
+    getRelatedWorks: (state) => {
+      return state.relatedWorksArr;
     },
   },
 
@@ -101,6 +120,15 @@ export default {
     },
 
     searchWorks({ commit, rootState }, payload) {
+      commit("getAxiosCall", {
+        url: payload.url,
+        params: payload.params,
+        callback: payload.callback,
+        host: rootState.HOST,
+      });
+    },
+
+    getRelatedWorks({ commit, rootState }, payload) {
       commit("getAxiosCall", {
         url: payload.url,
         params: payload.params,

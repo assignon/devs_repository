@@ -31,7 +31,10 @@
             </v-list-item-group>
           </v-list>
 
-          <div class="related-works animated fadeInUp" @click.stop="drawer = !drawer">
+          <div
+            class="related-works animated fadeInUp"
+            @click.stop="drawer = !drawer, worksRelated()"
+          >
             <v-btn rounded large color="#42b883" dark outlined class="related-works-btn">
               <!-- <v-icon color="#42b883 pl-3">fas fa-folder</v-icon> -->
               Related Works
@@ -43,7 +46,9 @@
       <!-- <v-flex xs10 sm10 md10 lg10 xl10 class="desc-content-flex">{{desc[0].description}}</v-flex> -->
       <v-flex xs10 sm10 md10 lg10 xl10 class="desc-content-flex">
         <div class="desc-content-header">
-          <h2>Work Description</h2>
+          <h2>
+            <span style="color: #54bf8e;">{{workName}}</span> Work Description
+          </h2>
           <v-divider width="5%" color="#16032c" style></v-divider>
         </div>
         <div id="install">
@@ -119,10 +124,22 @@
         absolute
         v-model="drawer"
         temporary
+        overlay-color="#54bf8e"
         right
-        class="works-drawer"
+        class="related-works-drawer"
         width="50%"
-      ></v-navigation-drawer>
+      >
+        <div v-if="relatedWorks.length == 0" class="nothing-founded-container">
+          <div class="nothing-founded">
+            <img src="../assets/projects/not-found.svg" alt class="animated fadeInUp" />
+            <h2 class="animated fadeInUp" style="animation-delay:0.5s;">No related works founded</h2>
+          </div>
+        </div>
+
+        <div class="related-works" v-else>
+          <WorksTemp :works="relatedWorks" h="250px" w="250px" :reload="true" />
+        </div>
+      </v-navigation-drawer>
     </v-layout>
   </div>
 </template>
@@ -130,6 +147,7 @@
 <script>
 import { mapGetters } from "vuex";
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
+import WorksTemp from "../components/layouts/WorksTemp";
 export default {
   name: "Description",
 
@@ -146,9 +164,14 @@ export default {
     };
   },
 
+  components: {
+    WorksTemp: WorksTemp
+  },
+
   computed: {
     ...mapGetters({
-      desc: "description/getDesc"
+      desc: "description/getDesc",
+      relatedWorks: "work/getRelatedWorks"
     }),
 
     target() {
@@ -208,6 +231,19 @@ export default {
           self.$store.getters["description/setDesc"](data);
         }
       });
+    },
+
+    worksRelated() {
+      let self = this;
+      this.$store.dispatch("work/getRelatedWorks", {
+        url: "works/related_works",
+        params: { work_name: self.workName },
+        callback: function(data) {
+          console.log(data);
+          self.$store.getters["work/setRelatedWorks"](JSON.parse(data));
+          console.log(self.$store.getters["work/getRelatedWorks"]);
+        }
+      });
     }
   }
 };
@@ -220,6 +256,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  /* z-index: 6; */
 }
 .desc-layout {
   width: 100%;
@@ -327,7 +364,49 @@ export default {
   font-size: 16px;
   width: 70%;
 }
-.works-drawer {
-  width: 50%;
+.related-works-drawer {
+  display: flex;
+  /* flex-direction: column; */
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: scroll;
+  top: 0px;
+  /* z-index: 5; */
+  /* margin: 0px;
+  padding: 0px; */
+}
+.related-works {
+  width: 100%;
+  height: auto;
+  display: flex;
+  /* flex-direction: row;
+  flex-wrap: wrap; */
+  justify-content: space-around;
+  align-items: center;
+}
+.related-works .works-flex {
+  width: 100%;
+  justify-content: center;
+  border: 1px solid green;
+}
+.nothing-founded-container {
+  width: 100%;
+  height: 75vh;
+  display: flex;
+  /* flex-direction: row; */
+  justify-content: center;
+  align-items: center;
+}
+.nothing-founded {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.nothing-founded img {
+  width: 70px;
+  height: 70px;
 }
 </style>

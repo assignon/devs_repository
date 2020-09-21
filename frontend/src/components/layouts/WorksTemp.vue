@@ -2,10 +2,10 @@
   <v-flex xs10 sm10 md4 lg4 xl4 class="works-flex">
     <div
       class="works-container animated fadeInUp"
-      :style="{ animationDelay: i * 0.3 + 's' }"
+      :style="{ animationDelay: i * 0.3 + 's' , width: w, height: h}"
       v-for="(project, i) in works"
       :key="i"
-      @click.stop="$router.push(`/work/${project.fields.name}`)"
+      @click.stop="$router.push(`/work/${project.fields.name}`), reloadState()"
     >
       <div
         class="works-img"
@@ -26,7 +26,7 @@
                 v-for="(progicon, pi) in splitToArray(project.fields.prog_lang)"
                 :key="pi"
                 :style="{ backgroundImage: `url(${require(`../../../media/prog_langs/${progicon}.svg`)})` }"
-              ></div>-->
+          ></div>-->
         </div>
       </div>
       <div class="works-name">
@@ -44,8 +44,7 @@
                 class="ml-2 mr-2"
                 v-bind="attrs"
                 v-on="on"
-                >fas fa-{{ typeicon }}</v-icon
-              >
+              >fas fa-{{ typeicon }}</v-icon>
             </template>
             <span></span>
           </v-tooltip>
@@ -71,7 +70,7 @@ export default {
     };
   },
 
-  props: ["works"],
+  props: ["works", "w", "h", "reload"],
 
   computed: {
     // ...mapGetters({
@@ -119,6 +118,12 @@ export default {
       }
       return arr;
     },
+
+    reloadState() {
+      if (this.reload) {
+        location.reload();
+      }
+    }
   }
 };
 </script>
@@ -135,8 +140,8 @@ export default {
   margin-top: 80px;
 }
 .works-container {
-  width: 300px;
-  height: 300px;
+  /* width: 300px;
+  height: 300px; */
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
