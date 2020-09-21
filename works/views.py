@@ -440,8 +440,8 @@ class Description_view(viewsets.ModelViewSet):
         description_id = Works.objects.get(name=work_name).description_id
         # get description by id
         description = Description.objects.get(id=description_id)
-        description_file = codecs.open(description.description, "r", "utf-8")
+        # description_file = codecs.open(description.description, "r", "utf-8")
         # print(file.read())
 
-        return Response([{'description': description.description, 'menu': description.menu}])
+        return Response([{'description': None, 'menu': description.menu}])
         # return Response('hallo')
