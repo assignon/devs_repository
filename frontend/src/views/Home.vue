@@ -10,7 +10,7 @@
               <h1
                 class="display-3 font-weight-bold mb-5 animated fadeInUp"
                 style="animation-delay: 0.2s"
-              >Welcom in my world</h1>
+              >Welcome in my world</h1>
               <p class="mb-5 animated fadeInUp" style="animation-delay: 0.6s">
                 Le Lorem Ipsum est simplement du faux texte employé dans la
                 composition et la mise en page avant impression. texte employé

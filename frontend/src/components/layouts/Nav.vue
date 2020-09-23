@@ -20,7 +20,7 @@
           style="text-decoration: none;cursor: pointer;"
         >
           <div class="menu-item">
-            <span>Aboute</span>
+            <span>About</span>
             <v-icon style="font-size: 18px;" class>fas fa-address-card</v-icon>
           </div>
         </div>
@@ -98,7 +98,7 @@
           style="text-decoration: none;cursor: pointer;"
         >
           <div class="menu-item">
-            <span>Aboute</span>
+            <span>About</span>
             <v-icon style="font-size: 18px;" class>fas fa-address-card</v-icon>
           </div>
         </div>

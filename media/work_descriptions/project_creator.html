@@ -1,0 +1,65 @@
+<div id="idea" class='animated fadeInUp'>
+    <h2>Idea</h2>
+    <p>CLI make with click and python to automate the creation of web and scripting project. Make the steps of project creation easier is the goal of this project.</p>
+</div>
+<div id="content" class='animated fadeInUp'>
+    <h2>Content</h2>
+    <p>
+        This CLI will automate all that boring proces for you. Create in one command line a new project with a framework in your choice and add it to GitHub without opening your browser.
+        <ul>
+            <li>Choose the right framework</li>
+            <li>Create a virtualenv</li>
+            <li>Activate your virtual env</li>
+            <li>Install the framework</li>
+            <li>Install additional packages for your project</li>
+            <li>Create a new Github repository</li>
+            <li>Add your project op GitHub</li>
+        </ul>
+    </p>
+</div>
+<div id="technics" class='animated fadeInUp'>
+    <h2>Technics</h2>
+    <p>
+        this project was written in <span style='color:#54bf8e; font-weight:bold;'>Python</span>, with <span style='color:#54bf8e; font-weight:bold;'>SQLite</span> as DBMS. For the creation of the command line interface,
+        the python <span style='color:#54bf8e; font-weight:bold;'>Click</span> package was used. Finally, <span style='color:#54bf8e; font-weight:bold;'>Selinium</span> was used for all browser automation tasks.
+    </p>
+</div>
+<div id="install" class='animated fadeInUp'>
+    <h2>Installation</h2>
+    <p>
+        pull the project frome this repository:<br/>
+        git clone <kbd>https://github.com/assignon/python_cli</kbd><br/>
+        in de command line go in the directory where you pull it<br/>
+        <kbd>path/to/the/directory/of/python_cli</kbd><br/>
+        Run the following command to install it on your machine to be able to run it from everywhere<br/>
+        make sure you are in the <strong>python_cli directory</strong> in your cmd<br/>
+        <kbd>pipenv shell pipenv install Click setuptools selenium colorama</kbd><br/><br/>
+
+        <strong>for Windows users</strong><br/>
+        <kbd>python entrypoint.py install-yanr</kbd><br/><br/>
+
+        <strong>For Linux and Mac users</strong><br/>
+        <kbd>python entrypoint.py install-yanr -os</kbd>
+        (if you run it from a venv, run it without -os)<br/><br/>
+    </p>
+</div>
+<div id="use" class='animated fadeInUp'>
+    <h2>Use</h2>
+    <p>
+        Now the installation and setup are done you can go a head and run it fron everywhere in the cmd with<br/>
+        <code>&lt;yanr --help&gt;</code> for more information about how you can use it.<br/><br/>
+
+        <strong>CHANGE yanr DEFAULT COMMAND</strong><br/>
+        If you want to change <code>&lt;yanr&gt;</code> to your own and use something like: <code>&lt;mycmd --help&gt;</code>
+        you can edit the <strong>setup.py</strong> file in the <strong>prthon_cli</strong> folder. Just open it in a text editor
+        and change where ever yanr is with your own.<br/>
+
+        Save the file and run this command from the cmd:<br/>
+        <strong>For Windows users:</strong>
+        <kbd>pip install --editable .</kbd><br/><br/>
+
+        <strong>For Mac and Linux users</strong> if you are not in a venv:
+        <kbd>pip install --editable . --user</kbd>
+        (in a venv run it without --user)
+    </p>
+</div>

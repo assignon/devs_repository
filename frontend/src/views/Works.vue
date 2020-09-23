@@ -38,11 +38,10 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-icon
                   medium
-                  v-if="desc"
-                  class="ml-3 animated bounceIn"
+                  class="asc-icon ml-3 animated bounceIn"
                   v-bind="attrs"
                   v-on="on"
-                  @click="desc = false, orderByAsc()"
+                  @click="orderByAsc()"
                 >fas fa-sort-amount-up</v-icon>
               </template>
               <span>old to newest</span>
@@ -52,11 +51,10 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-icon
                   medium
-                  v-if="desc == false"
-                  class="ml-3 animated bounceIn"
+                  class="desc-icon ml-3 animated bounceIn"
                   v-bind="attrs"
                   v-on="on"
-                  @click="desc = true, orderByDesc()"
+                  @click="orderByDesc()"
                 >fas fa-sort-amount-down</v-icon>
               </template>
               <span>newest to old</span>
@@ -120,11 +118,94 @@
       <!-- <v-flex 12 xs sm12 md8 lg10 xl10 class="pagination-flex">
         <v-pagination v-model="page" :length="1" :total-visible="7"></v-pagination>
       </v-flex>-->
-      <v-dialog v-model="searchDialog" max-width="500px">
-        <div
-          class="search-dialog-container"
-          style="background-color: white;"
-        >hallo there, you wanna kwon how you can use the search field?</div>
+      <v-dialog v-model="searchDialog" max-width="700px">
+        <div class="search-dialog-container" style="background-color: white;">
+          <h4
+            class="mb-3"
+          >The search engine offers different ways and combinations to make more efficient searching and finding projects.</h4>
+          <v-list>
+            <v-list-item-group v-model="descMenu" color="#41b883">
+              <v-list-item>
+                <v-list-item-content>
+                  <p>
+                    project
+                    <strong>type(s)</strong>,
+                    <strong>programming language(s)</strong>,
+                    <strong>tags</strong>
+                    <br />e.g.
+                    <br />
+                    <kbd>website</kbd>
+                  </p>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content>
+                  <p>
+                    <strong>Combining</strong> queries
+                    <br />e.g.
+                    <br />
+                    <kbd>website+app+...</kbd> or
+                    <kbd>website,app,pwa,...</kbd>
+                  </p>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content>
+                  <p>
+                    Search projects
+                    <strong>before (&lt;)</strong>,
+                    <strong>after (>)</strong> or on a
+                    <strong>specific (=)</strong> date
+                    <br />e.g.
+                    <br />
+                    <kbd>>2020,09,13</kbd> or
+                    <kbd>&lt;2020</kbd> or
+                    <kbd>=2020,09</kbd>
+                  </p>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content>
+                  <p>
+                    <strong>Combining</strong> queries and dates
+                    <br />e.g.
+                    <br />
+                    <kbd>website,pwa> 2020,09,13</kbd> or
+                    <kbd>website&lt;2020</kbd> or
+                    <kbd>website+pwa=2020,09</kbd>
+                  </p>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content>
+                  <p>
+                    <strong>built-in</strong> key words
+                    <br />e.g.
+                    <br />
+                    <kbd>newest</kbd> and
+                    <kbd>oldest</kbd>
+                  </p>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+          <p>
+            <span style="color: magenta,font-weight:bold">i:</span> avoid putting spaces between words during combined searches.
+            <br />Do:
+            <span style>website,app,cli,...</span>
+            <br />Not:
+            <span style="text-decoration: line-through">website, app, api, ...</span>
+            <br />
+          </p>
+          <p>
+            projects
+            <strong>types</strong> values: website, mobile, app, cli, desktop app, ...
+          </p>
+          <p>
+            projects
+            <strong>tags</strong> values: cli, command line, cmd, terminal, site, pwa, responsive, programming language packages(e.g. colorama, pillow, vuetify, ...)
+          </p>
+        </div>
       </v-dialog>
     </v-layout>
   </div>
@@ -337,11 +418,15 @@ export default {
 
     orderByAsc() {
       // get works order by ascending
+      document.querySelector(".asc-icon").style.display = "none";
+      document.querySelector(".desc-icon").style.display = "block";
       this.allWorks("asc");
     },
 
     orderByDesc() {
       // get works order by descending
+      document.querySelector(".desc-icon").style.display = "none";
+      document.querySelector(".asc-icon").style.display = "block";
       this.allWorks("desc");
     }
   }
@@ -426,6 +511,9 @@ export default {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
+}
+.desc-icon {
+  display: none;
 }
 .pl-flex {
   width: 70%;
@@ -549,5 +637,28 @@ export default {
   justify-content: center;
   align-content: center;
   padding: 20px;
+}
+.v-list-item__content {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+  padding: 0px;
+}
+.v-list-item__content p {
+  width: 90%;
+  text-align: left;
+  font-size: 16px;
+  color: #1b1127;
+}
+.v-application kbd {
+  background-color: #54bf8e;
+  padding: 2px;
+  margin: 2px 0px 2px 0px;
+}
+.search-dialog-container p {
+  color: #1b1127;
 }
 </style>

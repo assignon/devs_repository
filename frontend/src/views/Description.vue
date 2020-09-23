@@ -25,7 +25,19 @@
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                  <v-list-item-title v-text="item"></v-list-item-title>
+                  <a
+                    :href="desc[0].url"
+                    target="_blank"
+                    style="text-decoration: none; color:#717171"
+                    v-if="item=='url'"
+                  >url</a>
+                  <v-list-item-title v-text="item" v-if="item!='url' && item!='github'"></v-list-item-title>
+                  <a
+                    :href="desc[0].repository"
+                    target="_blank"
+                    style="text-decoration: none; color: #717171"
+                    v-if="item=='github'"
+                  >github</a>
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
@@ -44,80 +56,14 @@
       </v-flex>
 
       <!-- <v-flex xs10 sm10 md10 lg10 xl10 class="desc-content-flex">{{desc[0].description}}</v-flex> -->
-      <v-flex xs10 sm10 md10 lg10 xl10 class="desc-content-flex">
-        <div class="desc-content-header">
+      <v-flex xs10 sm10 md10 lg10 xl10 class="desc-content-flex mb-5">
+        <div class="desc-content-header animated fadeInUp" style="animation-delay: 0.4s">
           <h2>
             <span style="color: #54bf8e;">{{workName}}</span> Work Description
           </h2>
           <v-divider width="5%" color="#16032c" style></v-divider>
         </div>
-        <div id="install">
-          <h2>Install</h2>
-          <p>
-            Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le
-            faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme
-            assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.
-            Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique,
-            sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente
-            de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion
-            dans des applications de mise en page de texte, comme Aldus PageMaker. assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.
-            Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique,
-            sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente
-            de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion
-            dans des applications de mise en page de texte, comme Aldus PageMake assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.
-            Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique,
-            sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente
-            de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion
-            dans des applications de mise en page de texte, comme Aldus PageMake
-          </p>
-        </div>
-        <div id="idea">
-          <h2>Idea</h2>
-          <p>
-            Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le
-            faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme
-            assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.
-            Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique,
-            sans que son contenu n'en soit modifié.faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme
-            assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.
-            Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique,
-            sans que son contenu n'en soit modifié.
-          </p>
-        </div>
-        <div id="content">
-          <h2>Content</h2>
-          <p>
-            Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique,
-            sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente
-            de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion
-            dans des applications de mise en page de texte,sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente
-            de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion
-            dans des applications de mise en page de texte,
-          </p>
-        </div>
-        <div id="technics">
-          <h2>Technics</h2>
-          <p>
-            e Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le
-            faux texte standard de l'imprimerie depuis les années 1500, quand un imprimeur anonyme
-            assembla ensemble des morceaux de texte pour réaliser un livre spécimen de polices de texte.
-            Il n'a pas fait que ssans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente
-            de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion
-            dans des applications de mise en page de texte,sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente
-            de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion
-            dans des applications de mise en page de texte,
-          </p>
-        </div>
-        <div id="use">
-          <h2>Use</h2>
-          <p>
-            Il n'a pas fait que survivre cinq siècles, mais s'est aussi adapté à la bureautique informatique,
-            sans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente
-            de feuilles Letraset contenant des passages du Losans que son contenu n'en soit modifié. Il a été popularisé dans les années 1960 grâce à la vente
-            de feuilles Letraset contenant des passages du Lorem Ipsum, et, plus récemment, par son inclusion
-            dans des applications de mise en page de texte,
-          </p>
-        </div>
+        <div class="desc-container animated fadeIn"></div>
       </v-flex>
 
       <v-navigation-drawer
@@ -190,7 +136,11 @@ export default {
   },
 
   created() {
-    this.getDescription(); //get cuurent work descrion
+    let self = this;
+    this.getDescription().then(); //get cuurent work descrion
+    setTimeout(() => {
+      self.descriptionContent();
+    }, 500);
   },
 
   methods: {
@@ -221,7 +171,7 @@ export default {
       return icon;
     },
 
-    getDescription() {
+    async getDescription() {
       let self = this;
       this.$store.dispatch("description/getDescription", {
         url: "description/work_desc",
@@ -230,6 +180,18 @@ export default {
           console.log(data);
           self.$store.getters["description/setDesc"](data);
         }
+      });
+    },
+
+    descriptionContent() {
+      /*
+        loop throught description file content get back from de DB
+        and append it into the html
+      */
+      let descContent = this.desc; // get descriptiom obj array
+      let descContainer = document.querySelector(".desc-container");
+      descContent.forEach(data => {
+        descContainer.innerHTML += data.description;
       });
     },
 
@@ -338,15 +300,6 @@ export default {
   align-items: center;
   /* margin-top: 70px; */
 }
-.desc-content-flex div {
-  width: 70%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin-bottom: 20px;
-}
 .desc-content-flex .desc-content-header {
   width: 100%;
   height: 150px;
@@ -355,11 +308,30 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.desc-content-flex div h2 {
+.desc-container {
+  width: 70%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.desc-container #install {
+  width: 70%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  border: 1px solid red;
+}
+.desc-container h2 {
   text-align: left;
   margin-bottom: 10px;
+  border: 1px solid red;
 }
-.desc-content-flex div p {
+.desc-container p {
   text-align: left;
   font-size: 16px;
   width: 70%;

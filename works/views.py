@@ -21,8 +21,10 @@ from rest_framework.status import (
 from works.models import Works, Description, Tags
 from works.serializers import WorksSerializer, DescriptionSerializer
 import re
+import os
 from datetime import datetime
 import codecs
+from django.core.files import File
 
 
 class SearchPattern():
@@ -440,8 +442,15 @@ class Description_view(viewsets.ModelViewSet):
         description_id = Works.objects.get(name=work_name).description_id
         # get description by id
         description = Description.objects.get(id=description_id)
-        description_file = codecs.open(description.description, "r", "utf-8")
-        # print(file.read())
+        # description_file = codecs.open(
+        #     description.description, "r", "utf-8").read()
+        f = open(f'{os.getcwd()}/media/{description.description.name}',
+                 mode='r', encoding='utf8')
+        myfile = File(f)
 
-        return Response([{'description': description.description, 'menu': description.menu}])
+        desc_content = ""
+        for i in myfile:
+            desc_content += f' {i}'
+
+        return Response([{'description': desc_content, 'menu': description.menu, 'url': description.url, 'repository': description.repository}])
         # return Response('hallo')

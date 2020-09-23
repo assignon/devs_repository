@@ -9,7 +9,7 @@ import xml.etree.cElementTree as et
 
 
 class Description(models.Model):
-    """[Descriptio model]
+    """[Description model]
 
     Args:
         models ([type]): [description]
@@ -17,10 +17,12 @@ class Description(models.Model):
     # description = models.TextField()
     description = models.FileField(upload_to='work_descriptions')
     menu = models.CharField(max_length=155)
+    url = models.CharField(max_length=255)
+    repository = models.CharField(max_length=255)
 
-    # def __str__(self):
-    #     pass
-    #     # return str(self.name)
+    def __str__(self):
+        work_name = Works.objects.get(description=self.pk)
+        return str(work_name)
 
 
 class Tags(models.Model):
