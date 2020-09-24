@@ -111,13 +111,11 @@
       </v-flex>
 
       <v-flex xs12 sm12 md12 xl12 class="about-flex" id="about">
-        <div class="about-overlay">
-          <h1
-            class="about-title display-3 font-weight-bold"
+        <h1
+            class="about-title display-3 font-weight-bold mb-5"
             data-aos="fade-up"
             data-aos-duration="500"
           >About me</h1>
-        </div>
         <About />
       </v-flex>
 
@@ -186,9 +184,9 @@ export default {
         `
         ],
         [
-          `function javascript(str){?
-          let userInput = document.getElementById('input');?
-          if(userInput != ''){|
+          `function% javascript(str){?
+          let% userInput = document.getElementById('input');?
+          if%(userInput != ''){|
             console.log(userInput.value);?
           }else{|
             alert('field is empty')?
@@ -477,14 +475,15 @@ export default {
 .about-flex {
   width: 100%;
   height: auto;
-  min-height: 100vh;
+  /*min-height: 100vh;*/
   background-color: #fafafa;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 50px;
+  padding-top: 50px;
   /*margin-top: 10vh;*/
-  /*border: 1px solid red;*/
 }
 
 .about-overlay {
@@ -500,7 +499,7 @@ export default {
 }
 
 .about-flex .about-title {
-  color: white;
+  color: #17102d;
   /*margin-top: 100px;*/
   /*margin-bottom: 50px;*/
 }

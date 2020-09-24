@@ -197,7 +197,7 @@ export default {
       secondaryNav: false,
       drawer: false,
       duration: 400,
-      offset: 0,
+      offset: 25,
       easing: "easeInOutCubic",
       easings: Object.keys(easings),
       // navHeight: this.$router.currentRoute.name == 'Home' ? "100px" : "50px"

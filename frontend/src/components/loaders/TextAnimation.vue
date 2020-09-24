@@ -73,6 +73,7 @@ export default {
         */
       let textContainer = document.querySelector(".textanimation-core");
       let self = this;
+      let spanArray = [];
 
       this.textArray[randomIndex].forEach((t, index) => {
         let p = document.createElement("p");
@@ -93,6 +94,7 @@ export default {
           spans.classList.remove("bounceOut");
           spans.className = `animated ${self.animation}`;
           spans.style.animationDelay = `${i / 7}s`;
+          spanArray.push(spans)
           p.appendChild(spans);
 
           if (t[i] == "?") {
@@ -104,10 +106,16 @@ export default {
               "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
           } else if (t[i] == "#") {
             p.innerHTML += "<br/>";
+          }else if(t[i] == '%'){
+            spanArray.forEach(s => {
+              s.style.color = 'blue';
+            })
+            spanArray = [];
           }
         }
         try {
           textContainer.appendChild(p);
+          console.log(p.textContent)
         } catch (TypeError) {
           return false;
         }
