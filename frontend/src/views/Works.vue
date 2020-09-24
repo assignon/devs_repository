@@ -100,7 +100,20 @@
         </div>
 
         <div class="focus-in" v-if="searchEnter == false">
-          <WaitingLoader />
+          <!-- <WaitingLoader /> -->
+          <TextAnimation
+            :textArray="searchQueries"
+            w="auto"
+            h="auto"
+            animation="bounceIn"
+            color="#54bf8e"
+            fs="30px"
+            ta="center"
+            :random="true"
+            interval="7000"
+            timeout="4000"
+            display="flex"
+          />
           <h2 class="animated fadeInUp" style="animation-delay:0.5s;">Waiting for your query</h2>
         </div>
 
@@ -215,7 +228,8 @@
 // import snackBar from "../../components/modals/snackBar";
 import { mapGetters } from "vuex";
 import WorksTemp from "../components/layouts/WorksTemp";
-import WaitingLoader from "../components/loaders/Waiting.loader";
+// import WaitingLoader from "../components/loaders/Waiting.loader";
+import TextAnimation from "@/components/loaders/TextAnimation.vue";
 export default {
   name: "Works",
 
@@ -231,92 +245,25 @@ export default {
       searchMode: false, // when user is searching
       searchEnter: false, // when the user hit enter key to search works
       searchQuery: "", // search field value
+      descMenu: "", // search engine doc v model
       progLangs: [
         { icon: "fab fa-python", color: "black" },
         { icon: "fab fa-php", color: "black" },
         { icon: "fab fa-vuejs", color: "black" },
         { icon: "fas fa-terminal", color: "black" }
       ],
-      projects: [
-        {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-            prog_lang: ["python", "vuejs"],
-            name: "Co2ok",
-            work_type: ["globe-africa"]
-          }
-        },
-        {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-            prog_lang: ["vuejs"],
-            name: "Define Shipping",
-            work_type: ["mobile", "globe-africa"]
-          }
-        },
-        {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-            prog_lang: ["php"],
-            name: "Podium De Flux",
-            work_type: ["globe-africa"]
-          }
-        },
-        {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-            prog_lang: ["python"],
-            name: "Project Creator",
-            work_type: ["terminal"]
-          }
-        },
-        {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-            prog_lang: ["python", "vuejs"],
-            name: "Co2ok",
-            work_type: ["mobile", "terminal", "globe-africa"]
-          }
-        },
-        {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-            prog_lang: ["python", "vuejs"],
-            name: "Co2ok",
-            work_type: ["mobile", "terminal", "globe-africa"]
-          }
-        },
-        {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-            prog_lang: ["python", "vuejs"],
-            name: "Co2ok",
-            work_type: ["mobile", "terminal", "globe-africa"]
-          }
-        },
-        {
-          fields: {
-            image: require("../assets/projects/test.jpg"),
-            prog_lang: ["python", "vuejs"],
-            name: "Co2ok",
-            work_type: ["mobile", "terminal", "globe-africa"]
-          }
-        },
-        {
-          fields: {
-            image: "works/test.jpg",
-            prog_lang: "python,vuejs",
-            name: "Co2ok",
-            work_type: "mobile,terminal,globe-africa"
-          }
-        }
+      searchQueries: [
+        [`website or website+app+...`],
+        ["pwa>2020 or webapp,cli,...<2020/09"],
+        [">2020 or <2020/09 or >2020/09/14"]
       ]
     };
   },
 
   components: {
     WorksTemp: WorksTemp,
-    WaitingLoader: WaitingLoader
+    // WaitingLoader: WaitingLoader,
+    TextAnimation: TextAnimation
   },
 
   computed: {

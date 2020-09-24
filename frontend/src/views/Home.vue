@@ -38,7 +38,19 @@
             </div>-->
           </div>
 
-          <div class="container-two"></div>
+          <TextAnimation
+            :textArray="codes"
+            w="50%"
+            h="100%"
+            animation="bounceIn"
+            color="white"
+            fs="25px"
+            ta="left"
+            :random="true"
+            interval="60000"
+            timeout="90000"
+            display="inline-block"
+          />
         </div>
         <!-- <div class="landing-first">
             <v-img
@@ -121,12 +133,15 @@
 // @ is an alias to /src
 import About from "@/components/layouts/About.vue";
 import Contact from "@/components/layouts/Contact.vue";
+import TextAnimation from "@/components/loaders/TextAnimation.vue";
 
 export default {
   name: "Home",
+
   components: {
     About: About,
-    Contact: Contact
+    Contact: Contact,
+    TextAnimation: TextAnimation
   },
 
   data() {
@@ -160,13 +175,94 @@ export default {
         "fa-html5",
         "fa-css3-alt",
         "fa-php"
+      ],
+      codes: [
+        [
+          `
+        def python(str):?
+          if  "name"  ==  "__main__":|
+            user_input  =  input("give your name")|
+            print(user_input)
+        `
+        ],
+        [
+          `function javascript(str){?
+          let userInput = document.getElementById('input');?
+          if(userInput != ''){|
+            console.log(userInput.value);?
+          }else{|
+            alert('field is empty')?
+          }#
+        }
+        `
+        ],
+        [
+          ` @csrf_exempt#
+            @action(methods=['get'], detail=False)#
+            def all_works(self, request):#
+            """?
+            get all works from DB?#
+
+            Args:|
+                request ([get]): [get works]#
+            """?
+            order_by = request.query_params.get('order_by')?
+            if order_by == 'default':|
+                works = Works.objects.all().order_by('-pk')?
+            elif order_by == 'asc':|
+                works = Works.objects.all().order_by('pk')?
+            else:|
+                works = Works.objects.all().order_by('-pk'))#?
+
+            return Response(serializers.serialize('json', works))
+        `
+        ]
       ]
     };
   },
 
-  created() {},
+  created() {
+    // this.animateText();
+  },
 
-  methods: {}
+  mounted() {
+    // this.animateText();
+  },
+
+  methods: {
+    // animateText() {
+    //   let textContainer = document.querySelector(".container-two");
+    //   // let counter = 0;
+    //   this.texts[1].forEach((t, index) => {
+    //     // counter++;
+    //     let p = document.createElement("p");
+    //     p.className = "code-line animated fadeIn";
+    //     p.style.animationDelay = `${index}s`;
+    //     p.style.fontSize = "20px";
+    //     p.style.textAlign = "left";
+    //     p.style.textTransform = "bold";
+    //     for (let i = 0; i < t.length; i++) {
+    //       let spans = document.createElement("span");
+    //       spans.textContent = t[i];
+    //       spans.className = "animated bounceIn";
+    //       spans.style.animationDelay = `${i / 7}s`;
+    //       p.appendChild(spans);
+    //       if (t[i] == "?") {
+    //         p.innerHTML += "<br/>";
+    //         p.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    //       } else if (t[i] == "|") {
+    //         p.innerHTML += "<br/>";
+    //         p.innerHTML +=
+    //           "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    //       } else if (t[i] == "#") {
+    //         p.innerHTML += "<br/>";
+    //       }
+    //     }
+    //     textContainer.appendChild(p);
+    //     console.log(p);
+    //   });
+    // }
+  }
 };
 </script>
 
@@ -254,10 +350,22 @@ export default {
   width: 50%;
   height: 100%;
   display: flex;
+  color: white;
+  border: 1px solid whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   /* background-image: url("../assets/home/homeBackground.jpg");
   background-position: cente;
   background-size: cover;
   background-repeat: no-repeat; */
+}
+.code-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .prog-langs {

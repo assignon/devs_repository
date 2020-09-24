@@ -442,7 +442,6 @@ class Description_view(viewsets.ModelViewSet):
         description_id = Works.objects.get(name=work_name).description_id
         # get description by id
         description = Description.objects.get(id=description_id)
-<<<<<<< HEAD
         # description_file = codecs.open(
         #     description.description, "r", "utf-8").read()
         f = open(f'{os.getcwd()}/media/{description.description.name}',
@@ -454,10 +453,4 @@ class Description_view(viewsets.ModelViewSet):
             desc_content += f' {i}'
 
         return Response([{'description': desc_content, 'menu': description.menu, 'url': description.url, 'repository': description.repository}])
-=======
-        # description_file = codecs.open(description.description, "r", "utf-8")
-        # print(file.read())
-
-        return Response([{'description': None, 'menu': description.menu}])
->>>>>>> f87a8e0460f21be36bd8954ee6f334fad940071a
         # return Response('hallo')
