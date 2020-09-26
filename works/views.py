@@ -18,8 +18,8 @@ from rest_framework.status import (
     HTTP_200_OK
 )
 
-from works.models import Works, Description, Tags
-from works.serializers import WorksSerializer, DescriptionSerializer
+from works.models import Works, Description, Tags, Skills, ProgLang
+from works.serializers import WorksSerializer, DescriptionSerializer, SkillsSerializer
 import re
 import os
 from datetime import datetime
@@ -452,5 +452,39 @@ class Description_view(viewsets.ModelViewSet):
         for i in myfile:
             desc_content += f' {i}'
 
-        return Response([{'description': desc_content, 'menu': description.menu, 'url': description.url, 'repository': description.repository}])
-        # return Response('hallo')
+        return Response([
+            {
+                'description': desc_content,
+                'menu': description.menu,
+                'url': description.url,
+                'repository': description.repository
+            }
+        ])
+
+
+class Skills_view(viewsets.ModelViewSet):
+    queryset = Skills.objects.all()
+    serializer_class = SkillsSerializer
+    permission_classes = [AllowAny]
+
+    @csrf_exempt
+    @action(methods=['get'], detail=False)
+    def all_skills(self, request):
+        """
+        get skills from DB
+
+        Args:
+            request ([get]): [get skills]
+        """
+        categories = ['language', 'framework', 'other']
+        skills_arr = []
+        prog_langs_arr = []
+        for category in categories:
+            skills = Skills.objects.filter(category=category).values()
+            skills_arr.append({category: skills})
+
+        prog_langs = ProgLang.objects.all()
+        for pl in prog_langs:
+            prog_langs_arr.append({pl.id: pl.name})
+
+        return Response({'skills': skills_arr, 'prog_langs': prog_langs_arr})

@@ -8,9 +8,11 @@
           <div class="container-one">
             <div>
               <h1
-                class="display-3 font-weight-bold mb-5 animated fadeInUp"
+                class="font-weight-bold mb-5 animated fadeInUp"
                 style="animation-delay: 0.2s"
-              >Welcome in my world</h1>
+              >
+                Welcome in my world
+              </h1>
               <p class="mb-5 animated fadeInUp" style="animation-delay: 0.6s">
                 Le Lorem Ipsum est simplement du faux texte employé dans la
                 composition et la mise en page avant impression. texte employé
@@ -22,7 +24,8 @@
                   style="animation-delay: 1s"
                   large
                   color="#00FF8E"
-                >My Works</v-btn>
+                  >My Works</v-btn
+                >
               </router-link>
             </div>
             <!-- <div class="prog-langs">
@@ -100,22 +103,28 @@
               data-aos="fade-up"
               :data-aos-delay="i * (160 * 4)"
               data-aos-duration="500"
-            >{{ skill.name }}</h3>
+            >
+              {{ skill.name }}
+            </h3>
             <p
               data-aos="fade-up"
               :data-aos-delay="i * (170 * 4)"
               data-aos-duration="500"
-            >{{ skill.content }}</p>
+            >
+              {{ skill.content }}
+            </p>
           </div>
         </div>
       </v-flex>
 
       <v-flex xs12 sm12 md12 xl12 class="about-flex" id="about">
         <h1
-            class="about-title display-3 font-weight-bold mb-5"
-            data-aos="fade-up"
-            data-aos-duration="500"
-          >About me</h1>
+          class="about-title font-weight-bold"
+          data-aos="fade-up"
+          data-aos-duration="500"
+        >
+          About Me
+        </h1>
         <About />
       </v-flex>
 
@@ -500,6 +509,7 @@ export default {
 
 .about-flex .about-title {
   color: #17102d;
+  margin-bottom: 50px;
   /*margin-top: 100px;*/
   /*margin-bottom: 50px;*/
 }

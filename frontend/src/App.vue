@@ -31,7 +31,9 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
+@import url("https://fonts.googleapis.com/css?family=Amita");
+@import url("https://fonts.googleapis.com/css?family=Arbutus+Slab");
 html,
 body {
   scroll-behavior: smooth;
@@ -39,9 +41,11 @@ body {
   width: 100%;
   margin: 0px;
   padding: 0px;
+  font-family: "Arbutus Slab", Helvetica, Arial, sans-serif;
 }
 #app {
   /* scroll-behavior: smooth; */
+  font-family: "Arbutus Slab", Helvetica, Arial, sans-serif;
   margin: 0px;
   padding: 0px;
   width: 100%;

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from works.models import Works, Description, Tags, ProgLang
+from works.models import Works, Description, Tags, ProgLang, Skills
 
 
 # class ProgLangSerializer(serializers.ModelSerializer):
@@ -32,3 +32,9 @@ class DescriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Description
         fields = ('description, menu')
+
+
+class SkillsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Skills
+        fields = ('prog_lang', 'category', 'content')

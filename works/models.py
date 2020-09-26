@@ -66,6 +66,26 @@ class ProgLang(models.Model):  # programming language
             # raise ValidationError("File not svg")
 
 
+class Skills(models.Model):
+    """skills page model
+
+    Args:
+        models ([type]): [description]
+
+    Returns:
+        [type]: [description]
+    """
+    prog_lang = models.OneToOneField(ProgLang,
+                                     on_delete=models.CASCADE,
+                                     primary_key=True,
+                                     )
+    category = models.CharField(max_length=155)
+    content = models.TextField()
+
+    def __str__(self):
+        return str(self.prog_lang)
+
+
 class Works(models.Model):
     """
     create projects rable in DB
