@@ -1,7 +1,50 @@
 <template>
   <div class="desc-core animated fadeIn">
     <v-layout row justify-center align-center class="desc-layout">
-      <v-flex xs10 sm10 md2 lg2 xl2 class="desc-side-flex">
+      <v-flex xs12 sm12 md2 lg2 xl2 class="desc-side-flex">
+        <div class="mobile-menu">
+          <div class="mobile-menu-container hidden-md-and-up pa-5">
+            <v-chip
+              v-for="(item, i) in splitToArray(desc[0].menu)"
+              :key="i"
+              @click="
+                $vuetify.goTo(
+                  `#${item}`,
+                  options,
+                  (active = true),
+                  clickedChip()
+                )
+              "
+              class="mr-2 animated fadeInUp pl-5 pr-5"
+              :style="{ animationDelay: i * 0.3 + 's' }"
+            >
+              <v-icon left small>
+                {{ iconTransformer(item) }}
+              </v-icon>
+              <a
+                :href="desc[0].url"
+                target="_blank"
+                style="text-decoration: none; color:#717171"
+                v-if="item == 'url'"
+                >url</a
+              >
+              <p
+                v-if="item != 'url' && item != 'github'"
+                style="margin:auto; text-transform: capitalize;"
+              >
+                {{ item }}
+              </p>
+              <a
+                :href="desc[0].repository"
+                target="_blank"
+                style="text-decoration: none; color: #717171"
+                v-if="item == 'github'"
+                >github</a
+              >
+            </v-chip>
+          </div>
+        </div>
+
         <div class="menu-container hidden-sm-and-down">
           <router-link to="/works" style="text-decoration: none;">
             <div class="back-to-container animated fadeInUp">
@@ -88,7 +131,7 @@
         overlay-color="#54bf8e"
         right
         class="related-works-drawer"
-        width="50%"
+        :width="rwdw"
       >
         <div v-if="relatedWorks.length == 0" class="nothing-founded-container">
           <div class="nothing-founded">
@@ -127,7 +170,9 @@ export default {
       offset: 50,
       easing: "easeInOutCubic",
       easings: Object.keys(easings),
-      drawer: false // related works drawer model
+      drawer: false, // related works drawer model
+      active: false, // click outside model(refere to vuetify click outside directive)
+      rwdw: "50%" // related works drawer width
     };
   },
 
@@ -162,9 +207,76 @@ export default {
     setTimeout(() => {
       self.descriptionContent();
     }, 500);
+
+    if (window.innerWidth <= 500) {
+      // change related works drawer width on mobile
+      this.rwdw = "100%";
+    }
+
+    // window.addEventListener("scroll", self.displayMenuBar);
+  },
+
+  mounted() {
+    // let self = this;
+    // window.addEventListener("scroll", self.displayMenuBar());
   },
 
   methods: {
+    onClickOutside() {
+      this.active = false;
+    },
+
+    clickedChip() {
+      // let scrollValue = document.documentElement.scrollTop;
+      let self = this;
+      let mobileNav = document.querySelector(".mobile-menu-layout");
+      if (this.active) {
+        // ]hide menu bar if chip clicked
+        mobileNav.style.display = "none";
+        mobileNav.style.transition = "opacity 0.5s linear 0.1s";
+        mobileNav.classList.add("slideInUp");
+
+        // change chips container position to fixed
+        let grandParent = event.currentTarget.parentNode.parentNode;
+
+        // change children color and background-color
+        event.currentTarget.style.backgroundColor = "#e0eee7";
+        let child = event.currentTarget.childNodes[0];
+        child.children[0].style.color = "#42b883";
+        child.children[1].style.color = "#42b883";
+        // hide and show menu bar base on scroll value
+        window.addEventListener("scroll", function() {
+          self.displayMenuBar(grandParent);
+        });
+      }
+    },
+
+    displayMenuBar(grandParent) {
+      let scrollValue = document.documentElement.scrollTop;
+      let mobileNav = document.querySelector(".mobile-menu-layout");
+
+      if (scrollValue == 0) {
+        mobileNav.style.display = "flex";
+        mobileNav.style.transition = "opacity 0.5s linear 0.1s";
+        mobileNav.classList.remove("slideInUp");
+        mobileNav.classList.add("slideInDown");
+        // change chip granparent position to relative
+        grandParent.style.position = "relative";
+        grandParent.style.top = "0px";
+        grandParent.style.backgroundColor = "none";
+      } else {
+        mobileNav.style.display = "none";
+        mobileNav.style.transition = "opacity 0.5s linear 0.1s";
+        mobileNav.classList.remove("slideInDown");
+        mobileNav.classList.add("slideInUp");
+        // check if menu bar is visible
+        grandParent.style.position = "fixed";
+        grandParent.style.top = "-20px";
+        grandParent.style.zIndex = "5";
+        grandParent.style.backgroundColor = "white";
+      }
+    },
+
     splitToArray(str) {
       let arr = str.split(",");
       return arr;
@@ -252,6 +364,25 @@ export default {
   justify-content: flex-start;
   align-items: flex-start;
   /* background-color: #f5f5f5; */
+}
+.mobile-menu {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: scroll;
+  margin-top: 20px;
+}
+.mobile-menu-container {
+  width: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+::-webkit-scrollbar {
+  width: 0px;
 }
 .menu-container {
   width: 15%;
@@ -409,6 +540,9 @@ export default {
   }
   .desc-container h2 {
     font-size: 15px;
+  }
+  .desc-content-flex .desc-content-header {
+    height: 70px;
   }
 }
 </style>

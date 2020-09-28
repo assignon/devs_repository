@@ -199,10 +199,7 @@
           medium
           >fas fa-bars</v-icon
         >
-        <div
-          @click="$vuetify.goTo(0, options)"
-          style="text-decoration: none;cursor: pointer;"
-        >
+        <router-link to="/" style="text-decoration: none;">
           <div class="yan-logo">
             <h2>
               Yani
@@ -216,7 +213,7 @@
               >
             </h2>
           </div>
-        </div>
+        </router-link>
         <div class="filters" v-if="$router.currentRoute.name == 'Works'">
           <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
@@ -271,32 +268,114 @@
       temporary
       class="nav-drawer"
     >
-      <div class="mobile-menu-flex mt-5" style>
-        <router-link to="/" style="text-decoration: none;">
-          <div
-            class="mobile-menu-item animated"
-            syle="position: relative; left:-10px;"
+      <router-link to="/" style="text-decoration: none;">
+        <div
+          class="yan-logo"
+          style=" width: auto;height: auto;margin-top: 20px;justify-content: center;align-items: center;"
+        >
+          <h2 style="color: #36495d;">
+            Yani
+            <span
+              style="font-size: 30px;position: relative;left: 1px;color: #f99138;"
+              >c</span
+            >
+            <span style="color:#f99138;">:\</span>
+            <v-icon style="font-size: 17px;" color="#f99138"
+              >fas fa-terminal</v-icon
+            >
+          </h2>
+        </div>
+      </router-link>
+
+      <v-list rounded class="mt-5">
+        <!-- <v-subheader>REPORTS</v-subheader> -->
+        <v-list-item-group v-model="mobileMenu" color="#41b883">
+          <v-list-item
+            class="animated fadeInUp"
+            @click="$vuetify.goTo('#about', options), (drawer = false)"
+            style="animation-delay: 0.3s;text-decoration: none;cursor: pointer;"
           >
-            <span class="ml-1 mt-1">Accueille</span>
-            <v-icon medium style class>home</v-icon>
-          </div>
-        </router-link>
+            <v-list-item-icon>
+              <v-icon style="" medium class>fas fa-address-card</v-icon>
+            </v-list-item-icon>
 
-        <router-link to="/about" style="text-decoration: none;">
-          <div class="mobile-menu-item animated">
-            <span>About</span>
-            <v-icon style="font-size: 20px;" class>fas fa-address-card</v-icon>
-          </div>
-        </router-link>
+            <v-list-item-content>
+              <v-list-item-title>About</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
 
-        <router-link to="/contact" style="text-decoration: none;">
-          <div class="mobile-menu-item animated">
-            <span>Contact</span>
-            <v-icon style="font-size: 20px;" class>fas fa-envelope</v-icon>
-          </div>
-        </router-link>
-      </div>
-      <v-divider style="width: 200px;" class="mt-3 mb-3"></v-divider>
+          <v-list-item class="animated fadeInUp" style="animation-delay: 0.3s;">
+            <v-list-item-icon>
+              <v-icon style="" medium class>fas fa-cogs</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <router-link
+                to="/skills"
+                style="text-decoration: none;color: #000"
+              >
+                <div class="menu-item">
+                  <v-list-item-title>Skills</v-list-item-title>
+                </div>
+              </router-link>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item class="animated fadeInUp" style="animation-delay: 0.3s;">
+            <v-list-item-icon>
+              <v-icon style="" medium class>fas fa-folder</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <router-link
+                to="/works"
+                style="text-decoration: none;color: #000"
+              >
+                <div class="menu-item">
+                  <v-list-item-title>Works</v-list-item-title>
+                </div>
+              </router-link>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item
+            class="animated fadeInUp"
+            @click="$vuetify.goTo('#contact', options), (drawer = false)"
+            style="animation-delay: 0.3s;text-decoration: none;cursor: pointer;"
+          >
+            <v-list-item-icon>
+              <v-icon style="" medium class>fas fa-envelope</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>Contact</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+
+          <v-list-item
+            class="animated fadeInUp"
+            style="animation-delay: 0.3s;text-decoration: none;cursor: pointer;"
+          >
+            <v-list-item-icon>
+              <v-icon style="" medium class>fab fa-github</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <a
+                href="https://www.github.com/assignon"
+                target="_blank"
+                style="text-decoration: none;"
+              >
+                <div class="menu-item">
+                  <v-list-item-title>GitHub</v-list-item-title>
+                </div>
+              </a>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+
+      <!-- <v-divider style="width: 200px;" class="mt-3 mb-3"></v-divider> -->
     </v-navigation-drawer>
   </div>
 </template>
@@ -317,12 +396,17 @@ export default {
       easing: "easeInOutCubic",
       easings: Object.keys(easings),
       // navHeight: this.$router.currentRoute.name == 'Home' ? "100px" : "50px"
-      navHeight: "70px"
+      navHeight: "70px",
+      mobileMenu: 0 // mobile nav drawer list model
     };
   },
 
   created() {
     // window.addEventListener("scroll", this.menuScrollAnimation);
+    if (window.innerWidth <= 500) {
+      // change related works drawer width on mobile
+      this.navHeight = "50px";
+    }
   },
 
   computed: {
@@ -438,8 +522,8 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: row-reverse;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -479,7 +563,7 @@ export default {
 }
 .mobile-menu-layout {
   width: 100%;
-  height: 70px;
+  height: 50px;
   background-color: #16032c;
   box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
@@ -517,6 +601,27 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  border: 1px solid red;
+}
+
+.mobile-menu-flex .menu-item span {
+  font-size: 16px;
+  color: #16032c;
+  text-align: center;
+  position: relative;
+  left: 5px;
+  font-weight: bold;
+}
+
+.mobile-menu-flex .menu-item .v-icon {
+  color: #16032c;
+}
+
+.mobile-menu-flex .menu-item:hover span {
+  color: #00ff8e;
+}
+.mobile-menu-flex .menu-item:hover .v-icon {
+  color: #00ff8e;
 }
 
 .mobile-menu-item {
@@ -529,7 +634,7 @@ export default {
   margin-top: 20px;
 }
 
-.mobile-menu-item span {
+/* .mobile-menu-item span {
   margin-left: 10px;
   font-size: 16px;
   color: #757575;
@@ -543,7 +648,7 @@ export default {
 
 .mobile-menu-item:hover .v-icon {
   color: #8b53ff;
-}
+} */
 .filters {
   width: 50%;
   height: auto;

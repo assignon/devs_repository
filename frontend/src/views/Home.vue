@@ -76,7 +76,7 @@
       <v-flex xs12 sm12 md12 xl12 class="skills-flex">
         <h2
           class="skill-title"
-          data-aos="zoom-in"
+          data-aos="fade-up"
           data-aos-delay="250"
           data-aos-duration="500"
         >

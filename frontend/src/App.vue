@@ -27,7 +27,18 @@ export default {
 
   data: () => ({
     //
-  })
+  }),
+
+  created() {},
+
+  methods: {
+    scrollTopAnimation() {
+      let scrollValue = document.documentElement.scrollTop;
+      while (document.documentElement.scrollTop > 0) {
+        document.documentElement.scrollTop--;
+      }
+    }
+  }
 };
 </script>
 
