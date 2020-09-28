@@ -2,7 +2,7 @@
   <v-flex xs10 sm10 md4 lg4 xl4 class="works-flex">
     <div
       class="works-container animated fadeInUp"
-      :style="{ animationDelay: i * 0.3 + 's' , width: w, height: h}"
+      :style="{ animationDelay: i * 0.3 + 's', width: w, height: h }"
       v-for="(project, i) in works"
       :key="i"
       @click.stop="$router.push(`/work/${project.fields.name}`), reloadState()"
@@ -41,10 +41,11 @@
             <template v-slot:activator="{ on, attrs }">
               <v-icon
                 style="font-size:15px;color:white;"
-                class="ml-2 mr-2"
+                class="ml-2 mr-2 hidden-sm-and-down"
                 v-bind="attrs"
                 v-on="on"
-              >fas fa-{{ typeicon }}</v-icon>
+                >fas fa-{{ typeicon }}</v-icon
+              >
             </template>
             <span></span>
           </v-tooltip>
@@ -198,5 +199,17 @@ export default {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+@media only screen and (max-width: 500px) {
+  .works-container {
+    margin-bottom: 20px;
+  }
+  .works-flex {
+    width: 100%;
+    margin-top: 50px;
+  }
+  .works-container h4 {
+    font-size: 13px;
+  }
 }
 </style>

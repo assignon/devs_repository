@@ -38,3 +38,9 @@ class SkillsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Skills
         fields = ('prog_lang', 'category', 'content')
+
+
+class ProgLangSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProgLang
+        fields = ('name', 'logo')

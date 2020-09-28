@@ -1,5 +1,5 @@
 <template>
-  <div class="textanimation-core" :style="{width: w, height: h}"></div>
+  <div class="textanimation-core" :style="{ width: w, height: h }"></div>
 </template>
 
 <script>
@@ -94,7 +94,7 @@ export default {
           spans.classList.remove("bounceOut");
           spans.className = `animated ${self.animation}`;
           spans.style.animationDelay = `${i / 7}s`;
-          spanArray.push(spans)
+          spanArray.push(spans);
           p.appendChild(spans);
 
           if (t[i] == "?") {
@@ -106,16 +106,16 @@ export default {
               "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
           } else if (t[i] == "#") {
             p.innerHTML += "<br/>";
-          }else if(t[i] == '%'){
+          } else if (t[i] == "%") {
             spanArray.forEach(s => {
-              s.style.color = 'blue';
-            })
+              s.style.color = "blue";
+            });
             spanArray = [];
           }
         }
         try {
           textContainer.appendChild(p);
-          console.log(p.textContent)
+          console.log(p.textContent);
         } catch (TypeError) {
           return false;
         }
@@ -128,6 +128,14 @@ export default {
 </script>
 
 <style scoped>
+.cover {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .textanimation-core {
   /* width: 50%;
   height: 100%; */
@@ -136,7 +144,13 @@ export default {
   /* border: 1px solid whitesmoke; */
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+}
+@media only screen and (max-width: 500px) {
+  .textanimation-core {
+    width: 100%;
+    /* overflow: hidden; */
+  }
 }
 </style>

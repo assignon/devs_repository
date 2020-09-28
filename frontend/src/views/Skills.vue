@@ -2,38 +2,70 @@
   <div class="skills-core">
     <v-layout row justify-space-around align-center class="skills-layout">
       <v-flex xs12 sm12 md2 lg2 xl2 class="skills-flex">
-        <h2 class="mt-5 mb-2">My Skills</h2>
+        <h2 class="mt-5 mb-5">My Skills</h2>
 
-        <v-list rounded>
-          <v-list-item-group v-model="skillsMenu" color="#41b883">
-            <v-list-item
-              v-for="(lang, i) in skills[0].language"
-              :key="i"
-              @click="
-                $vuetify.goTo(`#${progLangs[i][lang.prog_lang_id]}`, options)
-              "
-              class="animated fadeInUp"
-              :style="{ animationDelay: i * 0.3 + 's' }"
-            >
-              <v-list-item-icon>
-                <img
-                  :src="
-                    `../../../media/prog_langs/${
-                      progLangs[i][lang.prog_lang_id]
-                    }.svg`
-                  "
-                  alt=""
-                  style="width:20px;height:20px;border:1px solid red;"
-                />
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title
-                  v-text="progLangs[i][lang.prog_lang_id]"
-                ></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
+        <div class="languages">
+          <h4 class="mb-5">Languages</h4>
+          <v-list rounded>
+            <v-list-item-group v-model="skillsMenu" color="#41b883">
+              <v-list-item
+                v-for="(lang, i) in skills[0].language"
+                :key="i"
+                class="animated fadeInUp"
+                :style="{ animationDelay: i * 0.3 + 's' }"
+              >
+                <v-list-item-icon>
+                  <!-- <img
+                    :src="
+                      require(`../../../media/prog_langs/${getProgLangName(
+                        lang.prog_lang_id
+                      )}.svg`)
+                    "
+                    alt=""
+                    :class="getProgLangName(lang.prog_lang_id)"
+                  /> -->
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </div>
+
+        <!-- <div class="frameworks">
+          <h4 class="mb-5">Frameworks</h4>
+          <v-list rounded>
+            <v-list-item-group v-model="skillsMenu" color="#41b883">
+              <v-list-item
+                v-for="(f, i) in skills[1].framework"
+                :key="i"
+                @click="
+                  $vuetify.goTo(`#${getProgLangName(f.prog_lang_id)}`, options)
+                "
+                class="animated fadeInUp"
+                :style="{ animationDelay: i * 0.3 + 's' }"
+              >
+                <v-list-item-icon>
+                  <img
+                    :src="
+                      require(`../../../media/prog_langs/${getProgLangName(
+                        f.prog_lang_id
+                      )}.svg`)
+                    "
+                    alt=""
+                    :class="getProgLangName(f.prog_lang_id)"
+                  />
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title
+                    v-text="getProgLangName(f.prog_lang_id)"
+                  ></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </div> -->
 
         <!-- <div class="pro-langs category mt-5">
                     <h3 class="animated fadeInUp" style="">Languages</h3>
@@ -138,11 +170,16 @@ export default {
     this.allSkills();
   },
 
+  mounted() {
+    let self = this;
+    console.log(self.getProgLangName(2));
+  },
+
   methods: {
     allSkills() {
       /*
-                    get all skills from the DB
-                */
+        get all skills from the DB
+     */
       let self = this;
       this.$store.dispatch("skills/allSkills", {
         url: "skills/all_skills",
@@ -153,6 +190,21 @@ export default {
           self.$store.getters["skills/setProgLangs"](data.prog_langs);
         }
       });
+    },
+
+    getProgLangName(plId) {
+      let self = this;
+      this.allSkills();
+      this.$store.dispatch("progLangName", {
+        progLangId: plId,
+        callback: function(data) {
+          console.log(data);
+          self.$store.getters["setProgLang"](data);
+          console.log(self.$store.state.progLangArr);
+        }
+      });
+
+      return self.$store.getters["getProgLang"][0]["name"];
     }
   }
 };
@@ -177,12 +229,21 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items: flex-start;
+  align-items: flex-end;
   background-color: #f5f5f5;
 }
 .theme--light.v-sheet {
   background-color: #f5f5f5;
   /* margin-top: 120px; */
+}
+.languages {
+  width: 90%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 1px solid red;
 }
 .skills-flex h2 {
   width: 100%;
@@ -238,4 +299,58 @@ export default {
   color: #00ff8e;
   font-size: 3px;
 }
+/***************************  programminmg languages style  ***********************************/
+.python {
+  width: 25px;
+  height: 25px;
+}
+.php {
+  width: 30px;
+  /* height: 40px; */
+}
+.vue {
+  width: 30px;
+  height: 30px;
+}
+.django {
+  width: 30px;
+  height: 30px;
+}
+.laravel {
+  width: 30px;
+  height: 30px;
+}
+.html5 {
+  width: 30px;
+  height: 30px;
+}
+.css3 {
+  width: 30px;
+  height: 30px;
+}
+.flask {
+  width: 30px;
+  height: 30px;
+}
+.flutter {
+  width: 30px;
+  height: 30px;
+}
+.javascript {
+  width: 30px;
+  height: 30px;
+}
+.dart {
+  width: 30px;
+  height: 30px;
+}
+.vuetify {
+  width: 30px;
+  height: 30px;
+}
+.git {
+  width: 30px;
+  height: 30px;
+}
+/**********************************************************************************************/
 </style>

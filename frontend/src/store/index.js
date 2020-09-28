@@ -5,6 +5,8 @@ import work from "./modules/work";
 import description from "./modules/description";
 import skills from "./modules/skills";
 
+import axios from "axios";
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -12,6 +14,7 @@ export default new Vuex.Store({
     HOST: "http://127.0.0.1:8000",
     AUTHENTICATED: undefined,
     usertoken: undefined,
+    progLangArr: [],
   },
 
   getters: {
@@ -45,6 +48,29 @@ export default new Vuex.Store({
     */
       console.log(state);
       return elem;
+    },
+
+    setProgLang: (state) => (data) => {
+      /*
+        push current programming language data
+        params:
+          data: [array]: [array of data]
+    */
+      console.log(state);
+      if (state.progLangArr.length == 0) {
+        data.forEach((item) => {
+          state.progLangArr.push(item);
+        });
+      } else {
+        state.progLangArr = [];
+        data.forEach((item) => {
+          state.progLangArr.push(item);
+        });
+      }
+      return state.progLangArr;
+    },
+    getProgLang: (state) => {
+      return state.progLangArr;
     },
 
     filterArr: (state) => (arr, callback) => {
@@ -85,11 +111,46 @@ export default new Vuex.Store({
       console.log(arr);
       // return "hallo tehre";
     },
+
+    getAxiosCall(state, payload) {
+      /*
+                      http get request
+                      params:
+                          payload: [object]: [data sended with the request]
+                  */
+      axios
+        .get(`${payload.host}/api/${payload.url}/`, {
+          params: payload.params,
+          // headers: {
+          //     "X-CSRFToken": payload.csrftoken,
+          //     Authorization: `token ${payload.auth}`,
+          // },
+        })
+        .then((response) => {
+          let res = response.data;
+          payload.callback(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 
   actions: {
     splitToArray({ commit }, str) {
       commit("splitToArray", str);
+    },
+
+    progLangName({ commit, rootState }, payload) {
+      /**
+       *get programming languages name
+       */
+      commit("getAxiosCall", {
+        url: "proglang/get_pl",
+        params: { plId: payload.progLangId },
+        callback: payload.callback,
+        host: rootState.HOST,
+      });
     },
   },
 

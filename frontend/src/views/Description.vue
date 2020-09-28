@@ -2,7 +2,7 @@
   <div class="desc-core animated fadeIn">
     <v-layout row justify-center align-center class="desc-layout">
       <v-flex xs10 sm10 md2 lg2 xl2 class="desc-side-flex">
-        <div class="menu-container">
+        <div class="menu-container hidden-sm-and-down">
           <router-link to="/works" style="text-decoration: none;">
             <div class="back-to-container animated fadeInUp">
               <v-icon color="#16032c">fas fa-chevron-left</v-icon>
@@ -18,10 +18,10 @@
                 :key="i"
                 @click="$vuetify.goTo(`#${item}`, options)"
                 class="animated fadeInUp"
-                :style="{animationDelay: i*0.3+'s',}"
+                :style="{ animationDelay: i * 0.3 + 's' }"
               >
                 <v-list-item-icon>
-                  <v-icon>{{iconTransformer(item)}}</v-icon>
+                  <v-icon>{{ iconTransformer(item) }}</v-icon>
                 </v-list-item-icon>
 
                 <v-list-item-content>
@@ -29,15 +29,20 @@
                     :href="desc[0].url"
                     target="_blank"
                     style="text-decoration: none; color:#717171"
-                    v-if="item=='url'"
-                  >url</a>
-                  <v-list-item-title v-text="item" v-if="item!='url' && item!='github'"></v-list-item-title>
+                    v-if="item == 'url'"
+                    >url</a
+                  >
+                  <v-list-item-title
+                    v-text="item"
+                    v-if="item != 'url' && item != 'github'"
+                  ></v-list-item-title>
                   <a
                     :href="desc[0].repository"
                     target="_blank"
                     style="text-decoration: none; color: #717171"
-                    v-if="item=='github'"
-                  >github</a>
+                    v-if="item == 'github'"
+                    >github</a
+                  >
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
@@ -45,9 +50,16 @@
 
           <div
             class="related-works animated fadeInUp"
-            @click.stop="drawer = !drawer, worksRelated()"
+            @click.stop="(drawer = !drawer), worksRelated()"
           >
-            <v-btn rounded large color="#42b883" dark outlined class="related-works-btn">
+            <v-btn
+              rounded
+              large
+              color="#42b883"
+              dark
+              outlined
+              class="related-works-btn"
+            >
               <!-- <v-icon color="#42b883 pl-3">fas fa-folder</v-icon> -->
               Related Works
             </v-btn>
@@ -57,9 +69,12 @@
 
       <!-- <v-flex xs10 sm10 md10 lg10 xl10 class="desc-content-flex">{{desc[0].description}}</v-flex> -->
       <v-flex xs10 sm10 md10 lg10 xl10 class="desc-content-flex mb-5">
-        <div class="desc-content-header animated fadeInUp" style="animation-delay: 0.4s">
+        <div
+          class="desc-content-header animated fadeInUp"
+          style="animation-delay: 0.4s"
+        >
           <h2>
-            <span style="color: #54bf8e;">{{workName}}</span> Work Description
+            <span style="color: #54bf8e;">{{ workName }}</span> Work Description
           </h2>
           <v-divider width="5%" color="#16032c" style></v-divider>
         </div>
@@ -77,8 +92,14 @@
       >
         <div v-if="relatedWorks.length == 0" class="nothing-founded-container">
           <div class="nothing-founded">
-            <img src="../assets/projects/not-found.svg" alt class="animated fadeInUp" />
-            <h2 class="animated fadeInUp" style="animation-delay:0.5s;">No related works founded</h2>
+            <img
+              src="../assets/projects/not-found.svg"
+              alt
+              class="animated fadeInUp"
+            />
+            <h2 class="animated fadeInUp" style="animation-delay:0.5s;">
+              No related works founded
+            </h2>
           </div>
         </div>
 
@@ -324,12 +345,10 @@ export default {
   justify-content: flex-start;
   align-items: flex-start;
   margin-bottom: 20px;
-  border: 1px solid red;
 }
 .desc-container h2 {
   text-align: left;
   margin-bottom: 10px;
-  border: 1px solid red;
 }
 .desc-container p {
   text-align: left;
@@ -380,5 +399,16 @@ export default {
 .nothing-founded img {
   width: 70px;
   height: 70px;
+}
+@media only screen and (max-width: 500px) {
+  .desc-side-flex {
+    height: auto;
+  }
+  .desc-container {
+    width: 100%;
+  }
+  .desc-container h2 {
+    font-size: 15px;
+  }
 }
 </style>

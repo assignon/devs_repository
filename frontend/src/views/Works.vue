@@ -6,14 +6,17 @@
           <div class="works-titel">
             <!-- <h2 class>My Works</h2>
             <v-divider width="5%" color="#16032c" style></v-divider>-->
-            <div class="input-container animated fadeInUp" style="animation-delay:0.2s">
+            <div
+              class="input-container animated fadeInUp"
+              style="animation-delay:0.2s"
+            >
               <input
                 type="search"
                 placeholder="search..."
                 class="search-project"
                 v-model="searchQuery"
                 @focusin="startSearch()"
-                @focusout="searchMode = false, searchEnter = false"
+                @focusout="(searchMode = false), (searchEnter = false)"
                 @keyup.enter="searchWorks()"
               />
               <v-tooltip bottom>
@@ -27,7 +30,8 @@
                     <v-icon
                       style="cursor:pointer;font-size:18px;"
                       class="animated bounceIn"
-                    >fas fa-question</v-icon>
+                      >fas fa-question</v-icon
+                    >
                   </div>
                 </template>
                 <span>How to use the search</span>
@@ -38,11 +42,12 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-icon
                   medium
-                  class="asc-icon ml-3 animated bounceIn"
+                  class="asc-icon ml-3 hidden-sm-and-down animated bounceIn"
                   v-bind="attrs"
                   v-on="on"
                   @click="orderByAsc()"
-                >fas fa-sort-amount-up</v-icon>
+                  >fas fa-sort-amount-up</v-icon
+                >
               </template>
               <span>old to newest</span>
             </v-tooltip>
@@ -51,11 +56,12 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-icon
                   medium
-                  class="desc-icon ml-3 animated bounceIn"
+                  class="desc-icon ml-3 hidden-sm-and-down animated bounceIn"
                   v-bind="attrs"
                   v-on="on"
                   @click="orderByDesc()"
-                >fas fa-sort-amount-down</v-icon>
+                  >fas fa-sort-amount-down</v-icon
+                >
               </template>
               <span>newest to old</span>
             </v-tooltip>
@@ -64,11 +70,12 @@
               <template v-slot:activator="{ on, attrs }">
                 <v-icon
                   medium
-                  class="ml-3 animated bounceIn"
+                  class="ml-3 hidden-sm-and-down animated bounceIn"
                   v-bind="attrs"
                   v-on="on"
                   @click="filtersVisible = !filtersVisible"
-                >fas fa-filter</v-icon>
+                  >fas fa-filter</v-icon
+                >
               </template>
               <span>filter</span>
             </v-tooltip>
@@ -76,11 +83,28 @@
         </div>
       </v-flex>
 
-      <v-flex xs12 sm12 md8 lg10 xl10 class="pl-flex animated" v-if="filtersVisible">
+      <v-flex
+        xs12
+        sm12
+        md8
+        lg10
+        xl10
+        class="pl-flex animated"
+        v-if="filtersVisible"
+      >
         <v-radio-group v-model="filter" row>
-          <div class="pl-container ml-5" v-for="(progLang, i) in progLangs" :key="i">
+          <div
+            class="pl-container ml-5"
+            v-for="(progLang, i) in progLangs"
+            :key="i"
+          >
             <!-- <v-radio label :color="progLang.color" :value="progLang.icon"></v-radio> -->
-            <v-checkbox v-model="selected" class label :value="progLang.icon"></v-checkbox>
+            <v-checkbox
+              v-model="selected"
+              class
+              label
+              :value="progLang.icon"
+            ></v-checkbox>
             <v-icon medium>{{ progLang.icon }}</v-icon>
           </div>
         </v-radio-group>
@@ -88,15 +112,24 @@
 
       <WorksTemp
         :works="works"
-        h="300px"
-        w="300px"
+        :h="height"
+        :w="width"
         :reload="false"
         v-if="searchMode == false && foundedWorks.length == 0"
       />
       <div v-if="searchMode" class="nothing-founded-container">
-        <div class="nothing-founded" v-if="foundedWorks.length == 0 && searchEnter">
-          <img src="../assets/projects/not-found.svg" alt class="animated fadeInUp" />
-          <h2 class="animated fadeInUp" style="animation-delay:0.5s;">No works founded</h2>
+        <div
+          class="nothing-founded"
+          v-if="foundedWorks.length == 0 && searchEnter"
+        >
+          <img
+            src="../assets/projects/not-found.svg"
+            alt
+            class="animated fadeInUp"
+          />
+          <h2 class="animated fadeInUp" style="animation-delay:0.5s;">
+            No works founded
+          </h2>
         </div>
 
         <div class="focus-in" v-if="searchEnter == false">
@@ -114,7 +147,9 @@
             timeout="4000"
             display="flex"
           />
-          <h2 class="animated fadeInUp" style="animation-delay:0.5s;">Waiting for your query</h2>
+          <h2 class="animated fadeInUp" style="animation-delay:0.5s;">
+            Waiting for your query
+          </h2>
         </div>
 
         <!-- <WorksTemp :works="foundedWorks" v-if="foundedWorks.length != 0" /> -->
@@ -122,8 +157,8 @@
 
       <WorksTemp
         :works="foundedWorks"
-        h="300px"
-        w="300px"
+        :h="height"
+        :w="width"
         :reload="false"
         v-if="foundedWorks.length != 0 || searchEnter"
       />
@@ -133,9 +168,10 @@
       </v-flex>-->
       <v-dialog v-model="searchDialog" max-width="700px">
         <div class="search-dialog-container" style="background-color: white;">
-          <h4
-            class="mb-3"
-          >The search engine offers different ways and combinations to make more efficient searching and finding projects.</h4>
+          <h4 class="mb-3">
+            The search engine offers different ways and combinations to make
+            more efficient searching and finding projects.
+          </h4>
           <v-list>
             <v-list-item-group v-model="descMenu" color="#41b883">
               <v-list-item>
@@ -154,8 +190,7 @@
               <v-list-item>
                 <v-list-item-content>
                   <p>
-                    <strong>Combining</strong> queries
-                    <br />e.g.
+                    <strong>Combining</strong> queries <br />e.g.
                     <br />
                     <kbd>website+app+...</kbd> or
                     <kbd>website,app,pwa,...</kbd>
@@ -168,11 +203,9 @@
                     Search projects
                     <strong>before (&lt;)</strong>,
                     <strong>after (>)</strong> or on a
-                    <strong>specific (=)</strong> date
-                    <br />e.g.
+                    <strong>specific (=)</strong> date <br />e.g.
                     <br />
-                    <kbd>>2020,09,13</kbd> or
-                    <kbd>&lt;2020</kbd> or
+                    <kbd>>2020,09,13</kbd> or <kbd>&lt;2020</kbd> or
                     <kbd>=2020,09</kbd>
                   </p>
                 </v-list-item-content>
@@ -180,8 +213,7 @@
               <v-list-item>
                 <v-list-item-content>
                   <p>
-                    <strong>Combining</strong> queries and dates
-                    <br />e.g.
+                    <strong>Combining</strong> queries and dates <br />e.g.
                     <br />
                     <kbd>website,pwa> 2020,09,13</kbd> or
                     <kbd>website&lt;2020</kbd> or
@@ -192,8 +224,7 @@
               <v-list-item>
                 <v-list-item-content>
                   <p>
-                    <strong>built-in</strong> key words
-                    <br />e.g.
+                    <strong>built-in</strong> key words <br />e.g.
                     <br />
                     <kbd>newest</kbd> and
                     <kbd>oldest</kbd>
@@ -203,20 +234,25 @@
             </v-list-item-group>
           </v-list>
           <p>
-            <span style="color: magenta,font-weight:bold">i:</span> avoid putting spaces between words during combined searches.
-            <br />Do:
+            <span style="color: magenta,font-weight:bold">i:</span> avoid
+            putting spaces between words during combined searches. <br />Do:
             <span style>website,app,cli,...</span>
             <br />Not:
-            <span style="text-decoration: line-through">website, app, api, ...</span>
+            <span style="text-decoration: line-through"
+              >website, app, api, ...</span
+            >
             <br />
           </p>
           <p>
             projects
-            <strong>types</strong> values: website, mobile, app, cli, desktop app, ...
+            <strong>types</strong> values: website, mobile, app, cli, desktop
+            app, ...
           </p>
           <p>
             projects
-            <strong>tags</strong> values: cli, command line, cmd, terminal, site, pwa, responsive, programming language packages(e.g. colorama, pillow, vuetify, ...)
+            <strong>tags</strong> values: cli, command line, cmd, terminal,
+            site, pwa, responsive, programming language packages(e.g. colorama,
+            pillow, vuetify, ...)
           </p>
         </div>
       </v-dialog>
@@ -246,6 +282,8 @@ export default {
       searchEnter: false, // when the user hit enter key to search works
       searchQuery: "", // search field value
       descMenu: "", // search engine doc v model
+      width: "300px", // works div container width
+      height: "300px", // works div container height
       progLangs: [
         { icon: "fab fa-python", color: "black" },
         { icon: "fab fa-php", color: "black" },
@@ -276,11 +314,30 @@ export default {
   created() {
     this.allWorks("default");
     this.$store.getters["work/getSearchedWorks"].length = 0;
+    this.screenWithChange();
     // let arr = this.$store.dispatch("splitToArray", "project,fields,work_type");
     console.log(this.splitToArray("project"));
   },
 
   methods: {
+    screenWithChange() {
+      window.addEventListener("resize", function() {
+        let screenSize = window.innerWidth;
+        if (screenSize <= 500) {
+          this.fontSize = "15px";
+          this.width = "170px";
+          this.height = "170px";
+        }
+      });
+
+      let screenSize = window.innerWidth;
+      if (screenSize <= 500) {
+        this.fontSize = "15px";
+        this.width = "170px";
+        this.height = "170px";
+      }
+    },
+
     splitToArray(str) {
       /*
       split a string words in to array
@@ -607,5 +664,22 @@ export default {
 }
 .search-dialog-container p {
   color: #1b1127;
+}
+@media only screen and (max-width: 500px) {
+  .works-core {
+    padding-top: 40px;
+  }
+  .works-titel {
+    width: 100%;
+  }
+  .input-container {
+    width: 90%;
+  }
+  .search-project {
+    width: 90%;
+  }
+  .question-icon-container {
+    width: 10%;
+  }
 }
 </style>

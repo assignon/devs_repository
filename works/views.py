@@ -19,7 +19,7 @@ from rest_framework.status import (
 )
 
 from works.models import Works, Description, Tags, Skills, ProgLang
-from works.serializers import WorksSerializer, DescriptionSerializer, SkillsSerializer
+from works.serializers import WorksSerializer, DescriptionSerializer, SkillsSerializer, ProgLangSerializer
 import re
 import os
 from datetime import datetime
@@ -488,3 +488,24 @@ class Skills_view(viewsets.ModelViewSet):
             prog_langs_arr.append({pl.id: pl.name})
 
         return Response({'skills': skills_arr, 'prog_langs': prog_langs_arr})
+
+
+class ProgLang_view(viewsets.ModelViewSet):
+    queryset = ProgLang.objects.all()
+    serializer_class = ProgLangSerializer
+    permission_classes = [AllowAny]
+
+    @csrf_exempt
+    @action(methods=['get'], detail=False)
+    def get_pl(self, request):
+        """
+        get programming language base on id from DB
+
+        Args:
+            request ([get]): [get skills]
+        """
+        pl_arr = []
+        pl_id = request.query_params.get('plId')
+        pl = ProgLang.objects.get(id=pl_id)
+        pl_arr.append({'name': pl.name, 'logo': pl.logo})
+        return Response(pl_arr)

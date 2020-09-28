@@ -1,6 +1,6 @@
 <template>
-  <v-layout row rwo-wrap align-center justify-center class="contact-layout">
-    <v-flex xs12 sm12 md6 lg6 xl6 class="map-flex">
+  <v-layout class="contact-layout">
+    <v-flex xs12 sm12 md6 lg6 xl6 class="map-flex hidden-sm-and-down">
       <div class="map-container">
         <!--        <iframe-->
         <!--          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d39032.8801596525!2d4.648319085932059!3d52.30593070344154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c5e7afa59ae60d%3A0x3f11830627093e83!2sHoofddorp!5e0!3m2!1sfr!2snl!4v1587240275749!5m2!1sfr!2snl"-->
@@ -115,6 +115,10 @@ export default {
 .contact-layout {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
 }
 
 .map-flex {
@@ -188,5 +192,10 @@ export default {
   justify-content: flex-end;
   align-items: center;
   margin-top: -15px;
+}
+@media only screen and (max-width: 500px) {
+  .contact-layout {
+    flex-direction: column;
+  }
 }
 </style>

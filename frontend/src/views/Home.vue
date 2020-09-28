@@ -5,7 +5,7 @@
         <div class="landing-cover"></div>
 
         <div class="landing-container">
-          <div class="container-one">
+          <div class="container-one hidden-sm-and-down">
             <div>
               <h1
                 class="font-weight-bold mb-5 animated fadeInUp"
@@ -41,54 +41,58 @@
             </div>-->
           </div>
 
+          <!-- <div class=" text-animation-container"> -->
           <TextAnimation
             :textArray="codes"
-            w="50%"
-            h="100%"
+            :w="width"
+            :h="height"
             animation="bounceIn"
             color="white"
-            fs="25px"
+            :fs="fontSize"
             ta="left"
             :random="true"
             interval="60000"
             timeout="90000"
             display="inline-block"
           />
+          <!-- </div> -->
+
+          <router-link
+            to="works"
+            style="text-decoration:none"
+            class="hidden-md-and-up animated"
+          >
+            <v-btn
+              class="works-btn animated bounceIn"
+              style="animation-delay: 1s"
+              large
+              color="#00FF8E"
+              >My Works</v-btn
+            >
+          </router-link>
         </div>
-        <!-- <div class="landing-first">
-            <v-img
-                alt=""
-                class=""
-                contain
-                min-width="100"
-                src='../assets/home/progr.png'
-                width="100%"
-                height="100%"
-              />
-        </div>
-        
-        <div class="landing-last">
-            <p>
-                @main.command()<br>
-                @click.option('--operatingsys', '-os', is_flag=True, help='Your operatingssystem, don t use it in a venv')<br>
-                def install_yanr(operatingsys):<br>
-                    <span style="margin-left: 20px;">if operatingsys:</span><br>
-                    <span style="margin-left: 40px;">os.system('pip install --editable . --user')</span><br>
-                    <span style="margin-left: 20px;">else:</span><br>
-                        <span style="margin-left: 40px;">os.system('pip install --editable .')</span><br>
-            </p>
-        </div>-->
       </v-flex>
 
       <v-flex xs12 sm12 md12 xl12 class="skills-flex">
-        <h2 class="skill-title">Hallo there</h2>
-        <p class="skill-subtext">Is me Yanick</p>
-        <div class="skills-container">
-          <div class="skills" v-for="(skill, i) in skills" :key="i">
-            <!--              <div class="skills-img"-->
-            <!--                   :style="{backgroundImage: `url(${skill.imge})`}"-->
-            <!--              ></div>-->
-            <v-img
+        <h2
+          class="skill-title"
+          data-aos="zoom-in"
+          data-aos-delay="250"
+          data-aos-duration="500"
+        >
+          My Expertise
+        </h2>
+        <p
+          class="skill-subtext"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          data-aos-duration="500"
+        >
+          The areas in which I excel
+        </p>
+        <div class="skills-container hidden-sm-and-down">
+          <div class="skills" v-for="(skill, i) in expertises" :key="i">
+            <!-- <v-img
               alt
               class="skills-img"
               contain
@@ -98,6 +102,14 @@
               data-aos="zoom-in"
               :data-aos-delay="i * 150"
               data-aos-duration="500"
+            /> -->
+            <img
+              :src="skill.imge"
+              alt=""
+              data-aos="zoom-in"
+              :data-aos-delay="i * 250"
+              data-aos-duration="500"
+              class="expertise-img"
             />
             <h3
               data-aos="fade-up"
@@ -115,16 +127,50 @@
             </p>
           </div>
         </div>
+        <!------------------------------------------ Mobile  ---------------------------------------------------------->
+        <v-carousel
+          hide-delimiters
+          class="hidden-md-and-up"
+          height="auto"
+          cycle
+          :show-arrows="false"
+          interval="4000"
+        >
+          <v-carousel-item v-for="(item, i) in expertises" :key="i">
+            <div class="skills-container">
+              <div class="skills">
+                <!-- <v-img
+                  alt
+                  class="skills-img"
+                  contain
+                  min-width="100"
+                  :src="item.imge"
+                  width="100"
+                  data-aos="zoom-in"
+                  :data-aos-delay="i * 150"
+                  data-aos-duration="500"
+                /> -->
+                <img :src="item.imge" alt="" class="expertise-img" />
+                <h3>
+                  {{ item.name }}
+                </h3>
+                <p>
+                  {{ item.content }}
+                </p>
+              </div>
+            </div>
+          </v-carousel-item>
+        </v-carousel>
       </v-flex>
 
       <v-flex xs12 sm12 md12 xl12 class="about-flex" id="about">
-        <h1
+        <h2
           class="about-title font-weight-bold"
           data-aos="fade-up"
           data-aos-duration="500"
         >
           About Me
-        </h1>
+        </h2>
         <About />
       </v-flex>
 
@@ -153,7 +199,10 @@ export default {
 
   data() {
     return {
-      skills: [
+      fontSize: "25px",
+      width: "50%",
+      height: "100%",
+      expertises: [
         {
           name: "Web Development",
           imge: require("../assets/home/wd.svg"),
@@ -230,6 +279,7 @@ export default {
 
   created() {
     // this.animateText();
+    this.screenWithChange();
   },
 
   mounted() {
@@ -237,6 +287,23 @@ export default {
   },
 
   methods: {
+    screenWithChange() {
+      window.addEventListener("resize", function() {
+        let screenSize = window.innerWidth;
+        if (screenSize <= 500) {
+          this.fontSize = "15px";
+          this.width = "80%";
+          this.height = "80%";
+        }
+      });
+
+      let screenSize = window.innerWidth;
+      if (screenSize <= 500) {
+        this.fontSize = "15px";
+        this.width = "80%";
+        this.height = "80%";
+      }
+    }
     // animateText() {
     //   let textContainer = document.querySelector(".container-two");
     //   // let counter = 0;
@@ -368,6 +435,15 @@ export default {
   background-size: cover;
   background-repeat: no-repeat; */
 }
+.text-animation-container {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid red;
+}
 .code-line {
   display: flex;
   flex-direction: row;
@@ -470,6 +546,10 @@ export default {
   /*height: 150px;*/
   margin-bottom: 10px;
 }
+.expertise-img {
+  width: 100px;
+  height: 100px;
+}
 
 .skills h3 {
   text-align: center;
@@ -509,7 +589,7 @@ export default {
 
 .about-flex .about-title {
   color: #17102d;
-  margin-bottom: 50px;
+  margin-bottom: 45px;
   /*margin-top: 100px;*/
   /*margin-bottom: 50px;*/
 }
@@ -522,5 +602,22 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+@media only screen and (max-width: 500px) {
+  .landing-container {
+    flex-direction: column;
+  }
+  .skills {
+    width: 100%;
+  }
+  .skills p {
+    width: 90%;
+  }
+  .skill-subtext {
+    margin-bottom: 45px;
+  }
+  .contact-flex {
+    height: 80vh;
+  }
 }
 </style>
