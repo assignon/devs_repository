@@ -33,10 +33,12 @@ export default {
       let textArrayLen = this.textArray.length;
       let randomNumber = Math.floor(Math.random() * textArrayLen);
       this.animateText(randomNumber, function(el) {
+        // el: <p>
         setTimeout(() => {
           el.style.display = "none";
         }, self.interval);
       });
+
       setInterval(() => {
         let textArrayLen = this.textArray.length;
         let randomNumber = Math.floor(Math.random() * textArrayLen);
@@ -61,6 +63,30 @@ export default {
   },
 
   methods: {
+    syntaxHighlighting(index, progIndex, keywordsIndex){
+      console.log(index)
+      console.log(progIndex)
+      console.log(keywordsIndex)
+      /*
+        change span color to programming language key word color
+        params:
+          index: [number]: [array index key]
+          progIndex: [str]: [array obj base on index]
+          keywordsIndex: [str]: [array obj elem]
+        doc:
+          k: keywords, c: cls, f: fn name, v: variabel, p: fn params, s: string, o: operators
+       */
+
+      let colors = [
+        {
+          P: [{k: 'blue', f: 'green', c: 'blue', v: 'white', p: 'orange', s: 'yellow', o: 'red'}]
+        },
+        {}
+      ]
+
+      return colors[0]['P']['k']
+    },
+
     animateText(randomIndex = 0, callback) {
       /*
             text typing animation
@@ -107,15 +133,23 @@ export default {
           } else if (t[i] == "#") {
             p.innerHTML += "<br/>";
           } else if (t[i] == "%") {
+            let index = t[i+1];
+            let progIndex = t[i+2];
+            let kwIndex = t[i+3];
+            console.log(index)
+            console.log(progIndex)
+            console.log(kwIndex)
+            console.log(self.syntaxHighlighting(index, progIndex, kwIndex))
             spanArray.forEach(s => {
-              s.style.color = "blue";
+              s.style.color = self.syntaxHighlighting(index, progIndex, kwIndex);
             });
+            //empty array
             spanArray = [];
           }
         }
         try {
           textContainer.appendChild(p);
-          console.log(p.textContent);
+          // console.log(p.textContent);
         } catch (TypeError) {
           return false;
         }

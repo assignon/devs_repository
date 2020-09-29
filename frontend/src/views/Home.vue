@@ -235,7 +235,7 @@ export default {
       codes: [
         [
           `
-        def python(str):?
+        def%0Pk python(str):?
           if  "name"  ==  "__main__":|
             user_input  =  input("give your name")|
             print(user_input)
@@ -253,8 +253,8 @@ export default {
         `
         ],
         [
-          ` @csrf_exempt#
-            @action(methods=['get'], detail=False)#
+          ` @csrf_exempt%0Pf#
+            @action%(methods=['get'], detail=False)#
             def all_works(self, request):#
             """?
             get all works from DB?#
