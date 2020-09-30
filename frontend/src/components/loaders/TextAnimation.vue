@@ -63,7 +63,14 @@ export default {
   },
 
   methods: {
+<<<<<<< HEAD
     syntaxHighlighting(index, progIndex, keywordsIndex) {
+=======
+    syntaxHighlighting(index, progIndex, keywordsIndex){
+      console.log(index)
+      console.log(progIndex)
+      console.log(keywordsIndex)
+>>>>>>> 20be5a5a6adeabae8260271198df4ca6c507c720
       /*
         change span color to programming language key word color
         params:
@@ -76,6 +83,7 @@ export default {
 
       let colors = [
         {
+<<<<<<< HEAD
           P: [
             {
               k: "blue",
@@ -92,6 +100,14 @@ export default {
       ];
 
       return colors[index][progIndex][0][keywordsIndex];
+=======
+          P: [{k: 'blue', f: 'green', c: 'blue', v: 'white', p: 'orange', s: 'yellow', o: 'red'}]
+        },
+        {}
+      ]
+
+      return colors[0]['P']['k']
+>>>>>>> 20be5a5a6adeabae8260271198df4ca6c507c720
     },
 
     animateText(randomIndex = 0, callback) {
@@ -143,6 +159,7 @@ export default {
             spans.innerHTML = " "; // remove #
             p.innerHTML += "<br/>";
           } else if (t[i] == "%") {
+<<<<<<< HEAD
             let index = t[i + 1]; // array index
             let progIndex = t[i + 2]; // prog lang name
             let kwIndex = t[i + 3]; // prog lang keyword type
@@ -168,6 +185,17 @@ export default {
                 progIndex,
                 kwIndex
               );
+=======
+            let index = t[i+1];
+            let progIndex = t[i+2];
+            let kwIndex = t[i+3];
+            console.log(index)
+            console.log(progIndex)
+            console.log(kwIndex)
+            console.log(self.syntaxHighlighting(index, progIndex, kwIndex))
+            spanArray.forEach(s => {
+              s.style.color = self.syntaxHighlighting(index, progIndex, kwIndex);
+>>>>>>> 20be5a5a6adeabae8260271198df4ca6c507c720
             });
             //empty array
             spanArray = [];
