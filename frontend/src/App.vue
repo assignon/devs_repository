@@ -34,7 +34,7 @@ export default {
   methods: {
     scrollTopAnimation() {
       let scrollValue = document.documentElement.scrollTop;
-      while (document.documentElement.scrollTop > 0) {
+      while (scrollValue > 0) {
         document.documentElement.scrollTop--;
       }
     }

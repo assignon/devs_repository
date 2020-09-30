@@ -74,14 +74,14 @@
       </v-flex>
 
       <v-flex xs12 sm12 md12 xl12 class="skills-flex">
-        <h2
+        <h1
           class="skill-title"
           data-aos="fade-up"
           data-aos-delay="250"
           data-aos-duration="500"
         >
           My Expertise
-        </h2>
+        </h1>
         <p
           class="skill-subtext"
           data-aos="fade-up"
@@ -164,13 +164,13 @@
       </v-flex>
 
       <v-flex xs12 sm12 md12 xl12 class="about-flex" id="about">
-        <h2
+        <h1
           class="about-title font-weight-bold"
           data-aos="fade-up"
           data-aos-duration="500"
         >
           About Me
-        </h2>
+        </h1>
         <About />
       </v-flex>
 
@@ -235,44 +235,44 @@ export default {
       codes: [
         [
           `
-        def python(str):?
+        def%0Pk python(str):?
           if  "name"  ==  "__main__":|
             user_input  =  input("give your name")|
             print(user_input)
         `
-        ],
-        [
-          `function% javascript(str){?
-          let% userInput = document.getElementById('input');?
-          if%(userInput != ''){|
-            console.log(userInput.value);?
-          }else{|
-            alert('field is empty')?
-          }#
-        }
-        `
-        ],
-        [
-          ` @csrf_exempt#
-            @action(methods=['get'], detail=False)#
-            def all_works(self, request):#
-            """?
-            get all works from DB?#
-
-            Args:|
-                request ([get]): [get works]#
-            """?
-            order_by = request.query_params.get('order_by')?
-            if order_by == 'default':|
-                works = Works.objects.all().order_by('-pk')?
-            elif order_by == 'asc':|
-                works = Works.objects.all().order_by('pk')?
-            else:|
-                works = Works.objects.all().order_by('-pk'))#?
-
-            return Response(serializers.serialize('json', works))
-        `
         ]
+        // [
+        //   `function%0Pf javascript(str){?
+        //   let% userInput = document.getElementById('input');?
+        //   if%(userInput != ''){|
+        //     console.log(userInput.value);?
+        //   }else{|
+        //     alert('field is empty')?
+        //   }#
+        // }
+        // `
+        // ],
+        // [
+        //   ` @csrf_exempt%0Pf#
+        //     @action%(methods=['get'], detail=False)#
+        //     def all_works(self, request):#
+        //     """?
+        //     get all works from DB?#
+
+        //     Args:|
+        //         request ([get]): [get works]#
+        //     """?
+        //     order_by = request.query_params.get('order_by')?
+        //     if order_by == 'default':|
+        //         works = Works.objects.all().order_by('-pk')?
+        //     elif order_by == 'asc':|
+        //         works = Works.objects.all().order_by('pk')?
+        //     else:|
+        //         works = Works.objects.all().order_by('-pk'))#?
+
+        //     return Response(serializers.serialize('json', works))
+        // `
+        // ]
       ]
     };
   },
@@ -515,6 +515,7 @@ export default {
 .skill-subtext {
   text-align: center;
   font-size: 15px;
+  margin-bottom: 30px;
 }
 
 .skills-container {

@@ -33,10 +33,12 @@ export default {
       let textArrayLen = this.textArray.length;
       let randomNumber = Math.floor(Math.random() * textArrayLen);
       this.animateText(randomNumber, function(el) {
+        // el: <p>
         setTimeout(() => {
           el.style.display = "none";
         }, self.interval);
       });
+
       setInterval(() => {
         let textArrayLen = this.textArray.length;
         let randomNumber = Math.floor(Math.random() * textArrayLen);
@@ -61,6 +63,37 @@ export default {
   },
 
   methods: {
+    syntaxHighlighting(index, progIndex, keywordsIndex) {
+      /*
+        change span color to programming language key word color
+        params:
+          index: [number]: [array index key]
+          progIndex: [str]: [array obj base on index]
+          keywordsIndex: [str]: [array obj elem]
+        doc:
+          k: keywords, c: cls, f: fn name, v: variabel, p: fn params, s: string, o: operators
+       */
+
+      let colors = [
+        {
+          P: [
+            {
+              k: "blue",
+              f: "green",
+              c: "blue",
+              v: "white",
+              p: "orange",
+              s: "yellow",
+              o: "red"
+            }
+          ]
+        },
+        {}
+      ];
+
+      return colors[index][progIndex][0][keywordsIndex];
+    },
+
     animateText(randomIndex = 0, callback) {
       /*
             text typing animation
@@ -98,24 +131,51 @@ export default {
           p.appendChild(spans);
 
           if (t[i] == "?") {
+            spans.innerHTML = " "; // remove ?
             p.innerHTML += "<br/>";
             p.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
           } else if (t[i] == "|") {
+            spans.innerHTML = " "; // remove |
             p.innerHTML += "<br/>";
             p.innerHTML +=
               "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
           } else if (t[i] == "#") {
+            spans.innerHTML = " "; // remove #
             p.innerHTML += "<br/>";
           } else if (t[i] == "%") {
+            let index = t[i + 1]; // array index
+            let progIndex = t[i + 2]; // prog lang name
+            let kwIndex = t[i + 3]; // prog lang keyword type
+
+            spans.innerHTML = " "; // remove %
+            spans.nextSibling.nextSibling.innerHTML = " ";
+            // spans.nextSibling.nextSibling.nextSibling.innerHTML = " ";
+            // spans.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML =
+            //   " ";
+            // if (t[i + 1] == index) {
+            //   console.log(spans);
+            // } else if (t[i + 2] == progIndex) {
+            //   spans.innerHTML = " "; // remove prog index
+            // } else if (t[i + 3] == kwIndex) {
+            //   spans.innerHTML = " "; // remove keyword index
+            // }
+
+            console.log(self.syntaxHighlighting(index, progIndex, kwIndex));
             spanArray.forEach(s => {
-              s.style.color = "blue";
+              // s.style.color = "green";
+              s.style.color = self.syntaxHighlighting(
+                index,
+                progIndex,
+                kwIndex
+              );
             });
+            //empty array
             spanArray = [];
           }
         }
         try {
           textContainer.appendChild(p);
-          console.log(p.textContent);
+          // console.log(p.textContent);
         } catch (TypeError) {
           return false;
         }

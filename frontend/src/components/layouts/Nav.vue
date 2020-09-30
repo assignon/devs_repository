@@ -263,6 +263,7 @@
     <v-navigation-drawer
       v-model="drawer"
       fixed
+      overlay-color="#54bf8e"
       top
       height="100vh"
       temporary
