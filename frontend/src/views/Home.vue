@@ -194,12 +194,12 @@ export default {
   components: {
     About: About,
     Contact: Contact,
-    TextAnimation: TextAnimation
+    TextAnimation: TextAnimation,
   },
 
   data() {
     return {
-      fontSize: "25px",
+      fontSize: "20px",
       width: "50%",
       height: "100%",
       expertises: [
@@ -207,20 +207,20 @@ export default {
           name: "Web Development",
           imge: require("../assets/home/wd.svg"),
           content:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. "
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. ",
         },
         {
           name: "Scripting/CLI",
           imge: require("../assets/home/cmdline.svg"),
           content:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression."
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.",
         },
         {
           name: "Api",
           imge: require("../assets/home/api.svg"),
           content:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression."
-        }
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.",
+        },
       ],
       technics: [
         "fa-python",
@@ -230,52 +230,41 @@ export default {
         "fa-html5",
         "fa-html5",
         "fa-css3-alt",
-        "fa-php"
+        "fa-php",
       ],
       codes: [
+        // [
+        //   `
+        // def%0Pk python(str):?
+        //   if  "name"  ==  "__main__":|
+        //     user_input  =  input("give your name")|
+        //     print(user_input)
+        // `,
+        // ],
         [
           `
-        def%0Pk python(str):?
-          if  "name"  ==  "__main__":|
-            user_input  =  input("give your name")|
-            print(user_input)
-        `
-<<<<<<< HEAD
-=======
-        ],
-        [
-          `function% javascript(str){?
-          let% userInput = document.getElementById('input');?
-          if%(userInput != ''){|
-            console.log(userInput.value);?
-          }else{|
-            alert('field is empty')?
-          }#
-        }
-        `
-        ],
-        [
-          ` @csrf_exempt%0Pf#
-            @action%(methods=['get'], detail=False)#
-            def all_works(self, request):#
-            """?
-            get all works from DB?#
+          def google_api(request, site):|?
+              API_KEY = "AIzaSyDQDsq1Blbm9UZuRGBC93IYKES5Oheplt0"|?
+              SITE = site|?
+              gmaps = googlemaps.Client(key=API_KEY)|?
 
-            Args:|
-                request ([get]): [get works]#
-            """?
-            order_by = request.query_params.get('order_by')?
-            if order_by == 'default':|
-                works = Works.objects.all().order_by('-pk')?
-            elif order_by == 'asc':|
-                works = Works.objects.all().order_by('pk')?
-            else:|
-                works = Works.objects.all().order_by('-pk'))#?
+              # eerst place_id vinden|?
+              g_query = gmaps.find_place(SITE, 'textquery')|?
+              if g_query['status'] == 'OK':|??
+                  # I'm always feeling lucky|??
+                  place_id = g_query['candidates'][0]['place_id']||??
 
-            return Response(serializers.serialize('json', works))
-        `
->>>>>>> 20be5a5a6adeabae8260271198df4ca6c507c720
-        ]
+                  # get address data|??
+                  adress = gmaps.place(place_id)['result']['address_components']|??
+                  adress_dict = {'place_id': True}|??
+                  for a in adress:|???
+                      adress_dict[a['types'][0]] = a['long_name']||??
+              
+                  return adress_dict|?
+              else:|??
+                  return {'place_id': False}
+          `,
+        ],
         // [
         //   `function%0Pf javascript(str){?
         //   let% userInput = document.getElementById('input');?
@@ -308,7 +297,7 @@ export default {
         //     return Response(serializers.serialize('json', works))
         // `
         // ]
-      ]
+      ],
     };
   },
 
@@ -338,7 +327,7 @@ export default {
         this.width = "80%";
         this.height = "80%";
       }
-    }
+    },
     // animateText() {
     //   let textContainer = document.querySelector(".container-two");
     //   // let counter = 0;
@@ -371,7 +360,7 @@ export default {
     //     console.log(p);
     //   });
     // }
-  }
+  },
 };
 </script>
 

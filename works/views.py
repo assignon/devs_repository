@@ -476,7 +476,7 @@ class Skills_view(viewsets.ModelViewSet):
         Args:
             request ([get]): [get skills]
         """
-        categories = ['language', 'framework', 'other']
+        categories = ['language', 'framework', 'database', 'other']
         skills_arr = []
         prog_langs_arr = []
         for category in categories:
@@ -485,7 +485,7 @@ class Skills_view(viewsets.ModelViewSet):
 
         prog_langs = ProgLang.objects.all()
         for pl in prog_langs:
-            prog_langs_arr.append({pl.id: pl.name})
+            prog_langs_arr.append({'name': pl.name})
 
         return Response({'skills': skills_arr, 'prog_langs': prog_langs_arr})
 

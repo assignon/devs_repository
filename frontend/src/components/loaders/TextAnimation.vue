@@ -17,11 +17,13 @@ export default {
     "random",
     "interval",
     "timeout",
-    "display"
+    "display",
   ], //ta=textAlign, fz=fontsize
 
   data() {
-    return {};
+    return {
+      totalDelay: 0, // time the text animation take to finish
+    };
   },
 
   created() {},
@@ -36,7 +38,7 @@ export default {
         // el: <p>
         setTimeout(() => {
           el.style.display = "none";
-        }, self.interval);
+        }, self.totalDelay);
       });
 
       setInterval(() => {
@@ -45,16 +47,16 @@ export default {
         this.animateText(randomNumber, function(el) {
           setTimeout(() => {
             let childs = el.children;
-            childs.forEach(child => {
+            childs.forEach((child) => {
               child.classList.remove(self.animation);
               child.classList.add("bounceOut");
               setTimeout(() => {
                 el.style.display = "none";
               }, 3000);
             });
-          }, self.timeout);
+          }, self.totalDelay);
         });
-      }, self.interval);
+      }, self.totalDelay * 2);
     } else {
       setInterval(() => {
         this.animateText();
@@ -63,14 +65,7 @@ export default {
   },
 
   methods: {
-<<<<<<< HEAD
     syntaxHighlighting(index, progIndex, keywordsIndex) {
-=======
-    syntaxHighlighting(index, progIndex, keywordsIndex){
-      console.log(index)
-      console.log(progIndex)
-      console.log(keywordsIndex)
->>>>>>> 20be5a5a6adeabae8260271198df4ca6c507c720
       /*
         change span color to programming language key word color
         params:
@@ -83,7 +78,6 @@ export default {
 
       let colors = [
         {
-<<<<<<< HEAD
           P: [
             {
               k: "blue",
@@ -92,22 +86,14 @@ export default {
               v: "white",
               p: "orange",
               s: "yellow",
-              o: "red"
-            }
-          ]
+              o: "red",
+            },
+          ],
         },
-        {}
+        {},
       ];
 
       return colors[index][progIndex][0][keywordsIndex];
-=======
-          P: [{k: 'blue', f: 'green', c: 'blue', v: 'white', p: 'orange', s: 'yellow', o: 'red'}]
-        },
-        {}
-      ]
-
-      return colors[0]['P']['k']
->>>>>>> 20be5a5a6adeabae8260271198df4ca6c507c720
     },
 
     animateText(randomIndex = 0, callback) {
@@ -116,8 +102,8 @@ export default {
             params:
                 randomIndex: [int]: [generate random int for the text array index, default: 0]
             doc: indentation signs
-                ?: 1 break and 1 tabulation
-                |: 1 break and 2 tabulations
+                ?: 1 tabulation
+                |: 1 break
                 #: 1 break
         */
       let textContainer = document.querySelector(".textanimation-core");
@@ -142,30 +128,32 @@ export default {
           spans.textContent = t[i];
           spans.classList.remove("bounceOut");
           spans.className = `animated ${self.animation}`;
-          spans.style.animationDelay = `${i / 7}s`;
+          spans.style.animationDelay = `${i / 10}s`;
           spanArray.push(spans);
           p.appendChild(spans);
 
+          this.totalDelay += i / 10;
+
           if (t[i] == "?") {
             spans.innerHTML = " "; // remove ?
-            p.innerHTML += "<br/>";
+            // p.innerHTML += "<br/>";
             p.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
           } else if (t[i] == "|") {
             spans.innerHTML = " "; // remove |
+            // p.innerHTML += "<br/>";
             p.innerHTML += "<br/>";
-            p.innerHTML +=
-              "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-          } else if (t[i] == "#") {
-            spans.innerHTML = " "; // remove #
-            p.innerHTML += "<br/>";
-          } else if (t[i] == "%") {
-<<<<<<< HEAD
+          }
+          // else if (t[i] == "#") {
+          //   spans.innerHTML = " "; // remove #
+          //   p.innerHTML += "<br/>";
+          // }
+          else if (t[i] == "%") {
             let index = t[i + 1]; // array index
             let progIndex = t[i + 2]; // prog lang name
             let kwIndex = t[i + 3]; // prog lang keyword type
 
-            spans.innerHTML = " "; // remove %
-            spans.nextSibling.nextSibling.innerHTML = " ";
+            // spans.innerHTML = " "; // remove %
+            // spans.nextSibling.nextSibling.innerHTML = " ";
             // spans.nextSibling.nextSibling.nextSibling.innerHTML = " ";
             // spans.nextSibling.nextSibling.nextSibling.nextSibling.innerHTML =
             //   " ";
@@ -178,29 +166,21 @@ export default {
             // }
 
             console.log(self.syntaxHighlighting(index, progIndex, kwIndex));
-            spanArray.forEach(s => {
+            spanArray.forEach((s) => {
               // s.style.color = "green";
               s.style.color = self.syntaxHighlighting(
                 index,
                 progIndex,
                 kwIndex
               );
-=======
-            let index = t[i+1];
-            let progIndex = t[i+2];
-            let kwIndex = t[i+3];
-            console.log(index)
-            console.log(progIndex)
-            console.log(kwIndex)
-            console.log(self.syntaxHighlighting(index, progIndex, kwIndex))
-            spanArray.forEach(s => {
-              s.style.color = self.syntaxHighlighting(index, progIndex, kwIndex);
->>>>>>> 20be5a5a6adeabae8260271198df4ca6c507c720
             });
             //empty array
             spanArray = [];
           }
+
+          console.log(this.totalDelay);
         }
+
         try {
           textContainer.appendChild(p);
           // console.log(p.textContent);
@@ -210,8 +190,8 @@ export default {
         callback(p);
         // console.log(p);
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

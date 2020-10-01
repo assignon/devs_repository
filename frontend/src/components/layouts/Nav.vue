@@ -398,12 +398,12 @@ export default {
       easings: Object.keys(easings),
       // navHeight: this.$router.currentRoute.name == 'Home' ? "100px" : "50px"
       navHeight: "70px",
-      mobileMenu: 0 // mobile nav drawer list model
+      mobileMenu: 0, // mobile nav drawer list model
     };
   },
 
   created() {
-    // window.addEventListener("scroll", this.menuScrollAnimation);
+    window.addEventListener("scroll", this.menuScrollAnimation);
     if (window.innerWidth <= 500) {
       // change related works drawer width on mobile
       this.navHeight = "50px";
@@ -421,9 +421,9 @@ export default {
       return {
         duration: this.duration,
         offset: this.offset,
-        easing: this.easing
+        easing: this.easing,
       };
-    }
+    },
   },
 
   methods: {
@@ -439,8 +439,8 @@ export default {
         scrollNavLayout.style.display = "none";
         scrollNavLayout.style.opacity = "0";
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

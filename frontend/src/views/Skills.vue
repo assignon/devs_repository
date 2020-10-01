@@ -1,123 +1,171 @@
 <template>
   <div class="skills-core">
-    <v-layout row justify-space-around align-center class="skills-layout">
-      <v-flex xs12 sm12 md2 lg2 xl2 class="skills-flex">
-        <h2 class="mt-5 mb-5">My Skills</h2>
+    <v-layout class="skills-layout">
+      <v-flex xs12 sm12 md4 lg4 xl4 class="skills-flex">
+        <!-- mobile version -->
+        <div class="mobile-menu hidden-md-and-up">
+          <div
+            class="mobile-menu-container"
+            v-for="(item, i) in progLangs"
+            :key="i"
+          >
+            <v-chip
+              @click="
+                $vuetify.goTo(
+                  `#${item.name}`,
+                  options,
+                  (active = true),
+                  clickedChip()
+                )
+              "
+              class="mr-2 animated fadeInUp pl-5 pr-5"
+              :style="{ animationDelay: i * 0.3 + 's' }"
+            >
+              <img
+                :src="require(`../../../media/prog_langs/${item.name}.svg`)"
+                alt=""
+                :class="item.name"
+              />
 
-        <div class="languages">
+              <p style="margin:auto; text-transform: capitalize;" class="ml-3">
+                {{ item.name }}
+              </p>
+            </v-chip>
+          </div>
+        </div>
+        <!-- laptop, desktop version -->
+        <h2 class="mt-5 mb-5 hidden-sm-and-down">My Skills</h2>
+        <!-- programming languages skills -->
+        <div class="languages  hidden-sm-and-down">
           <h4 class="mb-5">Languages</h4>
           <v-list rounded>
             <v-list-item-group v-model="skillsMenu" color="#41b883">
               <v-list-item
                 v-for="(lang, i) in skills[0].language"
                 :key="i"
-                class="animated fadeInUp"
-                :style="{ animationDelay: i * 0.3 + 's' }"
-              >
-                <v-list-item-icon>
-                  <!-- <img
-                    :src="
-                      require(`../../../media/prog_langs/${getProgLangName(
-                        lang.prog_lang_id
-                      )}.svg`)
-                    "
-                    alt=""
-                    :class="getProgLangName(lang.prog_lang_id)"
-                  /> -->
-                </v-list-item-icon>
-                <v-list-item-content>
-                  <v-list-item-title></v-list-item-title>
-                </v-list-item-content>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </div>
-
-        <!-- <div class="frameworks">
-          <h4 class="mb-5">Frameworks</h4>
-          <v-list rounded>
-            <v-list-item-group v-model="skillsMenu" color="#41b883">
-              <v-list-item
-                v-for="(f, i) in skills[1].framework"
-                :key="i"
-                @click="
-                  $vuetify.goTo(`#${getProgLangName(f.prog_lang_id)}`, options)
-                "
+                @click="$vuetify.goTo(`#${lang.prog_lang}`, options)"
                 class="animated fadeInUp"
                 :style="{ animationDelay: i * 0.3 + 's' }"
               >
                 <v-list-item-icon>
                   <img
                     :src="
-                      require(`../../../media/prog_langs/${getProgLangName(
-                        f.prog_lang_id
-                      )}.svg`)
+                      require(`../../../media/prog_langs/${lang.prog_lang}.svg`)
                     "
                     alt=""
-                    :class="getProgLangName(f.prog_lang_id)"
+                    :class="lang.prog_lang"
                   />
                 </v-list-item-icon>
                 <v-list-item-content>
                   <v-list-item-title
-                    v-text="getProgLangName(f.prog_lang_id)"
+                    v-text="lang.prog_lang"
                   ></v-list-item-title>
                 </v-list-item-content>
               </v-list-item>
             </v-list-item-group>
           </v-list>
-        </div> -->
-
-        <!-- <div class="pro-langs category mt-5">
-                    <h3 class="animated fadeInUp" style="">Languages</h3>
-                    <p
-                            v-for="(lang, i) in skills[0].languages"
-                            :key="i"
-                            class="animated zoomIn"
-                            :style="{animationDelay: `${i*0.5}s`,}"
-                    >
-                        <v-icon style="font-size: 7px;" class="mr-1">fas fa-circle</v-icon>
-                        {{lang}}
-                    </p>
-                </div>
-                <div class="frameworks category">
-                    <h3 class="animated fadeInUp" style="animation-delay: 1s;">Frameworks</h3>
-                    <p
-                            v-for="(framework, i) in skills[1].frameworks"
-                            :key="i"
-                            class="animated zoomIn"
-                            :style="{animationDelay: `${(i*0.5)+1}s`,}"
-                    >
-                        <v-icon style="font-size: 7px;" class="mr-1">fas fa-circle</v-icon>
-                        {{framework}}
-                    </p>
-                </div>
-                <div class="database category">
-                    <h3 class="animated fadeInUp" style="animation-delay: 1.2s;">DataBase</h3>
-                    <p
-                            v-for="(db, i) in skills[2].databases"
-                            :key="i"
-                            class="animated zoomIn"
-                            :style="{animationDelay: `${(i*1)+1}s`,}"
-                    >
-                        <v-icon style="font-size: 7px;" class="mr-1">fas fa-circle</v-icon>
-                        {{db}}
-                    </p>
-                </div>
-                <div class="other category">
-                    <h3 class="animated fadeInUp" style="animation-delay: 1.5s;">Other</h3>
-                    <p
-                            v-for="(other, i) in skills[3].others"
-                            :key="i"
-                            class="animated zoomIn"
-                            :style="{animationDelay: `${(i*1.5)+1}s`,}"
-                    >
-                        <v-icon style="font-size: 7px;" class="mr-1">fas fa-circle</v-icon>
-                        {{other}}
-                    </p>
-                </div> -->
+        </div>
+        <!-- frameworks skills -->
+        <div class="frameworks hidden-sm-and-down">
+          <h4 class="mb-5">Frameworks</h4>
+          <v-list rounded>
+            <v-list-item-group color="#41b883">
+              <v-list-item
+                v-for="(f, i) in skills[1].framework"
+                :key="i"
+                @click="$vuetify.goTo(`#${f.prog_lang}`, options)"
+                class="animated fadeInUp"
+                :style="{ animationDelay: i * 0.3 + 's' }"
+              >
+                <v-list-item-icon>
+                  <img
+                    :src="
+                      require(`../../../media/prog_langs/${f.prog_lang}.svg`)
+                    "
+                    alt=""
+                    :class="f.prog_lang"
+                  />
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title v-text="f.prog_lang"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </div>
+        <!-- other skills -->
+        <div class="others hidden-sm-and-down">
+          <h4 class="mb-5">DataBase</h4>
+          <v-list rounded>
+            <v-list-item-group color="#41b883">
+              <v-list-item
+                v-for="(db, i) in skills[2].database"
+                :key="i"
+                @click="$vuetify.goTo(`#${db.prog_lang}`, options)"
+                class="animated fadeInUp"
+                :style="{ animationDelay: i * 0.3 + 's' }"
+              >
+                <v-list-item-icon>
+                  <img
+                    :src="
+                      require(`../../../media/prog_langs/${db.prog_lang}.svg`)
+                    "
+                    alt=""
+                    :class="db.prog_lang"
+                  />
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title v-text="db.prog_lang"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </div>
+        <!-- database skills -->
+        <div class="db hidden-sm-and-down">
+          <h4 class="mb-5">Other</h4>
+          <v-list rounded>
+            <v-list-item-group color="#41b883">
+              <v-list-item
+                v-for="(o, i) in skills[3].other"
+                :key="i"
+                @click="$vuetify.goTo(`#${o.prog_lang}`, options)"
+                class="animated fadeInUp"
+                :style="{ animationDelay: i * 0.3 + 's' }"
+              >
+                <v-list-item-icon>
+                  <img
+                    :src="
+                      require(`../../../media/prog_langs/${o.prog_lang}.svg`)
+                    "
+                    alt=""
+                    :class="o.prog_lang"
+                  />
+                </v-list-item-icon>
+                <v-list-item-content>
+                  <v-list-item-title v-text="o.prog_lang"></v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list-item-group>
+          </v-list>
+        </div>
       </v-flex>
 
-      <v-flex xs12 sm12 md10 lg10 xl10 class="skills-content-flex"> </v-flex>
+      <v-flex xs12 sm12 md8 lg8 xl8 class="skills-content-flex">
+        <div v-for="(skill, s) in skills" :key="s">
+          <div v-for="(obj, o) in skill" :key="o">
+            <div
+              class="skills-content"
+              :id="item.prog_lang"
+              v-for="(item, i) in obj"
+              :key="i"
+            >
+              <h3>{{ item.prog_lang }}</h3>
+              <p>{{ item.content }}</p>
+            </div>
+          </div>
+        </div>
+      </v-flex>
     </v-layout>
   </div>
 </template>
@@ -125,6 +173,7 @@
 <script>
 import { mapGetters } from "vuex";
 import * as easings from "vuetify/es5/services/goto/easing-patterns";
+// import Vue from "vue";
 export default {
   name: "Skills",
 
@@ -133,22 +182,18 @@ export default {
       skillsMenu: 0, //v-list model
       // scrolling options
       duration: 400,
-      offset: 50,
+      offset: 120,
       easing: "easeInOutCubic",
-      easings: Object.keys(easings)
-      //   skills: [
-      //     { languages: ["Python", "JavaScript"] },
-      //     { frameworks: ["VueJs", "Django", "Flask"] },
-      //     { databases: ["MySQL", "SQLite", "FireBase"] },
-      //     { others: ["Html5", "CSS3", "Vuetify", "Git"] }
-      //   ]
+      easings: Object.keys(easings),
+      skillsCategories: ["language", "framework", "other", "database"],
+      active: false, // click outside model(refere to vuetify click outside directive)
     };
   },
 
   computed: {
     ...mapGetters({
       skills: "skills/getSkills",
-      progLangs: "skills/getProgLangs"
+      progLangs: "skills/getProgLangs",
     }),
 
     target() {
@@ -161,22 +206,30 @@ export default {
       return {
         duration: this.duration,
         offset: this.offset,
-        easing: this.easing
+        easing: this.easing,
       };
-    }
+    },
   },
 
   created() {
-    this.allSkills();
+    // let self = this;
+    this.allSkills().then();
   },
 
-  mounted() {
-    let self = this;
-    console.log(self.getProgLangName(2));
-  },
+  mounted() {},
 
   methods: {
-    allSkills() {
+    clickedChip() {
+      if (this.active) {
+        // change children color and background-color
+        event.currentTarget.style.backgroundColor = "#e0eee7";
+        let child = event.currentTarget.childNodes[0];
+        child.children[0].style.color = "#42b883";
+        child.children[1].style.color = "#42b883";
+      }
+    },
+
+    async allSkills() {
       /*
         get all skills from the DB
      */
@@ -188,62 +241,108 @@ export default {
           console.log(data);
           self.$store.getters["skills/setSkills"](data.skills);
           self.$store.getters["skills/setProgLangs"](data.prog_langs);
-        }
+        },
       });
     },
 
-    getProgLangName(plId) {
-      let self = this;
-      this.allSkills();
-      this.$store.dispatch("progLangName", {
-        progLangId: plId,
-        callback: function(data) {
-          console.log(data);
-          self.$store.getters["setProgLang"](data);
-          console.log(self.$store.state.progLangArr);
-        }
-      });
+    // getProgLangName(plId) {
+    //   let self = this;
+    //   this.allSkills();
+    //   this.$store.dispatch("progLangName", {
+    //     progLangId: plId,
+    //     callback: function(data) {
+    //       console.log(data);
+    //       self.$store.getters["setProgLang"](data);
+    //       // console.log(self.$store.state.progLangArr);
+    //     }
+    //   });
 
-      return self.$store.getters["getProgLang"][0]["name"];
-    }
-  }
+    //   return self.$store.getters["getProgLang"][0]["name"];
+    // }
+  },
 };
 </script>
 
 <style scoped>
 .skills-core {
   width: 100%;
-  height: 95vh;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .skills-layout {
+  display: flex;
+  flex-direction: row;
   width: 100%;
-  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+  height: auto;
 }
-
 .skills-flex {
-  height: 100%;
+  width: 15%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-end;
   background-color: #f5f5f5;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  overflow-y: scroll;
+  padding-top: 80px;
+}
+.mobile-menu {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: scroll;
+  margin-top: 20px;
+}
+.menu-container {
+  width: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+.mobile-menu-container {
+  width: auto;
+  height: auto;
+  padding-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+::-webkit-scrollbar {
+  width: 0px;
 }
 .theme--light.v-sheet {
   background-color: #f5f5f5;
   /* margin-top: 120px; */
 }
-.languages {
+::-webkit-scrollbar {
+  width: 0px;
+}
+.languages,
+.db,
+.others,
+.frameworks {
   width: 90%;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  border: 1px solid red;
 }
 .skills-flex h2 {
   width: 100%;
@@ -252,105 +351,141 @@ export default {
 }
 
 .skills-content-flex {
-  height: 100%;
+  width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-top: 10px;
   /*background-color: lightgray;*/
 }
 
-.category {
-  width: 70%;
+/* .skills-content-flex div {
+  width: 100%;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+} */
+
+.skills-content-flex .skills-content {
+  width: 70%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 70px;
 }
 
-.category h3 {
-  color: #fff;
+.skills-content h3 {
   text-align: left;
   margin-bottom: 7px;
-  margin-top: 5px;
+  margin-top: 30px;
+  text-transform: capitalize;
 }
 
-.category p {
-  color: #fff;
+.skills-content p {
   text-align: left;
   font-size: 16px;
-  margin: 0px;
-  margin-bottom: 7px;
-  margin-left: 15px;
-  cursor: pointer;
-  font-weight: bold;
 }
 
-.category p .v-icon {
-  color: white;
-}
-
-.category p:hover {
-  color: #00ff8e;
-}
-
-.category p:hover .v-icon {
-  color: #00ff8e;
-  font-size: 3px;
-}
 /***************************  programminmg languages style  ***********************************/
 .python {
   width: 25px;
-  height: 25px;
+  height: 20px;
 }
 .php {
   width: 30px;
-  /* height: 40px; */
+  height: 20px;
 }
 .vue {
   width: 30px;
-  height: 30px;
+  height: 20px;
 }
 .django {
   width: 30px;
-  height: 30px;
+  height: 20px;
 }
 .laravel {
   width: 30px;
-  height: 30px;
+  height: 20px;
 }
 .html5 {
   width: 30px;
-  height: 30px;
+  height: 20px;
 }
 .css3 {
   width: 30px;
-  height: 30px;
+  height: 20px;
 }
 .flask {
   width: 30px;
-  height: 30px;
+  height: 20px;
 }
 .flutter {
   width: 30px;
-  height: 30px;
+  height: 20px;
 }
 .javascript {
   width: 30px;
-  height: 30px;
+  height: 20px;
 }
 .dart {
   width: 30px;
-  height: 30px;
+  height: 20px;
 }
 .vuetify {
   width: 30px;
-  height: 30px;
+  height: 20px;
 }
-.git {
+.git,
+.sqlite,
+.firebase,
+.mysql {
   width: 30px;
-  height: 30px;
+  height: 20px;
 }
 /**********************************************************************************************/
+@media only screen and (max-width: 500px) {
+  .skills-layout {
+    flex-direction: column;
+  }
+  .skills-flex {
+    flex-direction: row;
+    /* position: relative; */
+    padding-top: 60px;
+    height: auto;
+    width: 100%;
+    background-color: #fff;
+  }
+  .skills-content-flex {
+    padding-top: 50px;
+  }
+  .git,
+  .sqlite,
+  .firebase,
+  .mysql,
+  .vuetify,
+  .dart,
+  .javascript,
+  .flutter,
+  .flask,
+  .css3,
+  .html5,
+  .laravel,
+  .django,
+  .vue,
+  .php,
+  .python {
+    width: 20px;
+    height: 20px;
+  }
+  .skills-content-flex .skills-content {
+    width: 80%;
+    margin-left: 30px;
+  }
+}
 </style>

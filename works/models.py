@@ -75,10 +75,7 @@ class Skills(models.Model):
     Returns:
         [type]: [description]
     """
-    prog_lang = models.OneToOneField(ProgLang,
-                                     on_delete=models.CASCADE,
-                                     primary_key=True,
-                                     )
+    prog_lang = models.CharField(max_length=155)
     category = models.CharField(max_length=155)
     content = models.TextField()
 

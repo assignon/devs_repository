@@ -314,13 +314,13 @@ export default {
   created() {
     this.allWorks("default");
     this.$store.getters["work/getSearchedWorks"].length = 0;
-    this.screenWithChange();
+    this.screenWidthChange();
     // let arr = this.$store.dispatch("splitToArray", "project,fields,work_type");
     console.log(this.splitToArray("project"));
   },
 
   methods: {
-    screenWithChange() {
+    screenWidthChange() {
       window.addEventListener("resize", function() {
         let screenSize = window.innerWidth;
         if (screenSize <= 500) {
