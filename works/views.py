@@ -374,16 +374,23 @@ class Works_view(viewsets.ModelViewSet):
         """
         order_by = request.query_params.get('order_by')
         if order_by == 'default':
-            works = Works.objects.all().order_by('-pk')
+            works = Works.objects.all().order_by('-pk')[0:3]
         elif order_by == 'asc':
-            works = Works.objects.all().order_by('pk')
+            works = Works.objects.all().order_by('pk')[0:3]
         else:
-            works = Works.objects.all().order_by('-pk')
+            works = Works.objects.all().order_by('-pk')[0:3]
         # works = self.get_queryset()
 
         # serializer = self.get_serializer_class()(works)
         return Response(serializers.serialize('json', works))
         # return Response(serializer.data)
+
+    @csrf_exempt
+    @action(methods=['get'], detail=False)
+    def works_count(self, request):
+        # get number of works in DB
+        works_count = Works.objects.all().count()
+        return Response(works_count)
 
     @csrf_exempt
     @action(methods=['get'], detail=False)

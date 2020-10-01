@@ -163,9 +163,10 @@
         v-if="foundedWorks.length != 0 || searchEnter"
       />
 
-      <!-- <v-flex 12 xs sm12 md8 lg10 xl10 class="pagination-flex">
-        <v-pagination v-model="page" :length="1" :total-visible="7"></v-pagination>
-      </v-flex>-->
+      <v-flex 12 xs sm12 md8 lg10 xl10 class="pagination-flex">
+        <v-pagination v-model="page" :length="currentScreenWidth()" :total-visible="currentScreenWidth()"></v-pagination>
+      </v-flex>
+
       <v-dialog v-model="searchDialog" max-width="700px">
         <div class="search-dialog-container" style="background-color: white;">
           <h4 class="mb-3">
@@ -294,7 +295,7 @@ export default {
         [`website or website+app+...`],
         ["pwa>2020 or webapp,cli,...<2020/09"],
         [">2020 or <2020/09 or >2020/09/14"]
-      ]
+      ],
     };
   },
 
@@ -307,16 +308,28 @@ export default {
   computed: {
     ...mapGetters({
       works: "work/getWorks",
-      foundedWorks: "work/getSearchedWorks"
-    })
+      foundedWorks: "work/getSearchedWorks",
+    }),
+
+    worksCount: function(){
+      let self = this;
+      return this.$store.getters['get'](self.$store.state.worksCount)
+    }
   },
 
   created() {
-    this.allWorks("default");
+    let self = this
+    this.allWorks("default", 0, self.currentScreenWidth());
     this.$store.getters["work/getSearchedWorks"].length = 0;
     this.screenWidthChange();
     // let arr = this.$store.dispatch("splitToArray", "project,fields,work_type");
     console.log(this.splitToArray("project"));
+    console.log(self.currentScreenWidth());
+    self.$store.dispatch('workscount', {
+      params: {}
+    })
+
+    console.log(this.worksCount)
   },
 
   methods: {
@@ -376,16 +389,41 @@ export default {
       return arr;
     },
 
-    allWorks(orderBy) {
+    currentScreenWidth(){
+      /*
+      get the current laptop, computer screen with
+      return: current screen width
+      * */
+      let screenSize = window.innerWidth;
+      let limit = 0; // pagination limit
+      if(screenSize <= 500){
+        // mobile
+        limit = 6;
+      }else if(screenSize > 500 && screenSize <= 834){
+        // tablette
+        limit = 9;
+      }else if(screenSize > 834 && screenSize <= 1440){
+        // laptop
+        limit = 9;
+      }else if(screenSize > 1440){
+        // desktop
+        limit = 12;
+      }
+
+      return limit;
+    },
+
+    allWorks(orderBy, offset, limit) {
       /*
         get all works from the DB
         params:
           orderBy: [str]: [define the order of the data (ex: default=desc, desc, asc)]
+          limit: [int]: [pagination integer]
       */
       let self = this;
       this.$store.dispatch("work/allWorks", {
         url: "works/all_works",
-        params: { order_by: orderBy },
+        params: { order_by: orderBy, limit: limit, offset: offset },
         callback: function(data) {
           console.log(JSON.parse(data));
           self.$store.getters["work/setWorks"](JSON.parse(data));
@@ -424,14 +462,14 @@ export default {
       // get works order by ascending
       document.querySelector(".asc-icon").style.display = "none";
       document.querySelector(".desc-icon").style.display = "block";
-      this.allWorks("asc");
+      this.allWorks("asc", 0, self.currentScreenWidth());
     },
 
     orderByDesc() {
       // get works order by descending
       document.querySelector(".desc-icon").style.display = "none";
       document.querySelector(".asc-icon").style.display = "block";
-      this.allWorks("desc");
+      this.allWorks("desc", 0, self.currentScreenWidth());
     }
   }
 };

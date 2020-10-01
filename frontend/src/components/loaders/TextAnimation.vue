@@ -214,6 +214,7 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  overflow: hidden;
 }
 @media only screen and (max-width: 500px) {
   .textanimation-core {

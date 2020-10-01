@@ -15,6 +15,7 @@ export default new Vuex.Store({
     AUTHENTICATED: undefined,
     usertoken: undefined,
     progLangArr: [],
+    worksCount: 0, // number of works get from DB
   },
 
   getters: {
@@ -44,7 +45,7 @@ export default new Vuex.Store({
         get given element
         params:
           elem: [array, string, number, boolean]: [element to get]
-        return: rray, string, number, boolean
+        return: array, string, number, boolean
     */
       console.log(state);
       return elem;
@@ -149,6 +150,23 @@ export default new Vuex.Store({
         url: "proglang/get_pl",
         params: { plId: payload.progLangId },
         callback: payload.callback,
+        host: rootState.HOST,
+      });
+    },
+
+    workscount({ commit, rootState, state }, payload) {
+      /**
+       *get number of works in DB
+       */
+      commit("getAxiosCall", {
+        url: "works/works_count",
+        params: payload.params,
+        callback: function(data){
+          console.log(data)
+          console.log( state.works_count)
+          state.works_count = data
+          console.log( state.works_count)
+        },
         host: rootState.HOST,
       });
     },
