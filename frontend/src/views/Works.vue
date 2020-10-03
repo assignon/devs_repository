@@ -164,7 +164,43 @@
       />
 
       <v-flex 12 xs sm12 md8 lg10 xl10 class="pagination-flex">
-        <v-pagination v-model="page" :length="currentScreenWidth()" :total-visible="currentScreenWidth()"></v-pagination>
+        <!-- <v-pagination
+          v-model="page"
+          :length="paginationPages"
+          :total-visible="limitOnScreenWidth()"
+          @input="getPaginatedWorks()"
+        ></v-pagination> -->
+        <h1
+          class="ml-3"
+          data-aos="fade-in"
+          data-aos-delay="500"
+          data-aos-duration="500"
+        >
+          W
+        </h1>
+        <div class="o-container">
+          <h1
+            v-for="(item, i) in paginationPages"
+            :key="i"
+            data-aos="zoom-in"
+            :data-aos-delay="i * 500"
+            data-aos-duration="500"
+            :id="i + 1"
+            class="ml-2 os"
+            @click="getPaginatedWorks()"
+          >
+            <span></span>
+            <span class="page-number"></span>
+          </h1>
+        </div>
+        <h1
+          class="ml-3"
+          data-aos="fade-in"
+          data-aos-delay="800"
+          data-aos-duration="500"
+        >
+          rks
+        </h1>
       </v-flex>
 
       <v-dialog v-model="searchDialog" max-width="700px">
@@ -274,7 +310,7 @@ export default {
     return {
       valid: true, // search form v-model
       desc: true, // check if the projects are sorted order by desc
-      page: 9, // pagination
+      page: 1, // pagination
       filter: "plFilter", // radio input model
       filtersVisible: false, // check if the radio iput div display is none orr not
       searchDialog: false, // search explaination dialog model
@@ -289,20 +325,23 @@ export default {
         { icon: "fab fa-python", color: "black" },
         { icon: "fab fa-php", color: "black" },
         { icon: "fab fa-vuejs", color: "black" },
-        { icon: "fas fa-terminal", color: "black" }
+        { icon: "fas fa-terminal", color: "black" },
       ],
       searchQueries: [
         [`website or website+app+...`],
         ["pwa>2020 or webapp,cli,...<2020/09"],
-        [">2020 or <2020/09 or >2020/09/14"]
+        [">2020 or <2020/09 or >2020/09/14"],
       ],
+      offset: 0, // get works query offset(start)
+      limit: this.limitOnScreenWidth(), // get works query limit(end)
+      worksOrder: "default", // works ordering
     };
   },
 
   components: {
     WorksTemp: WorksTemp,
     // WaitingLoader: WaitingLoader,
-    TextAnimation: TextAnimation
+    TextAnimation: TextAnimation,
   },
 
   computed: {
@@ -311,25 +350,39 @@ export default {
       foundedWorks: "work/getSearchedWorks",
     }),
 
-    worksCount: function(){
+    worksCount: function() {
       let self = this;
-      return this.$store.getters['get'](self.$store.state.worksCount)
-    }
+      return this.$store.getters["get"](self.$store.state.worksCount);
+    },
+
+    paginationPages() {
+      let pages = this.worksCount / this.limitOnScreenWidth();
+      return Math.ceil(pages);
+    },
+
+    randClr() {
+      return this.$store.getters["randomColor"];
+    },
   },
 
   created() {
-    let self = this
-    this.allWorks("default", 0, self.currentScreenWidth());
+    let self = this;
+    this.allWorks("default", 0, self.limitOnScreenWidth());
     this.$store.getters["work/getSearchedWorks"].length = 0;
     this.screenWidthChange();
     // let arr = this.$store.dispatch("splitToArray", "project,fields,work_type");
-    console.log(this.splitToArray("project"));
-    console.log(self.currentScreenWidth());
-    self.$store.dispatch('workscount', {
-      params: {}
-    })
+    // console.log(this.splitToArray("project"));
+    // console.log(self.limitOnScreenWidth());
+    console.log(this.limit);
+    self.$store.dispatch("workscount", {
+      params: {},
+    });
+  },
 
-    console.log(this.worksCount)
+  mounted() {
+    setTimeout(() => {
+      this.customizePagination();
+    }, 200);
   },
 
   methods: {
@@ -389,28 +442,42 @@ export default {
       return arr;
     },
 
-    currentScreenWidth(){
+    limitOnScreenWidth() {
       /*
-      get the current laptop, computer screen with
-      return: current screen width
+      get the current laptop, computer screen width
+      to determine the number of projects to display
+      return: works max number
       * */
       let screenSize = window.innerWidth;
       let limit = 0; // pagination limit
-      if(screenSize <= 500){
-        // mobile
+      if (screenSize <= 500) {
+        // mobile[6]
         limit = 6;
-      }else if(screenSize > 500 && screenSize <= 834){
-        // tablette
+      } else if (screenSize > 500 && screenSize <= 834) {
+        // tablette[9]
         limit = 9;
-      }else if(screenSize > 834 && screenSize <= 1440){
-        // laptop
+      } else if (screenSize > 834 && screenSize <= 1440) {
+        // laptop[9]
         limit = 9;
-      }else if(screenSize > 1440){
-        // desktop
+      } else if (screenSize > 1440) {
+        // desktop[12]
         limit = 12;
       }
 
       return limit;
+    },
+
+    customizePagination() {
+      let os = document.querySelectorAll(".os");
+      let self = this;
+      for (let i = 0; i < os.length; i++) {
+        let randNum = Math.floor(
+          Math.random() * self.$store.state.colorsArr.length
+        );
+        os[i].style.color = self.$store.state.colorsArr[randNum];
+        os[i].firstChild.innerHTML = "O";
+        os[i].lastChild.innerHTML = i + 1;
+      }
     },
 
     allWorks(orderBy, offset, limit) {
@@ -427,8 +494,24 @@ export default {
         callback: function(data) {
           console.log(JSON.parse(data));
           self.$store.getters["work/setWorks"](JSON.parse(data));
-        }
+        },
       });
+    },
+
+    getPaginatedWorks() {
+      /*
+      get works base on pagination number
+      */
+      let self = this;
+      this.page = event.currentTarget.id;
+      if (this.page == 1) {
+        self.allWorks(self.worksOrder, 0, self.limitOnScreenWidth());
+      } else {
+        self.limit = self.limitOnScreenWidth() * self.page;
+        self.offset = self.limit - self.limitOnScreenWidth();
+
+        self.allWorks(self.worksOrder, self.offset, self.limit);
+      }
     },
 
     startSearch() {
@@ -454,24 +537,29 @@ export default {
           }
           // push founded works data to setSearchedWorks array
           self.$store.getters["work/setSearchedWorks"](JSON.parse(data));
-        }
+        },
       });
     },
 
     orderByAsc() {
       // get works order by ascending
-      document.querySelector(".asc-icon").style.display = "none";
-      document.querySelector(".desc-icon").style.display = "block";
-      this.allWorks("asc", 0, self.currentScreenWidth());
+      let self = this;
+      this.worksOrder = "asc";
+      let asc = document.querySelector(".asc-icon");
+      asc.style.display = "none";
+      document.querySelector(".desc-icon").style.display = "inline-flex";
+      self.getPaginatedWorks();
     },
 
     orderByDesc() {
-      // get works order by descending
+      // get works order by
+      let self = this;
+      this.worksOrder = "desc";
       document.querySelector(".desc-icon").style.display = "none";
       document.querySelector(".asc-icon").style.display = "block";
-      this.allWorks("desc", 0, self.currentScreenWidth());
-    }
-  }
+      self.getPaginatedWorks();
+    },
+  },
 };
 </script>
 
@@ -702,6 +790,36 @@ export default {
 }
 .search-dialog-container p {
   color: #1b1127;
+}
+.pagination-flex {
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.o-container {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.o-container .os {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.page-number {
+  font-size: 10px;
+  margin-top: -17px;
+  position: relative;
+  top: 10px;
 }
 @media only screen and (max-width: 500px) {
   .works-core {

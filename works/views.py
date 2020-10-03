@@ -373,12 +373,14 @@ class Works_view(viewsets.ModelViewSet):
             request ([get]): [get works]
         """
         order_by = request.query_params.get('order_by')
+        offset = request.query_params.get('offset')
+        limit = request.query_params.get('limit')
         if order_by == 'default':
-            works = Works.objects.all().order_by('-pk')[0:3]
+            works = Works.objects.all().order_by('-pk')[int(offset):int(limit)]
         elif order_by == 'asc':
-            works = Works.objects.all().order_by('pk')[0:3]
+            works = Works.objects.all().order_by('pk')[int(offset):int(limit)]
         else:
-            works = Works.objects.all().order_by('-pk')[0:3]
+            works = Works.objects.all().order_by('-pk')[int(offset):int(limit)]
         # works = self.get_queryset()
 
         # serializer = self.get_serializer_class()(works)

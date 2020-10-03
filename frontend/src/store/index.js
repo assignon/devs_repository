@@ -16,6 +16,7 @@ export default new Vuex.Store({
     usertoken: undefined,
     progLangArr: [],
     worksCount: 0, // number of works get from DB
+    colorsArr: ["#54bf8e", "#f67024", "#00ff8e", "#ce2b58", "#0dc1f7"],
   },
 
   getters: {
@@ -87,6 +88,11 @@ export default new Vuex.Store({
         return callback(value);
       }).length;
       return count;
+    },
+
+    randomColor: (state) => {
+      let randNum = Math.floor(Math.random() * state.colorsArr.length);
+      return state.colorsArr[randNum];
     },
 
     // getCount: (state) => (arr) => {
@@ -161,11 +167,8 @@ export default new Vuex.Store({
       commit("getAxiosCall", {
         url: "works/works_count",
         params: payload.params,
-        callback: function(data){
-          console.log(data)
-          console.log( state.works_count)
-          state.works_count = data
-          console.log( state.works_count)
+        callback: function(data) {
+          state.worksCount = data;
         },
         host: rootState.HOST,
       });
