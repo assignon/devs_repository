@@ -17,12 +17,12 @@ export default {
     "random",
     "interval",
     "timeout",
-    "display",
+    "display"
   ], //ta=textAlign, fz=fontsize
 
   data() {
     return {
-      totalDelay: 0, // time the text animation take to finish
+      totalDelay: 0 // time the text animation take to finish
     };
   },
 
@@ -30,37 +30,38 @@ export default {
 
   mounted() {
     let self = this;
-    if (this.random) {
+    if (self.random) {
       // console.log(randomNumber);
       let textArrayLen = this.textArray.length;
       let randomNumber = Math.floor(Math.random() * textArrayLen);
       this.animateText(randomNumber, function(el) {
         // el: <p>
-        setTimeout(() => {
-          el.style.display = "none";
-        }, self.totalDelay);
+        console.log(el);
+        // setTimeout(() => {
+        //   el.style.display = "none";
+        // }, self.totalDelay);
       });
 
-      setInterval(() => {
-        let textArrayLen = this.textArray.length;
-        let randomNumber = Math.floor(Math.random() * textArrayLen);
-        this.animateText(randomNumber, function(el) {
-          setTimeout(() => {
-            let childs = el.children;
-            childs.forEach((child) => {
-              child.classList.remove(self.animation);
-              child.classList.add("bounceOut");
-              setTimeout(() => {
-                el.style.display = "none";
-              }, 3000);
-            });
-          }, self.totalDelay);
-        });
-      }, self.totalDelay * 2);
-    } else {
-      setInterval(() => {
-        this.animateText();
-      }, 2000);
+      //   setInterval(() => {
+      //     let textArrayLen = this.textArray.length;
+      //     let randomNumber = Math.floor(Math.random() * textArrayLen);
+      //     this.animateText(randomNumber, function(el) {
+      //       setTimeout(() => {
+      //         let childs = el.children;
+      //         childs.forEach((child) => {
+      //           child.classList.remove(self.animation);
+      //           child.classList.add("bounceOut");
+      //           setTimeout(() => {
+      //             el.style.display = "none";
+      //           }, 3000);
+      //         });
+      //       }, self.totalDelay);
+      //     });
+      //   }, self.totalDelay * 2);
+      // } else {
+      //   setInterval(() => {
+      //     this.animateText();
+      //   }, 2000);
     }
   },
 
@@ -86,11 +87,11 @@ export default {
               v: "white",
               p: "orange",
               s: "yellow",
-              o: "red",
-            },
-          ],
+              o: "red"
+            }
+          ]
         },
-        {},
+        {}
       ];
 
       return colors[index][progIndex][0][keywordsIndex];
@@ -166,7 +167,7 @@ export default {
             // }
 
             console.log(self.syntaxHighlighting(index, progIndex, kwIndex));
-            spanArray.forEach((s) => {
+            spanArray.forEach(s => {
               // s.style.color = "green";
               s.style.color = self.syntaxHighlighting(
                 index,
@@ -178,7 +179,7 @@ export default {
             spanArray = [];
           }
 
-          console.log(this.totalDelay);
+          // console.log(this.totalDelay);
         }
 
         try {
@@ -190,8 +191,8 @@ export default {
         callback(p);
         // console.log(p);
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

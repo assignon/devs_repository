@@ -25,7 +25,7 @@ class WorksSerializer(serializers.ModelSerializer):
         model = Works
         # fields = '__all__'
         fields = ('name', 'image', 'prog_lang',
-                  'work_type', 'description', 'tags', 'added_on',)
+                  'work_type', 'description_id', 'tags', 'added_on',)
 
 
 class DescriptionSerializer(serializers.ModelSerializer):

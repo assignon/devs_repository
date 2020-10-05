@@ -26,6 +26,7 @@
 
       <v-flex xs8 sm8 m8 lg8 class="menu-flex">
         <div
+          v-if="$router.name == 'Home'"
           @click="$vuetify.goTo('#about', options)"
           style="text-decoration: none;cursor: pointer;"
         >
@@ -34,7 +35,18 @@
             <v-icon style="font-size: 18px;" class>fas fa-address-card</v-icon>
           </div>
         </div>
-
+        <!-- come back to contact when current page != home -->
+        <div
+          v-if="$router.name != 'Home'"
+          @click="$router.push('/'), scrollTo('#about')"
+          style="text-decoration: none;cursor: pointer;"
+        >
+          <div class="menu-item">
+            <span>About</span>
+            <v-icon style="font-size: 18px;" class>fas fa-address-card</v-icon>
+          </div>
+        </div>
+        <!-- -------------------------------------------------- -->
         <router-link to="/skills" style="text-decoration: none;">
           <div class="menu-item">
             <span>Skills</span>
@@ -50,6 +62,7 @@
         </router-link>
 
         <div
+          v-if="$router.name == 'Home'"
           @click="$vuetify.goTo('#contact', options)"
           style="text-decoration: none;cursor: pointer;"
         >
@@ -58,7 +71,18 @@
             <v-icon style="font-size: 18px;" class>fas fa-envelope</v-icon>
           </div>
         </div>
-
+        <!-- come back to contact when current page != home -->
+        <div
+          v-if="$router.name != 'Home'"
+          @click="$router.push('/'), scrollTo('#contact')"
+          style="text-decoration: none;cursor: pointer;"
+        >
+          <div class="menu-item">
+            <span>Contact</span>
+            <v-icon style="font-size: 18px;" class>fas fa-envelope</v-icon>
+          </div>
+        </div>
+        <!-- ------------------------------------------------------------- -->
         <a
           href="https://www.github.com/assignon"
           target="_blank"
@@ -137,6 +161,7 @@
 
       <v-flex xs8 sm8 m8 lg8 class="menu-flex">
         <div
+          v-if="$router.name == 'Home'"
           @click="$vuetify.goTo('#about', options)"
           style="text-decoration: none;cursor: pointer;"
         >
@@ -145,7 +170,18 @@
             <v-icon style="font-size: 18px;" class>fas fa-address-card</v-icon>
           </div>
         </div>
-
+        <!-- come back to about when the current page != home -->
+        <div
+          v-if="$router.name != 'Home'"
+          @click="$router.push('/'), scrollTo('#about')"
+          style="text-decoration: none;cursor: pointer;"
+        >
+          <div class="menu-item">
+            <span>About</span>
+            <v-icon style="font-size: 18px;" class>fas fa-address-card</v-icon>
+          </div>
+        </div>
+        <!-- ------------------------------------------------------------- -->
         <router-link to="/skills" style="text-decoration: none;">
           <div class="menu-item">
             <span>Skills</span>
@@ -161,6 +197,7 @@
         </router-link>
 
         <div
+          v-if="$router.name == 'Home'"
           @click="$vuetify.goTo('#contact', options)"
           style="text-decoration: none;cursor: pointer;"
         >
@@ -169,7 +206,18 @@
             <v-icon style="font-size: 18px;" class>fas fa-envelope</v-icon>
           </div>
         </div>
-
+        <!-- come back to contact when current page != home -->
+        <div
+          v-if="$router.name != 'Home'"
+          @click="$router.push('/'), scrollTo('#contact')"
+          style="text-decoration: none;cursor: pointer;"
+        >
+          <div class="menu-item">
+            <span>Contact</span>
+            <v-icon style="font-size: 18px;" class>fas fa-address-card</v-icon>
+          </div>
+        </div>
+        <!-- --------------------------------------------------------------------------- -->
         <a
           href="https://www.github.com/assignon"
           target="_blank"
@@ -292,6 +340,7 @@
         <!-- <v-subheader>REPORTS</v-subheader> -->
         <v-list-item-group v-model="mobileMenu" color="#41b883">
           <v-list-item
+            v-if="$router.name == 'Home'"
             class="animated fadeInUp"
             @click="$vuetify.goTo('#about', options), (drawer = false)"
             style="animation-delay: 0.3s;text-decoration: none;cursor: pointer;"
@@ -304,6 +353,22 @@
               <v-list-item-title>About</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <!-- come back to about when current page != home -->
+          <v-list-item
+            class="animated fadeInUp"
+            v-if="$router.name != 'Home'"
+            @click="$router.push('/'), scrollTo('#about'), (drawer = false)"
+            style="animation-delay: 0.3s;text-decoration: none;cursor: pointer;"
+          >
+            <v-list-item-icon>
+              <v-icon style="" medium class>fas fa-address-card</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>About</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- --------------------------------------------------------------------------- -->
 
           <v-list-item class="animated fadeInUp" style="animation-delay: 0.3s;">
             <v-list-item-icon>
@@ -340,6 +405,7 @@
           </v-list-item>
 
           <v-list-item
+            v-if="$router.name == 'Home'"
             class="animated fadeInUp"
             @click="$vuetify.goTo('#contact', options), (drawer = false)"
             style="animation-delay: 0.3s;text-decoration: none;cursor: pointer;"
@@ -352,6 +418,22 @@
               <v-list-item-title>Contact</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <!-- come back to contact when current page != home -->
+          <v-list-item
+            class="animated fadeInUp"
+            v-if="$router.name != 'Home'"
+            @click="$router.push('/'), scrollTo('#contact'), (drawer = false)"
+            style="animation-delay: 0.3s;text-decoration: none;cursor: pointer;"
+          >
+            <v-list-item-icon>
+              <v-icon style="" medium class>fas fa-address-card</v-icon>
+            </v-list-item-icon>
+
+            <v-list-item-content>
+              <v-list-item-title>Contact</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+          <!-- --------------------------------------------------------------------------- -->
 
           <v-list-item
             class="animated fadeInUp"
@@ -439,6 +521,13 @@ export default {
         scrollNavLayout.style.display = "none";
         scrollNavLayout.style.opacity = "0";
       }
+    },
+
+    scrollTo(ancre) {
+      let self = this;
+      setTimeout(() => {
+        this.$vuetify.goTo(ancre, self.options);
+      }, 20);
     },
   },
 };

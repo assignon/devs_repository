@@ -376,11 +376,17 @@ class Works_view(viewsets.ModelViewSet):
         offset = request.query_params.get('offset')
         limit = request.query_params.get('limit')
         if order_by == 'default':
-            works = Works.objects.all().order_by('-pk')[int(offset):int(limit)]
+            works = Works.objects.all().order_by('-pk')[int(offset):int(limit)] \
+                if offset == 0 and limit == 0 \
+                else Works.objects.all().order_by('-pk')
         elif order_by == 'asc':
-            works = Works.objects.all().order_by('pk')[int(offset):int(limit)]
+            works = Works.objects.all().order_by('pk')[int(offset):int(limit)] \
+                if offset == 0 and limit == 0 \
+                else Works.objects.all().order_by('pk')
         else:
-            works = Works.objects.all().order_by('-pk')[int(offset):int(limit)]
+            works = Works.objects.all().order_by('-pk')[int(offset):int(limit)] \
+                if offset == 0 and limit == 0 \
+                else Works.objects.all().order_by('-pk')
         # works = self.get_queryset()
 
         # serializer = self.get_serializer_class()(works)
@@ -417,13 +423,13 @@ class Works_view(viewsets.ModelViewSet):
         work_name = request.query_params.get('work_name')  # current work name
         related_works_data = []
         # get current work tags
-        current_work_tags = Works.objects.get(name=work_name).tags
-        tags = current_work_tags.split(",")  # split tags into array
+        current_work_tags = Works.objects.get(name=work_name).work_type
+        work_types = current_work_tags.split(",")  # split tags into array
 
-        for tag in tags:
+        for wtype in work_types:
             # filter works on tags and exclude the current work
             works_related = Works.objects.exclude(name=work_name).filter(
-                tags__icontains=tag)
+                tags__icontains=wtype)
             related_works_data.extend(works_related)
 
         # remove duplcated works

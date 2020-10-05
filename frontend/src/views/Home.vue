@@ -6,18 +6,19 @@
 
         <div class="landing-container">
           <div class="container-one hidden-sm-and-down">
-            <div>
+            <div class="container-one-content">
               <h1
                 class="font-weight-bold mb-5 animated fadeInUp"
                 style="animation-delay: 0.2s"
               >
                 Welcome in my world
               </h1>
-              <p class="mb-5 animated fadeInUp" style="animation-delay: 0.6s">
+              <RandomWork class="hidden-sm-and-down" />
+              <!-- <p class="mb-5 animated fadeInUp" style="animation-delay: 0.6s">
                 Le Lorem Ipsum est simplement du faux texte employé dans la
                 composition et la mise en page avant impression. texte employé
                 dans la composition et la mise en page avant impression.
-              </p>
+              </p> -->
               <router-link to="works" style="text-decoration:none">
                 <v-btn
                   class="works-btn animated bounceIn"
@@ -187,6 +188,7 @@
 import About from "@/components/layouts/About.vue";
 import Contact from "@/components/layouts/Contact.vue";
 import TextAnimation from "@/components/loaders/TextAnimation.vue";
+import RandomWork from "../components/layouts/RandomWork";
 
 export default {
   name: "Home",
@@ -195,6 +197,7 @@ export default {
     About: About,
     Contact: Contact,
     TextAnimation: TextAnimation,
+    RandomWork: RandomWork
   },
 
   data() {
@@ -207,20 +210,20 @@ export default {
           name: "Web Development",
           imge: require("../assets/home/wd.svg"),
           content:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. ",
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. "
         },
         {
           name: "Scripting/CLI",
           imge: require("../assets/home/cmdline.svg"),
           content:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.",
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression."
         },
         {
           name: "Api",
           imge: require("../assets/home/api.svg"),
           content:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.",
-        },
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression."
+        }
       ],
       technics: [
         "fa-python",
@@ -230,7 +233,7 @@ export default {
         "fa-html5",
         "fa-html5",
         "fa-css3-alt",
-        "fa-php",
+        "fa-php"
       ],
       codes: [
         // [
@@ -263,8 +266,8 @@ export default {
                   return adress_dict|?
               else:|??
                   return {'place_id': False}
-          `,
-        ],
+          `
+        ]
         // [
         //   `function%0Pf javascript(str){?
         //   let% userInput = document.getElementById('input');?
@@ -297,7 +300,7 @@ export default {
         //     return Response(serializers.serialize('json', works))
         // `
         // ]
-      ],
+      ]
     };
   },
 
@@ -327,7 +330,7 @@ export default {
         this.width = "80%";
         this.height = "80%";
       }
-    },
+    }
     // animateText() {
     //   let textContainer = document.querySelector(".container-two");
     //   // let counter = 0;
@@ -360,7 +363,7 @@ export default {
     //     console.log(p);
     //   });
     // }
-  },
+  }
 };
 </script>
 
@@ -417,7 +420,7 @@ export default {
   align-items: center;
 }
 
-.container-one div {
+.container-one .container-one-content {
   width: 70%;
   height: 100%;
   display: flex;

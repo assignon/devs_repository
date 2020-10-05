@@ -10,7 +10,7 @@
       <div
         class="works-img"
         :style="{
-          backgroundImage: `url(${require(`../../../../media/${project.fields.image}`)})`
+          backgroundImage: `url(${require(`../../../../media/${project.fields.image}`)})`,
         }"
       >
         <div class="prog-langs-container pt-3">
@@ -30,7 +30,10 @@
         </div>
       </div>
       <div class="works-name">
-        <h4 class="mb1">{{ project.fields.name }}</h4>
+        <h4 class="mb1">
+          {{ project.fields.name }}
+          <!-- <span class="date-added">2W ago</span> -->
+        </h4>
         <v-divider width="10%" color="#fff" style></v-divider>
         <div class="type-icon mt-2">
           <v-tooltip
@@ -66,8 +69,8 @@ export default {
         { icon: "fab fa-python", color: "black" },
         { icon: "fab fa-php", color: "black" },
         { icon: "fab fa-vuejs", color: "black" },
-        { icon: "fas fa-terminal", color: "black" }
-      ]
+        { icon: "fas fa-terminal", color: "black" },
+      ],
     };
   },
 
@@ -124,8 +127,42 @@ export default {
       if (this.reload) {
         location.reload();
       }
-    }
-  }
+    },
+
+    // worksDate(datetime) {
+    //   let dateSplited = datetime.split("T");
+    //   let date = dateSplited[0];
+    //   let splitedTime = dateSplited[1].split(".");
+    //   let time = splitedTime[0];
+
+    //   let calculateDate = null;
+    //   let calculateTime = null;
+
+    //   if (calculateDate < 7) {
+    //     // days
+    //   } else if (calculateDate >= 7 && calculateDate < 30) {
+    //     // weeks
+    //     let weekModulo = calculateDate % 7;
+    //     if (weekModulo == 0) {
+    //       //round week(1, 2, 3week)
+    //     } else {
+    //       // float week
+    //       let getWeek = weekModulo.toString().split(",");
+    //       //return week +(1+week)
+    //     }
+    //   } else if (calculateDate > 30) {
+    //     // years
+    //     let yearModulo = calculateDate % 30;
+    //     if (yearModulo == 0) {
+    //       // round year
+    //     } else {
+    //       let getYear = yearModulo.toString().split(",");
+    //     }
+    //   } else if (calculateDate == 0) {
+    //     // hours
+    //   }
+    // },
+  },
 };
 </script>
 
@@ -191,6 +228,17 @@ export default {
 .works-name h4 {
   text-align: center;
   color: white;
+}
+.date-added {
+  font-size: 12px;
+  padding: 0px 5px 0px 5px;
+  border: 1px solid white;
+  border-radius: 50px;
+  color: #16032c;
+  background-color: white;
+  position: relative;
+  left: 10px;
+  font-weight: bold;
 }
 .type-icon {
   width: 100%;
