@@ -177,10 +177,8 @@
           @input="getPaginatedWorks()"
         ></v-pagination> -->
         <h1
-          class="ml-3"
-          data-aos="fade-in"
-          data-aos-delay="500"
-          data-aos-duration="500"
+          class="ml-3 animated fadeInUp"
+
         >
           W
         </h1>
@@ -188,9 +186,7 @@
           <h1
             v-for="(item, i) in paginationPages"
             :key="i"
-            data-aos="zoom-in"
-            :data-aos-delay="i * 500"
-            data-aos-duration="500"
+
             :id="i + 1"
             class="ml-2 os"
             @click="getPaginatedWorks()"
@@ -200,10 +196,8 @@
           </h1>
         </div>
         <h1
-          class="ml-3"
-          data-aos="fade-in"
-          data-aos-delay="800"
-          data-aos-duration="500"
+          class="ml-3 aimated fadeInUp"
+
         >
           rks
         </h1>
