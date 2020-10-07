@@ -1,6 +1,9 @@
 from rest_framework import routers
-# from account.views import Account_view
+from works.views import Works_view, Description_view, Skills_view, ProgLang_view
 
 
 router = routers.DefaultRouter()
-# router.register('product', Product_view, base_name='productdata')
+router.register('works', Works_view)
+router.register('description', Description_view)
+router.register('skills', Skills_view)
+router.register('proglang', ProgLang_view)

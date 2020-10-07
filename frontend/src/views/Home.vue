@@ -5,24 +5,28 @@
         <div class="landing-cover"></div>
 
         <div class="landing-container">
-          <div class="container-one">
-            <div>
+          <div class="container-one hidden-sm-and-down">
+            <div class="container-one-content">
               <h1
-                class="display-3 font-weight-bold mb-5 animated fadeInUp"
+                class="font-weight-bold mb-5 animated fadeInUp"
                 style="animation-delay: 0.2s"
-              >Welcom in my world</h1>
-              <p class="mb-5 animated fadeInUp" style="animation-delay: 0.6s">
+              >
+                Welcome in my world
+              </h1>
+              <RandomWork class="hidden-sm-and-down" />
+              <!-- <p class="mb-5 animated fadeInUp" style="animation-delay: 0.6s">
                 Le Lorem Ipsum est simplement du faux texte employé dans la
                 composition et la mise en page avant impression. texte employé
                 dans la composition et la mise en page avant impression.
-              </p>
+              </p> -->
               <router-link to="works" style="text-decoration:none">
                 <v-btn
                   class="works-btn animated bounceIn"
                   style="animation-delay: 1s"
                   large
                   color="#00FF8E"
-                >My Works</v-btn>
+                  >My Works</v-btn
+                >
               </router-link>
             </div>
             <!-- <div class="prog-langs">
@@ -38,42 +42,58 @@
             </div>-->
           </div>
 
-          <div class="container-two"></div>
+          <!-- <div class=" text-animation-container"> -->
+          <TextAnimation
+            :textArray="codes"
+            :w="width"
+            :h="height"
+            animation="bounceIn"
+            color="white"
+            :fs="fontSize"
+            ta="left"
+            :random="true"
+            interval="60000"
+            timeout="90000"
+            display="inline-block"
+          />
+          <!-- </div> -->
+
+          <router-link
+            to="works"
+            style="text-decoration:none"
+            class="hidden-md-and-up animated"
+          >
+            <v-btn
+              class="works-btn animated bounceIn"
+              style="animation-delay: 1s"
+              large
+              color="#00FF8E"
+              >My Works</v-btn
+            >
+          </router-link>
         </div>
-        <!-- <div class="landing-first">
-            <v-img
-                alt=""
-                class=""
-                contain
-                min-width="100"
-                src='../assets/home/progr.png'
-                width="100%"
-                height="100%"
-              />
-        </div>
-        
-        <div class="landing-last">
-            <p>
-                @main.command()<br>
-                @click.option('--operatingsys', '-os', is_flag=True, help='Your operatingssystem, don t use it in a venv')<br>
-                def install_yanr(operatingsys):<br>
-                    <span style="margin-left: 20px;">if operatingsys:</span><br>
-                    <span style="margin-left: 40px;">os.system('pip install --editable . --user')</span><br>
-                    <span style="margin-left: 20px;">else:</span><br>
-                        <span style="margin-left: 40px;">os.system('pip install --editable .')</span><br>
-            </p>
-        </div>-->
       </v-flex>
 
       <v-flex xs12 sm12 md12 xl12 class="skills-flex">
-        <h2 class="skill-title">Hallo there</h2>
-        <p class="skill-subtext">Is me Yanick</p>
-        <div class="skills-container">
-          <div class="skills" v-for="(skill, i) in skills" :key="i">
-            <!--              <div class="skills-img"-->
-            <!--                   :style="{backgroundImage: `url(${skill.imge})`}"-->
-            <!--              ></div>-->
-            <v-img
+        <h1
+          class="skill-title"
+          data-aos="fade-up"
+          data-aos-delay="250"
+          data-aos-duration="500"
+        >
+          My Expertise
+        </h1>
+        <p
+          class="skill-subtext"
+          data-aos="fade-up"
+          data-aos-delay="100"
+          data-aos-duration="500"
+        >
+          The areas in which I excel
+        </p>
+        <div class="skills-container hidden-sm-and-down">
+          <div class="skills" v-for="(skill, i) in expertises" :key="i">
+            <!-- <v-img
               alt
               class="skills-img"
               contain
@@ -83,29 +103,75 @@
               data-aos="zoom-in"
               :data-aos-delay="i * 150"
               data-aos-duration="500"
+            /> -->
+            <img
+              :src="skill.imge"
+              alt=""
+              data-aos="zoom-in"
+              :data-aos-delay="i * 250"
+              data-aos-duration="500"
+              class="expertise-img"
             />
             <h3
               data-aos="fade-up"
               :data-aos-delay="i * (160 * 4)"
               data-aos-duration="500"
-            >{{ skill.name }}</h3>
+            >
+              {{ skill.name }}
+            </h3>
             <p
               data-aos="fade-up"
               :data-aos-delay="i * (170 * 4)"
               data-aos-duration="500"
-            >{{ skill.content }}</p>
+            >
+              {{ skill.content }}
+            </p>
           </div>
         </div>
+        <!------------------------------------------ Mobile  ---------------------------------------------------------->
+        <v-carousel
+          hide-delimiters
+          class="hidden-md-and-up"
+          height="auto"
+          cycle
+          :show-arrows="false"
+          interval="4000"
+        >
+          <v-carousel-item v-for="(item, i) in expertises" :key="i">
+            <div class="skills-container">
+              <div class="skills">
+                <!-- <v-img
+                  alt
+                  class="skills-img"
+                  contain
+                  min-width="100"
+                  :src="item.imge"
+                  width="100"
+                  data-aos="zoom-in"
+                  :data-aos-delay="i * 150"
+                  data-aos-duration="500"
+                /> -->
+                <img :src="item.imge" alt="" class="expertise-img" />
+                <h3>
+                  {{ item.name }}
+                </h3>
+                <p>
+                  {{ item.content }}
+                </p>
+              </div>
+            </div>
+          </v-carousel-item>
+        </v-carousel>
       </v-flex>
 
       <v-flex xs12 sm12 md12 xl12 class="about-flex" id="about">
-        <div class="about-overlay">
-          <h1
-            class="about-title display-3 font-weight-bold"
-            data-aos="fade-up"
-            data-aos-duration="500"
-          >About me</h1>
-        </div>
+        <h1
+          class="about-title font-weight-bold"
+          data-aos="fade-up"
+          data-aos-duration="500"
+        >
+          About Me
+        </h1>
         <About />
       </v-flex>
 
@@ -121,17 +187,25 @@
 // @ is an alias to /src
 import About from "@/components/layouts/About.vue";
 import Contact from "@/components/layouts/Contact.vue";
+import TextAnimation from "@/components/loaders/TextAnimation.vue";
+import RandomWork from "../components/layouts/RandomWork";
 
 export default {
   name: "Home",
+
   components: {
     About: About,
-    Contact: Contact
+    Contact: Contact,
+    TextAnimation: TextAnimation,
+    RandomWork: RandomWork
   },
 
   data() {
     return {
-      skills: [
+      fontSize: "20px",
+      width: "50%",
+      height: "100%",
+      expertises: [
         {
           name: "Web Development",
           imge: require("../assets/home/wd.svg"),
@@ -160,13 +234,136 @@ export default {
         "fa-html5",
         "fa-css3-alt",
         "fa-php"
+      ],
+      codes: [
+        // [
+        //   `
+        // def%0Pk python(str):?
+        //   if  "name"  ==  "__main__":|
+        //     user_input  =  input("give your name")|
+        //     print(user_input)
+        // `,
+        // ],
+        [
+          `
+          def google_api(request, site):|?
+              API_KEY = "AIzaSyDQDsq1Blbm9UZuRGBC93IYKES5Oheplt0"|?
+              SITE = site|?
+              gmaps = googlemaps.Client(key=API_KEY)|?
+
+              # eerst place_id vinden|?
+              g_query = gmaps.find_place(SITE, 'textquery')|?
+              if g_query['status'] == 'OK':|??
+                  # I'm always feeling lucky|??
+                  place_id = g_query['candidates'][0]['place_id']||??
+
+                  # get address data|??
+                  adress = gmaps.place(place_id)['result']['address_components']|??
+                  adress_dict = {'place_id': True}|??
+                  for a in adress:|???
+                      adress_dict[a['types'][0]] = a['long_name']||??
+              
+                  return adress_dict|?
+              else:|??
+                  return {'place_id': False}
+          `
+        ]
+        // [
+        //   `function%0Pf javascript(str){?
+        //   let% userInput = document.getElementById('input');?
+        //   if%(userInput != ''){|
+        //     console.log(userInput.value);?
+        //   }else{|
+        //     alert('field is empty')?
+        //   }#
+        // }
+        // `
+        // ],
+        // [
+        //   ` @csrf_exempt%0Pf#
+        //     @action%(methods=['get'], detail=False)#
+        //     def all_works(self, request):#
+        //     """?
+        //     get all works from DB?#
+
+        //     Args:|
+        //         request ([get]): [get works]#
+        //     """?
+        //     order_by = request.query_params.get('order_by')?
+        //     if order_by == 'default':|
+        //         works = Works.objects.all().order_by('-pk')?
+        //     elif order_by == 'asc':|
+        //         works = Works.objects.all().order_by('pk')?
+        //     else:|
+        //         works = Works.objects.all().order_by('-pk'))#?
+
+        //     return Response(serializers.serialize('json', works))
+        // `
+        // ]
       ]
     };
   },
 
-  created() {},
+  created() {
+    // this.animateText();
+    this.screenWithChange();
+  },
 
-  methods: {}
+  mounted() {
+    // this.animateText();
+  },
+
+  methods: {
+    screenWithChange() {
+      window.addEventListener("resize", function() {
+        let screenSize = window.innerWidth;
+        if (screenSize <= 500) {
+          this.fontSize = "15px";
+          this.width = "80%";
+          this.height = "80%";
+        }
+      });
+
+      let screenSize = window.innerWidth;
+      if (screenSize <= 500) {
+        this.fontSize = "15px";
+        this.width = "80%";
+        this.height = "80%";
+      }
+    }
+    // animateText() {
+    //   let textContainer = document.querySelector(".container-two");
+    //   // let counter = 0;
+    //   this.texts[1].forEach((t, index) => {
+    //     // counter++;
+    //     let p = document.createElement("p");
+    //     p.className = "code-line animated fadeIn";
+    //     p.style.animationDelay = `${index}s`;
+    //     p.style.fontSize = "20px";
+    //     p.style.textAlign = "left";
+    //     p.style.textTransform = "bold";
+    //     for (let i = 0; i < t.length; i++) {
+    //       let spans = document.createElement("span");
+    //       spans.textContent = t[i];
+    //       spans.className = "animated bounceIn";
+    //       spans.style.animationDelay = `${i / 7}s`;
+    //       p.appendChild(spans);
+    //       if (t[i] == "?") {
+    //         p.innerHTML += "<br/>";
+    //         p.innerHTML += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    //       } else if (t[i] == "|") {
+    //         p.innerHTML += "<br/>";
+    //         p.innerHTML +=
+    //           "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+    //       } else if (t[i] == "#") {
+    //         p.innerHTML += "<br/>";
+    //       }
+    //     }
+    //     textContainer.appendChild(p);
+    //     console.log(p);
+    //   });
+    // }
+  }
 };
 </script>
 
@@ -223,7 +420,7 @@ export default {
   align-items: center;
 }
 
-.container-one div {
+.container-one .container-one-content {
   width: 70%;
   height: 100%;
   display: flex;
@@ -254,10 +451,31 @@ export default {
   width: 50%;
   height: 100%;
   display: flex;
+  color: white;
+  border: 1px solid whitesmoke;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   /* background-image: url("../assets/home/homeBackground.jpg");
   background-position: cente;
   background-size: cover;
   background-repeat: no-repeat; */
+}
+.text-animation-container {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid red;
+}
+.code-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .prog-langs {
@@ -324,6 +542,7 @@ export default {
 .skill-subtext {
   text-align: center;
   font-size: 15px;
+  margin-bottom: 30px;
 }
 
 .skills-container {
@@ -355,6 +574,10 @@ export default {
   /*height: 150px;*/
   margin-bottom: 10px;
 }
+.expertise-img {
+  width: 100px;
+  height: 100px;
+}
 
 .skills h3 {
   text-align: center;
@@ -369,14 +592,15 @@ export default {
 .about-flex {
   width: 100%;
   height: auto;
-  min-height: 100vh;
+  /*min-height: 100vh;*/
   background-color: #fafafa;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 50px;
+  padding-top: 50px;
   /*margin-top: 10vh;*/
-  /*border: 1px solid red;*/
 }
 
 .about-overlay {
@@ -392,7 +616,8 @@ export default {
 }
 
 .about-flex .about-title {
-  color: white;
+  color: #17102d;
+  margin-bottom: 45px;
   /*margin-top: 100px;*/
   /*margin-bottom: 50px;*/
 }
@@ -405,5 +630,22 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+@media only screen and (max-width: 500px) {
+  .landing-container {
+    flex-direction: column;
+  }
+  .skills {
+    width: 100%;
+  }
+  .skills p {
+    width: 90%;
+  }
+  .skill-subtext {
+    margin-bottom: 45px;
+  }
+  .contact-flex {
+    height: 80vh;
+  }
 }
 </style>
