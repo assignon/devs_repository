@@ -1,6 +1,6 @@
 <template>
   <div class="home-core">
-    <v-layout row justify-space-around align-center class="home-layout">
+    <v-layout class="home-layout">
       <v-flex xs12 sm12 md12 xl12 class="landing-flex" id="homeTop">
         <div class="landing-cover"></div>
 
@@ -379,6 +379,10 @@ export default {
 .home-layout {
   width: 100%;
   height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
 }
 
 .landing-flex {

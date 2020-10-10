@@ -1,6 +1,6 @@
 <template>
   <div class="desc-core animated fadeIn">
-    <v-layout row justify-center align-center class="desc-layout">
+    <v-layout class="desc-layout">
       <v-flex xs12 sm12 md2 lg2 xl2 class="desc-side-flex">
         <div class="mobile-menu">
           <div class="mobile-menu-container hidden-md-and-up pa-5">
@@ -272,6 +272,7 @@ export default {
         // check if menu bar is visible
         grandParent.style.position = "fixed";
         grandParent.style.top = "-20px";
+        grandParent.style.left = "0px";
         grandParent.style.zIndex = "5";
         grandParent.style.backgroundColor = "white";
       }
@@ -356,6 +357,10 @@ export default {
 .desc-layout {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 .desc-side-flex {
   height: 95vh;
@@ -532,6 +537,9 @@ export default {
   height: 70px;
 }
 @media only screen and (max-width: 500px) {
+  .desc-layout {
+    flex-direction: column;
+  }
   .desc-side-flex {
     height: auto;
   }
