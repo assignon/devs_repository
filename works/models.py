@@ -85,7 +85,7 @@ class Skills(models.Model):
 
 class Works(models.Model):
     """
-    create projects rable in DB
+    create projects table in DB
 
     Args:
         models ([type]): [description]
@@ -112,3 +112,19 @@ class Works(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+
+class About(models.Model):
+    """
+    create about table in DB
+
+    Args:
+        models ([type]): [description]
+
+    Returns: 
+    """
+    tab_name = models.CharField(max_length=100)
+    content = models.TextField()
+
+    def __str__(self):
+        return str(self.tab_name)

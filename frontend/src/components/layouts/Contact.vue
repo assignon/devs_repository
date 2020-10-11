@@ -13,18 +13,20 @@
         <!--          tabindex="0"-->
         <!--        ></iframe>-->
         <div class="map-overlay">
-          <h1 class="mb-5" style="color: white;">Contact Me</h1>
-          <v-icon medium class="mt-5 mb-1" color="white">fas fa-at</v-icon>
-          <p class="mb-5">yanick007assignon@gmail.com</p>
-          <v-icon medium class="mb-1 mt-2" color="white"
-            >fas fa-phone-alt</v-icon
-          >
-          <p>0618874429</p>
+          <div>
+            <h1 class="mb-5" style="color: white;">Contact Me</h1>
+            <v-icon medium class="mt-5 mb-1" color="white">fas fa-at</v-icon>
+            <p class="mb-5">yanick007assignon@gmail.com</p>
+            <v-icon medium class="mb-1 mt-2" color="white"
+              >fas fa-phone-alt</v-icon
+            >
+            <p>0618874429</p>
+          </div>
         </div>
       </div>
     </v-flex>
 
-    <v-flex xs12 sm12 md6 lg6 xl6 class="form-flex">
+    <v-flex xs12 sm12 md6 lg6 xl6 class="form-flex animated fadeIn">
       <h1
         class="mb-5 font-weight-bold"
         data-aos="fade-up"
@@ -37,11 +39,12 @@
         color="#16032c"
         style="margin-top:-15px;margin-bottom:20px;"
       ></v-divider>
-      <v-form class="mt-5">
+      <p class="form-err-msg animated fadeInUp" v-show="contactFormErr"></p>
+      <v-form class="mt-5 contact-form animated" ref="form" v-if="!emailSended">
         <v-text-field
           v-model="name"
           :rules="[rules.required]"
-          label="Name"
+          label="Name*"
           required
           outlined
           data-aos="fade-up"
@@ -51,7 +54,7 @@
         <v-text-field
           v-model="email"
           :rules="emailRules"
-          label="Email"
+          label="Email*"
           required
           outlined
           data-aos="fade-up"
@@ -60,7 +63,7 @@
         ></v-text-field>
         <v-textarea
           class="mx-2"
-          label="Message me"
+          label="Message me*"
           rows="5"
           color="#8B53FF"
           flat
@@ -79,11 +82,18 @@
             width="30%"
             class="fot-weight-bold white--text"
             color="#16032c"
+            @click="sendMail()"
           >
             <v-icon medium left class="ml-1">fas fa-paper-plane</v-icon>SEND
           </v-btn>
         </div>
       </v-form>
+      <div class="email-sended animated fadeIn" v-if="emailSended">
+        <h3 class="animated fadeInUp">Thanks {{ name }}</h3>
+        <p class="animated fadeInUp">
+          I receive your email and i will response shortly...
+        </p>
+      </div>
     </v-flex>
   </v-layout>
 </template>
@@ -94,7 +104,7 @@ export default {
 
   data() {
     return {
-      messageValue: "",
+      messageValue: "", // contact meg field model
       email: "", // contact email field model
       name: "", // contact name field model
       rules: {
@@ -105,8 +115,46 @@ export default {
       emailRules: [
         v => !!v || "Email is required",
         v => /.+@.+/.test(v) || "Email is not valid"
-      ]
+      ],
+      emailSended: false,
+      contactFormErr: false
     };
+  },
+
+  created() {},
+
+  methods: {
+    sendMail() {
+      let self = this;
+      let formErrMsg = document.querySelector(".form-err-msg");
+      if (self.name != "" && self.email != "" && self.messageValue != "") {
+        self.contactFormErr = false;
+        this.$store.dispatch("sendmail", {
+          url: "works/sendmail",
+          params: {
+            name: self.name,
+            email: self.email,
+            message: self.messageValue
+          },
+          callback: function(data) {
+            console.log(data);
+            self.msgReceive();
+          }
+        });
+      } else {
+        this.contactFormErr = true;
+        formErrMsg.innerHTML = "Fields are empty";
+      }
+    },
+
+    msgReceive() {
+      let self = this;
+      this.emailSended = true;
+      setTimeout(function() {
+        self.emailSended = false;
+      }, 2000);
+      self.$refs.form.reset();
+    }
   }
 };
 </script>
@@ -147,9 +195,17 @@ export default {
   /*opacity: 0.6;*/
   position: absolute;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.map-overlay div {
+  width: 50%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .map-overlay p {
@@ -193,6 +249,28 @@ export default {
   align-items: center;
   margin-top: -15px;
 }
+.email-sended {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.email-sended p {
+  text-align: center;
+  font-size: 17px;
+  width: 100%;
+  height: auto;
+}
+.form-err-msg {
+  text-align: center;
+  font-size: 17px;
+  width: 100%;
+  height: auto;
+  color: red;
+}
+
 @media only screen and (max-width: 500px) {
   .contact-layout {
     flex-direction: column;

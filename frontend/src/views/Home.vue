@@ -591,7 +591,7 @@ export default {
 
 .about-flex {
   width: 100%;
-  height: auto;
+  height: 500px;
   /*min-height: 100vh;*/
   background-color: #fafafa;
   display: flex;

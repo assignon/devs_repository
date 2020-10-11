@@ -19,6 +19,7 @@ export default new Vuex.Store({
     colorsArr: ["#54bf8e", "#f67024", "#00ff8e", "#ce2b58", "#0dc1f7"],
     searchDialog: false, // search explaination dialog model
     searchDocList: false, // search documentation list model
+    aboutArr: [],
   },
 
   getters: {
@@ -75,6 +76,29 @@ export default new Vuex.Store({
     },
     getProgLang: (state) => {
       return state.progLangArr;
+    },
+
+    setAbout: (state) => (data) => {
+      /*
+        push current programming language data
+        params:
+          data: [array]: [array of data]
+    */
+      console.log(state);
+      if (state.aboutArr.length == 0) {
+        data.forEach((item) => {
+          state.aboutArr.push(item);
+        });
+      } else {
+        state.aboutArr = [];
+        data.forEach((item) => {
+          state.aboutArr.push(item);
+        });
+      }
+      return state.aboutArr;
+    },
+    getAbout: (state) => {
+      return state.aboutArr;
     },
 
     filterArr: (state) => (arr, callback) => {
@@ -143,6 +167,29 @@ export default new Vuex.Store({
           console.log(error);
         });
     },
+
+    postAxiosCall(state, payload) {
+      /*
+           http post request
+           params:
+               payload: [object]: [data sended with the request]
+       */
+      axios
+        .post(`${payload.host}/api/${payload.url}/`, {
+          body: payload.params,
+          // headers: {
+          //     "X-CSRFToken": payload.csrftoken,
+          //     Authorization: `token ${payload.auth}`,
+          // },
+        })
+        .then((response) => {
+          let res = response.data;
+          payload.callback(res);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 
   actions: {
@@ -172,6 +219,30 @@ export default new Vuex.Store({
         callback: function(data) {
           state.worksCount = data;
         },
+        host: rootState.HOST,
+      });
+    },
+
+    sendmail({ commit, rootState }, payload) {
+      /**
+       *get number of works in DB
+       */
+      commit("postAxiosCall", {
+        url: payload.url,
+        params: payload.params,
+        callback: payload.callback,
+        host: rootState.HOST,
+      });
+    },
+
+    about({ commit, rootState }, payload) {
+      /**
+       *get number of works in DB
+       */
+      commit("getAxiosCall", {
+        url: "about/about_content",
+        params: payload.params,
+        callback: payload.callback,
         host: rootState.HOST,
       });
     },
