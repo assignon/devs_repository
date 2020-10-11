@@ -16,7 +16,14 @@ export default new Vuex.Store({
     usertoken: undefined,
     progLangArr: [],
     worksCount: 0, // number of works get from DB
-    colorsArr: ["#54bf8e", "#f67024", "#00ff8e", "#ce2b58", "#0dc1f7"],
+    colorsArr: [
+      "#54bf8e",
+      "#f67024",
+      "#00ff8e",
+      "#ce2b58",
+      "#0dc1f7",
+      "#FFC107",
+    ],
     searchDialog: false, // search explaination dialog model
     searchDocList: false, // search documentation list model
   },

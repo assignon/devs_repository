@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import environ
+
+env = environ.Env()
+# reading .env file
+environ.Env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -173,3 +178,10 @@ CORS_ORIGIN_WHITELIST = (
     # 'localhost:8080',
     # '192.168.56.1:8080/',
 )
+
+EMAIL_BACKEND = 'django.core.email.backends.smtp.EmailBackend'
+EMAIL_HOST_USER = env("EMAIL_HOST_USER")
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USER_TLS = True
+EMAIL_HOST_PASSWORD = env("EMAIL_PASSWORD")

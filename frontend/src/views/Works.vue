@@ -169,24 +169,29 @@
         v-if="foundedWorks.length != 0 || searchEnter"
       />
 
-      <v-flex 12 xs sm12 md8 lg10 xl10 class="pagination-flex">
+      <v-flex
+        12
+        xs
+        sm12
+        md8
+        lg10
+        xl10
+        class="pagination-flex"
+        v-if="worksCount > limitOnScreenWidth()"
+      >
         <!-- <v-pagination
           v-model="page"
           :length="paginationPages"
           :total-visible="limitOnScreenWidth()"
           @input="getPaginatedWorks()"
         ></v-pagination> -->
-        <h1
-          class="ml-3 animated fadeInUp"
-
-        >
+        <h1 class="ml-3 animated fadeInUp">
           W
         </h1>
         <div class="o-container">
           <h1
             v-for="(item, i) in paginationPages"
             :key="i"
-
             :id="i + 1"
             class="ml-2 os"
             @click="getPaginatedWorks()"
@@ -195,11 +200,8 @@
             <span class="page-number"></span>
           </h1>
         </div>
-        <h1
-          class="ml-3 aimated fadeInUp"
-
-        >
-          rks
+        <h1 class="ml-3 aimated fadeInUp">
+          rkS
         </h1>
       </v-flex>
 
@@ -371,7 +373,6 @@ export default {
         // desktop[12]
         limit = 12;
       }
-
       return limit;
     },
 
@@ -691,6 +692,10 @@ export default {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+.o-container .os:hover {
+  transition: transform 0.2s linear 0s;
+  transform: scale(1.1, 1.1);
 }
 .page-number {
   font-size: 10px;

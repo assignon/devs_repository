@@ -25,6 +25,7 @@ import os
 from datetime import datetime
 import codecs
 from django.core.files import File
+from django.core.mail import send_mail
 
 
 class SearchPattern():
@@ -377,15 +378,15 @@ class Works_view(viewsets.ModelViewSet):
         limit = request.query_params.get('limit')
         if order_by == 'default':
             works = Works.objects.all().order_by('-pk')[int(offset):int(limit)] \
-                if offset == 0 and limit == 0 \
+                if offset != 0 and limit != 0 \
                 else Works.objects.all().order_by('-pk')
         elif order_by == 'asc':
             works = Works.objects.all().order_by('pk')[int(offset):int(limit)] \
-                if offset == 0 and limit == 0 \
+                if offset != 0 and limit != 0 \
                 else Works.objects.all().order_by('pk')
         else:
             works = Works.objects.all().order_by('-pk')[int(offset):int(limit)] \
-                if offset == 0 and limit == 0 \
+                if offset != 0 and limit != 0 \
                 else Works.objects.all().order_by('-pk')
         # works = self.get_queryset()
 

@@ -84,6 +84,16 @@
         </div>
         <!-- ------------------------------------------------------------- -->
         <a
+          href="https://my.indeed.com/p/yanicka-k7s9qpm"
+          target="_blank"
+          style="text-decoration: none; color: white;font-size: 17px;font-weight:bold"
+        >
+          <div class="menu-item">
+            cv
+            <!-- <v-icon style="font-size: 25px; color:#fff" class>CV</v-icon> -->
+          </div>
+        </a>
+        <a
           href="https://www.github.com/assignon"
           target="_blank"
           style="text-decoration: none;"
@@ -219,6 +229,16 @@
         </div>
         <!-- --------------------------------------------------------------------------- -->
         <a
+          href="https://my.indeed.com/p/yanicka-k7s9qpm"
+          target="_blank"
+          style="text-decoration: none; color: white;font-size: 17px;font-weight:bold"
+        >
+          <div class="menu-item">
+            cv
+            <!-- <v-icon style="font-size: 25px; color:#fff" class>CV</v-icon> -->
+          </div>
+        </a>
+        <a
           href="https://www.github.com/assignon"
           target="_blank"
           style="text-decoration: none;"
@@ -304,6 +324,19 @@
             </template>
             <span>filter</span>
           </v-tooltip>
+        </div>
+        <div
+          style="width:50%; height:100%;display:flex;justify-content:flex-end;align-items:center"
+        >
+          <a
+            href="https://my.indeed.com/p/yanicka-k7s9qpm"
+            target="_blank"
+            style="text-decoration: none; color: white;font-size: 17px;font-weight:bold"
+          >
+            <div class="menu-item">
+              CV
+            </div>
+          </a>
         </div>
       </v-flex>
     </v-layout>
@@ -434,6 +467,23 @@
             </v-list-item-content>
           </v-list-item>
           <!-- --------------------------------------------------------------------------- -->
+          <!-- <v-list-item
+            class="animated fadeInUp"
+            style="animation-delay: 0.3s;text-decoration: none;cursor: pointer;"
+          >
+            <v-list-item-content>
+              <a
+                href="https://my.indeed.com/p/yanicka-k7s9qpm"
+                target="_blank"
+                style="text-decoration: none; color: black;font-size: 17px;font-weight:bold"
+              >
+                <div class="menu-item">
+                  <v-list-item-title>CV</v-list-item-title>
+
+                </div>
+              </a>
+            </v-list-item-content>
+          </v-list-item> -->
 
           <v-list-item
             class="animated fadeInUp"
@@ -480,7 +530,7 @@ export default {
       easings: Object.keys(easings),
       // navHeight: this.$router.currentRoute.name == 'Home' ? "100px" : "50px"
       navHeight: "70px",
-      mobileMenu: 0, // mobile nav drawer list model
+      mobileMenu: 0 // mobile nav drawer list model
     };
   },
 
@@ -503,9 +553,9 @@ export default {
       return {
         duration: this.duration,
         offset: this.offset,
-        easing: this.easing,
+        easing: this.easing
       };
-    },
+    }
   },
 
   methods: {
@@ -528,8 +578,8 @@ export default {
       setTimeout(() => {
         this.$vuetify.goTo(ancre, self.options);
       }, 20);
-    },
-  },
+    }
+  }
 };
 </script>
 

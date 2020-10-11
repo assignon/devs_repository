@@ -202,7 +202,7 @@ export default {
 
   data() {
     return {
-      fontSize: "20px",
+      fontSize: "18px",
       width: "50%",
       height: "100%",
       expertises: [
