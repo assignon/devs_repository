@@ -4,7 +4,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/cv.pdf"
   },
   {
-    "revision": "836524d45d399ab575784a823e2843c2",
+    "revision": "cedba3a9c2f3a9d27290e7a32d82f61f",
     "url": "/index.html"
   },
   {
@@ -16,7 +16,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/robots.txt"
   },
   {
-    "revision": "932c7a4a1c70c63e227d",
+    "revision": "47e042490db09e65b00e",
     "url": "/static/css/app.e1d680b3.css"
   },
   {
@@ -128,20 +128,20 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/img/fa-solid-900.ec763292.svg"
   },
   {
-    "revision": "bfa69c4f3255d5c564c2ec600ff9885e",
-    "url": "/static/img/firebase.bfa69c4f.svg"
+    "revision": "722d5e83aa647073061d9d2036fa06de",
+    "url": "/static/img/firebase.722d5e83.svg"
   },
   {
-    "revision": "db14d1dd8b8a67c3cf138211da87a1a7",
-    "url": "/static/img/flask.db14d1dd.svg"
+    "revision": "a702f230fb4c31d9772fa68066c45de2",
+    "url": "/static/img/flask.a702f230.svg"
   },
   {
     "revision": "bd9fec894dfe707631e11a1dfedb25b5",
     "url": "/static/img/flutter.bd9fec89.svg"
   },
   {
-    "revision": "64d5e98f1a220cdcad2b1a70d52ab669",
-    "url": "/static/img/git.64d5e98f.svg"
+    "revision": "4bea42ef2568375148069b0033e1a66b",
+    "url": "/static/img/git.4bea42ef.svg"
   },
   {
     "revision": "6a7b8fada5fb30c47654847c5f3514e8",
@@ -196,8 +196,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/img/vue.60dfaadb.svg"
   },
   {
-    "revision": "a1d6f0165d16f1a489e652b360f0cbe9",
-    "url": "/static/img/vuetify.a1d6f016.svg"
+    "revision": "ac01305c637621195bf96929ba1b13e3",
+    "url": "/static/img/vuetify.ac01305c.svg"
   },
   {
     "revision": "c71804d4b6003677a87cdf0b29038f49",
@@ -208,8 +208,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/static/js/about.bdaf0fb9.js"
   },
   {
-    "revision": "932c7a4a1c70c63e227d",
-    "url": "/static/js/app.7ec82fdc.js"
+    "revision": "47e042490db09e65b00e",
+    "url": "/static/js/app.7cc507ab.js"
   },
   {
     "revision": "6b3bac8270a6454cb680",
