@@ -11,7 +11,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    HOST: "http://127.0.0.1:8000",
+    HOST: "http://yanick007.pythonanywhere.com",
     AUTHENTICATED: undefined,
     usertoken: undefined,
     progLangArr: [],

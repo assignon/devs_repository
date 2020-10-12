@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import dotenv
 import os
+import dotenv
 
 # read env
 dotenv.read_dotenv()
@@ -29,7 +29,7 @@ SECRET_KEY = 'b1y1$w^ty1s-=_+g8(-h!5x-fd8d9+%35iq2ud_%i73^&*%$gh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['yanick007.pythonanywhere.com']
 
 
 # Application definition
@@ -141,8 +141,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # MEDIA_ROOT = str(APPS_DIR('media'))
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -177,7 +177,7 @@ CORS_ORIGIN_WHITELIST = (
     # 'localhost:8080',
     # '192.168.56.1:8080/',
 )
-
+# email settings
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
 EMAIL_HOST = "smtp.gmail.com"
