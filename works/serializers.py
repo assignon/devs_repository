@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from works.models import Works, Description, Tags, ProgLang, Skills
+from works.models import Works, Description, Tags, ProgLang, Skills, About
 
 
 # class ProgLangSerializer(serializers.ModelSerializer):
@@ -44,3 +44,9 @@ class ProgLangSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProgLang
         fields = ('name', 'logo')
+
+
+class AboutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = About
+        fields = ('tab_name', 'content')

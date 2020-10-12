@@ -86,19 +86,18 @@
         <a
           href="https://my.indeed.com/p/yanicka-k7s9qpm"
           target="_blank"
-          style="text-decoration: none; color: white;font-size: 17px;font-weight:bold"
+          style="text-decoration: none; color: white;font-size: 17px;font-weight:bold;margin-left: 50px;margin-rigth:20px;"
         >
-          <div class="menu-item">
-            cv
-            <!-- <v-icon style="font-size: 25px; color:#fff" class>CV</v-icon> -->
+          <div class="">
+            CV
           </div>
         </a>
         <a
           href="https://www.github.com/assignon"
           target="_blank"
-          style="text-decoration: none;"
+          style="text-decoration: none;margin-left: 50px;margin-rigth:20px;"
         >
-          <div class="menu-item">
+          <div class="">
             <!--            <span>Github</span>-->
             <v-icon style="font-size: 25px; color:#fff" class
               >fab fa-github</v-icon
@@ -231,19 +230,18 @@
         <a
           href="https://my.indeed.com/p/yanicka-k7s9qpm"
           target="_blank"
-          style="text-decoration: none; color: white;font-size: 17px;font-weight:bold"
+          style="text-decoration: none; color: white;font-size: 17px;font-weight:bold;margin-left: 50px;margin-rigth:20px;"
         >
-          <div class="menu-item">
-            cv
-            <!-- <v-icon style="font-size: 25px; color:#fff" class>CV</v-icon> -->
+          <div class="">
+            CV
           </div>
         </a>
         <a
           href="https://www.github.com/assignon"
           target="_blank"
-          style="text-decoration: none;"
+          style="text-decoration: none;margin-left: 50px;margin-rigth:20px;"
         >
-          <div class="menu-item">
+          <div class="">
             <v-icon style="font-size: 25px; color:#fff" class
               >fab fa-github</v-icon
             >
@@ -467,23 +465,6 @@
             </v-list-item-content>
           </v-list-item>
           <!-- --------------------------------------------------------------------------- -->
-          <!-- <v-list-item
-            class="animated fadeInUp"
-            style="animation-delay: 0.3s;text-decoration: none;cursor: pointer;"
-          >
-            <v-list-item-content>
-              <a
-                href="https://my.indeed.com/p/yanicka-k7s9qpm"
-                target="_blank"
-                style="text-decoration: none; color: black;font-size: 17px;font-weight:bold"
-              >
-                <div class="menu-item">
-                  <v-list-item-title>CV</v-list-item-title>
-
-                </div>
-              </a>
-            </v-list-item-content>
-          </v-list-item> -->
 
           <v-list-item
             class="animated fadeInUp"

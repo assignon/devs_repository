@@ -91,7 +91,7 @@
             </v-list-item-group>
           </v-list>
 
-          <div
+          <!-- <div
             class="related-works animated fadeInUp"
             @click.stop="(drawer = !drawer), worksRelated()"
           >
@@ -103,10 +103,9 @@
               outlined
               class="related-works-btn"
             >
-              <!-- <v-icon color="#42b883 pl-3">fas fa-folder</v-icon> -->
               Related Works
             </v-btn>
-          </div>
+          </div> -->
         </div>
       </v-flex>
 

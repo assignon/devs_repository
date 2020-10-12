@@ -18,8 +18,8 @@ from rest_framework.status import (
     HTTP_200_OK
 )
 
-from works.models import Works, Description, Tags, Skills, ProgLang
-from works.serializers import WorksSerializer, DescriptionSerializer, SkillsSerializer, ProgLangSerializer
+from works.models import Works, Description, Tags, Skills, ProgLang, About
+from works.serializers import WorksSerializer, DescriptionSerializer, SkillsSerializer, ProgLangSerializer, AboutSerializer
 import re
 import os
 from datetime import datetime
@@ -438,6 +438,22 @@ class Works_view(viewsets.ModelViewSet):
 
         return Response(serializers.serialize('json', rm_duplicate))
 
+    @csrf_exempt
+    @action(methods=['post'], detail=False)
+    def sendmail(self, request):
+        name = request.data['body']['name']
+        email = request.data['body']['email']
+        message = request.data['body']['message']
+        # send email
+        send_mail(
+            f'Portfolio mail van {name}',
+            message,
+            email,
+            ['yanick007.dev@gmail.com']
+        )
+
+        return Response(request.data)
+
 
 class Description_view(viewsets.ModelViewSet):
     queryset = Description.objects.all()
@@ -525,3 +541,21 @@ class ProgLang_view(viewsets.ModelViewSet):
         pl = ProgLang.objects.get(id=pl_id)
         pl_arr.append({'name': pl.name, 'logo': pl.logo})
         return Response(pl_arr)
+
+
+class About_view(viewsets.ModelViewSet):
+    queryset = About.objects.all()
+    serializer_class = AboutSerializer
+    permission_classes = [AllowAny]
+
+    @csrf_exempt
+    @action(methods=['get'], detail=False)
+    def about_content(self, request):
+        """
+         get about content from DB
+
+        Args:
+            request ([get]): [get about content]
+        """
+        about = About.objects.all()
+        return Response(serializers.serialize('json', about))
