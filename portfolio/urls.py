@@ -22,20 +22,22 @@ from django.conf.urls.static import static
 # from django.contrib.auth.views import logout
 from .router import router
 from portfolio import views
+from django.conf.urls import url
+from django.views.generic import TemplateView
 
 urlpatterns = [
 
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     # path('products/', include("products.urls", namespace="products")),
+    url(r'^$', TemplateView.as_view(template_name='index.html')),
     # frontend urls
-    # path('', views.index, name='index'),
-    # path('about/', views.about, name='about'),
-    # path('product/<str:id>/', views.product, name='product'),
-    # path('signup/', views.signup, name='signup'),
-    # path('contact/', views.contact, name='contact'),
+    path('', views.home, name='home'),
+    path('works/', views.works, name='works'),
+    path('work/<str:name>/', views.description, name='description'),
+    path('skills/', views.skills, name='skills'),
 
-]+ static(
+] + static(
     settings.STATIC_URL, document_root=settings.STATIC_ROOT,
     # settings.STATIC_URL, document_root=settings.STATIC_ROOT
 )

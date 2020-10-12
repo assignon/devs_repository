@@ -1,60 +1,222 @@
 <template>
   <div class="works-core">
-    <v-layout column justify-center align-center class="works-layout">
+    <v-layout column align-center class="works-layout">
       <v-flex xs12 sm12 md8 lg10 xl10 class="filter-flex">
         <div class="works-head">
           <div class="works-titel">
-            <h2 class>My Works</h2>
-            <v-divider width="5%" color="#16032c" style></v-divider>
-          </div>
+            <!-- <h2 class>My Works</h2>
+            <v-divider width="5%" color="#16032c" style></v-divider>-->
+            <div
+              class="input-container animated fadeInUp"
+              style="animation-delay:0.2s"
+            >
+              <input
+                type="search"
+                placeholder="search..."
+                class="search-project"
+                v-model="searchQuery"
+                @focusin="startSearch()"
+                @focusout="(searchMode = false), (searchEnter = false)"
+                @keyup.enter="searchWorks()"
+              />
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <div
+                    class="question-icon-container"
+                    v-bind="attrs"
+                    v-on="on"
+                    @click.stop="$store.state.searchDialog = true"
+                  >
+                    <v-icon
+                      style="cursor:pointer;font-size:18px;"
+                      class="animated bounceIn"
+                      >fas fa-question</v-icon
+                    >
+                  </div>
+                </template>
+                <span>How to use the search</span>
+              </v-tooltip>
+            </div>
 
-          <div class="filter">
-            <v-icon medium v-if="desc">fas fa-sort-amount-up</v-icon>
-            <v-icon medium v-if="!desc">fas fa-sort-amount-down</v-icon>
-            <v-icon medium>fab fa-python</v-icon>
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  medium
+                  class="asc-icon ml-3 hidden-sm-and-down animated bounceIn"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="orderByAsc()"
+                  >fas fa-sort-amount-up</v-icon
+                >
+              </template>
+              <span>old to newest</span>
+            </v-tooltip>
+
+            <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  medium
+                  class="desc-icon ml-3 hidden-sm-and-down animated bounceIn"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="orderByDesc()"
+                  >fas fa-sort-amount-down</v-icon
+                >
+              </template>
+              <span>newest to old</span>
+            </v-tooltip>
+
+            <!-- <v-tooltip bottom>
+              <template v-slot:activator="{ on, attrs }">
+                <v-icon
+                  medium
+                  class="ml-3 hidden-sm-and-down animated bounceIn"
+                  v-bind="attrs"
+                  v-on="on"
+                  @click="filtersVisible = !filtersVisible"
+                  >fas fa-filter</v-icon
+                >
+              </template>
+              <span>filter</span>
+            </v-tooltip> -->
           </div>
         </div>
       </v-flex>
 
-      <v-flex xs12 sm12 md8 lg10 xl10 class="pl-flex">
-        <v-radio-group v-model="ex7" row>
-          <div class="pl-container" v-for="(progLang, i) in progLangs" :key="i">
-            <v-radio label :color="progLang.color" :value="progLang.icon"></v-radio>
-            <v-icon medium>fab fa-{{progLang.icon}}</v-icon>
+      <!-- <v-flex
+        xs12
+        sm12
+        md8
+        lg10
+        xl10
+        class="pl-flex animated"
+        v-if="filtersVisible"
+      >
+        <v-radio-group v-model="filter" row>
+          <div
+            class="pl-container ml-5"
+            v-for="(progLang, i) in progLangs"
+            :key="i"
+          >
+            <v-checkbox
+              v-model="selected"
+              class
+              label
+              :value="progLang.icon"
+            ></v-checkbox>
+            <v-icon medium>{{ progLang.icon }}</v-icon>
           </div>
         </v-radio-group>
-      </v-flex>
+      </v-flex> -->
 
-      <!-- <div class="works-container"> -->
-      <v-flex xs10 sm10 md4 lg4 xl4 class="works-flex">
-        <div class="works-container" v-for="(project, i) in projects" :key="i">
-          <div class="works-img" :style="{backgroundImage: `url(${project.img})`}">
-            <v-icon medium v-for="(progicon, pi) in project.progIcon" :key="pi">fab fa-{{progicon}}</v-icon>
-          </div>
-          <div class="works-name">
-            <h3 class="mb1">{{project.name}}</h3>
-            <v-divider width="10%" color="#fff" style></v-divider>
-            <div class="type-icon mt-2">
-              <v-icon
-                style="font-size:15px;color:white;"
-                class="ml-2 mr-2"
-                v-for="(typeicon, ti) in project.typeIcon"
-                :key="ti"
-              >fas fa-{{typeicon}}</v-icon>
-            </div>
-          </div>
+      <WorksTemp
+        :works="works"
+        :h="height"
+        :w="width"
+        :reload="false"
+        v-if="
+          searchMode == false &&
+            foundedWorks.length == 0 &&
+            searchEnter == false
+        "
+      />
+      <div
+        v-if="searchMode && foundedWorks.length == 0"
+        class="nothing-founded-container"
+      >
+        <div
+          class="nothing-founded"
+          v-if="foundedWorks.length == 0 && searchEnter"
+        >
+          <img
+            src="../assets/projects/not-found.svg"
+            alt
+            class="animated fadeInUp"
+          />
+          <h2 class="animated fadeInUp" style="animation-delay:0.5s;">
+            No works founded
+          </h2>
         </div>
-      </v-flex>
-      <!-- </div> -->
 
-      <v-flex 12 xs sm12 md8 lg10 xl10 class="pagination-flex">
-        <v-pagination v-model="page" :length="15" :total-visible="7"></v-pagination>
+        <div class="focus-in" v-if="searchEnter == false">
+          <WaitingLoader />
+          <!-- <TextAnimation
+            :textArray="searchQueries"
+            w="auto"
+            h="auto"
+            animation="bounceIn"
+            color="#54bf8e"
+            fs="30px"
+            ta="center"
+            :random="true"
+            interval="7000"
+            timeout="4000"
+            display="flex"
+          /> -->
+          <h2 class="animated fadeInUp" style="animation-delay:0.5s;">
+            Waiting for your query
+          </h2>
+        </div>
+
+        <!-- <WorksTemp :works="foundedWorks" v-if="foundedWorks.length != 0" /> -->
+      </div>
+
+      <WorksTemp
+        :works="foundedWorks"
+        :h="height"
+        :w="width"
+        :reload="false"
+        v-if="foundedWorks.length != 0 || searchEnter"
+      />
+
+      <v-flex
+        12
+        xs
+        sm12
+        md8
+        lg10
+        xl10
+        class="pagination-flex"
+        v-if="worksCount > limitOnScreenWidth()"
+      >
+        <!-- <v-pagination
+          v-model="page"
+          :length="paginationPages"
+          :total-visible="limitOnScreenWidth()"
+          @input="getPaginatedWorks()"
+        ></v-pagination> -->
+        <h1 class="ml-3 animated fadeInUp">
+          W
+        </h1>
+        <div class="o-container">
+          <h1
+            v-for="(item, i) in paginationPages"
+            :key="i"
+            :id="i + 1"
+            class="ml-2 os"
+            @click="getPaginatedWorks()"
+          >
+            <span></span>
+            <span class="page-number"></span>
+          </h1>
+        </div>
+        <h1 class="ml-3 aimated fadeInUp">
+          rkS
+        </h1>
       </v-flex>
+
+      <searchDoc />
     </v-layout>
   </div>
 </template>
 
 <script>
+// import snackBar from "../../components/modals/snackBar";
+import { mapGetters } from "vuex";
+import WorksTemp from "../components/layouts/WorksTemp";
+import SearchDoc from "../components/layouts/SearchDoc";
+import WaitingLoader from "../components/loaders/Waiting.loader";
+// import TextAnimation from "@/components/loaders/TextAnimation.vue";
 export default {
   name: "Works",
 
@@ -63,74 +225,251 @@ export default {
       valid: true, // search form v-model
       desc: true, // check if the projects are sorted order by desc
       page: 1, // pagination
+      filter: "plFilter", // radio input model
+      filtersVisible: false, // check if the radio iput div display is none orr not
+      selected: [], // selected checkboxes
+      searchMode: false, // when user is searching
+      searchEnter: false, // when the user hit enter key to search works
+      searchQuery: "", // search field value
+      width: "300px", // works div container width
+      height: "300px", // works div container height
+      descMenu: "", // search engine doc v model
       progLangs: [
-        { icon: "python", color: "black" },
-        { icon: "php", color: "black" },
-        { icon: "vuejs", color: "black" },
-        { icon: "terminal", color: "black" }
+        { icon: "fab fa-python", color: "black" },
+        { icon: "fab fa-php", color: "black" },
+        { icon: "fab fa-vuejs", color: "black" },
+        { icon: "fas fa-terminal", color: "black" }
       ],
-      projects: [
-        {
-          img: require("../assets/projects/test.jpg"),
-          progIcon: ["python", "vuejs"],
-          name: "Co2ok",
-          typeIcon: ["globe-africa"]
-        },
-        {
-          img: require("../assets/projects/test.jpg"),
-          progIcon: ["vuejs"],
-          name: "Define Shipping",
-          typeIcon: ["mobile", "globe-africa"]
-        },
-        {
-          img: require("../assets/projects/test.jpg"),
-          progIcon: ["php"],
-          name: "Podium De Flux",
-          typeIcon: ["globe-africa"]
-        },
-        {
-          img: require("../assets/projects/test.jpg"),
-          progIcon: ["python"],
-          name: "Project Creator",
-          typeIcon: ["terminal"]
-        },
-        {
-          img: require("../assets/projects/test.jpg"),
-          progIcon: ["python", "vuejs"],
-          name: "Co2ok",
-          typeIcon: ["mobile", "terminal", "globe-africa"]
-        },
-        {
-          img: require("../assets/projects/test.jpg"),
-          progIcon: ["python", "vuejs"],
-          name: "Co2ok",
-          typeIcon: ["mobile", "terminal", "globe-africa"]
-        },
-        {
-          img: require("../assets/projects/test.jpg"),
-          progIcon: ["python", "vuejs"],
-          name: "Co2ok",
-          typeIcon: ["mobile", "terminal", "globe-africa"]
-        },
-        {
-          img: require("../assets/projects/test.jpg"),
-          progIcon: ["python", "vuejs"],
-          name: "Co2ok",
-          typeIcon: ["mobile", "terminal", "globe-africa"]
-        },
-        {
-          img: require("../assets/projects/test.jpg"),
-          progIcon: ["python", "vuejs"],
-          name: "Co2ok",
-          typeIcon: ["mobile", "terminal", "globe-africa"]
-        }
-      ]
+      searchQueries: [
+        [`website or website+app+...`],
+        ["pwa>2020 or webapp,cli,...<2020/09"],
+        [">2020 or <2020/09 or >2020/09/14"]
+      ],
+      offset: 0, // get works query offset(start)
+      limit: this.limitOnScreenWidth(), // get works query limit(end)
+      worksOrder: "default" // works ordering
     };
   },
 
-  created() {},
+  components: {
+    WorksTemp: WorksTemp,
+    SearchDoc: SearchDoc,
+    WaitingLoader: WaitingLoader
+    // TextAnimation: TextAnimation,
+  },
 
-  methods: {}
+  computed: {
+    ...mapGetters({
+      works: "work/getWorks",
+      foundedWorks: "work/getSearchedWorks"
+    }),
+
+    worksCount: function() {
+      let self = this;
+      return this.$store.getters["get"](self.$store.state.worksCount);
+    },
+
+    paginationPages() {
+      let pages = this.worksCount / this.limitOnScreenWidth();
+      return Math.ceil(pages);
+    },
+
+    randClr() {
+      return this.$store.getters["randomColor"];
+    }
+  },
+
+  created() {
+    let self = this;
+    this.allWorks("default", 0, self.limitOnScreenWidth());
+    this.$store.getters["work/getSearchedWorks"].length = 0;
+    this.screenWidthChange();
+    self.$store.dispatch("workscount", {
+      params: {}
+    });
+  },
+
+  mounted() {
+    setTimeout(() => {
+      this.customizePagination();
+    }, 200);
+  },
+
+  methods: {
+    screenWidthChange() {
+      window.addEventListener("resize", function() {
+        let screenSize = window.innerWidth;
+        if (screenSize <= 500) {
+          this.fontSize = "15px";
+          this.width = "170px";
+          this.height = "170px";
+        }
+      });
+
+      let screenSize = window.innerWidth;
+      if (screenSize <= 500) {
+        this.fontSize = "15px";
+        this.width = "170px";
+        this.height = "170px";
+      }
+    },
+
+    splitToArray(str) {
+      /*
+      split a string words in to array
+      params:
+        str: [str]: [string to split]
+      returns: return array
+      */
+      let arr;
+      if (str.includes("cli")) {
+        let newStr = str.replace("cli", "terminal");
+        arr = newStr.split(",");
+        // arr = [];
+        // split.forEach(function(item) {
+        //   console.log(item);
+        //   arr.push({ original: "cli", new: newStr });
+        // });
+      } else if (str.includes("website")) {
+        let newStr = str.replace("website", "globe-africa");
+        arr = newStr.split(",");
+        // arr = [];
+        // split.forEach(function(item) {
+        //   console.log(item);
+        //   arr.push({ original: "website", new: newStr });
+        // });
+      } else if (str.includes("app")) {
+        let newStr = str.replace("app", "mobile");
+        arr = newStr.split(",");
+        // arr = [];
+        // split.forEach(function(item) {
+        //   console.log(item);
+        //   arr.push({ original: "mobile", new: newStr });
+        // });
+      } else {
+        arr = str.split(",");
+      }
+      return arr;
+    },
+
+    limitOnScreenWidth() {
+      /*
+      get the current laptop, computer screen width
+      to determine the number of projects to display
+      return: works max number
+      * */
+      let screenSize = window.innerWidth;
+      let limit = 0; // pagination limit
+      if (screenSize <= 500) {
+        // mobile[6]
+        limit = 6;
+      } else if (screenSize > 500 && screenSize <= 834) {
+        // tablette[9]
+        limit = 9;
+      } else if (screenSize > 834 && screenSize <= 1440) {
+        // laptop[9]
+        limit = 9;
+      } else if (screenSize > 1440) {
+        // desktop[12]
+        limit = 12;
+      }
+      return limit;
+    },
+
+    customizePagination() {
+      let os = document.querySelectorAll(".os");
+      let self = this;
+      for (let i = 0; i < os.length; i++) {
+        let randNum = Math.floor(
+          Math.random() * self.$store.state.colorsArr.length
+        );
+        os[i].style.color = self.$store.state.colorsArr[randNum];
+        os[i].firstChild.innerHTML = "O";
+        os[i].lastChild.innerHTML = i + 1;
+      }
+    },
+
+    allWorks(orderBy, offset, limit) {
+      /*
+        get all works from the DB
+        params:
+          orderBy: [str]: [define the order of the data (ex: default=desc, desc, asc)]
+          limit: [int]: [pagination integer]
+      */
+      let self = this;
+      this.$store.dispatch("work/allWorks", {
+        url: "works/all_works",
+        params: { order_by: orderBy, limit: limit, offset: offset },
+        callback: function(data) {
+          console.log(JSON.parse(data));
+          self.$store.getters["work/setWorks"](JSON.parse(data));
+        }
+      });
+    },
+
+    getPaginatedWorks() {
+      /*
+      get works base on pagination number
+      */
+      let self = this;
+      this.page = event.currentTarget.id;
+      if (this.page == 1) {
+        self.allWorks(self.worksOrder, 0, self.limitOnScreenWidth());
+      } else {
+        self.limit = self.limitOnScreenWidth() * self.page;
+        self.offset = self.limit - self.limitOnScreenWidth();
+
+        self.allWorks(self.worksOrder, self.offset, self.limit);
+      }
+    },
+
+    startSearch() {
+      // when search field focus in
+      this.$store.getters["work/getSearchedWorks"].length = 0;
+      this.searchMode = true;
+    },
+
+    searchWorks() {
+      /* when enter key hited */
+      let self = this;
+      this.searchEnter = true;
+      // empty search field
+      document.querySelector(".search-project").value = "";
+      // send request
+      this.$store.dispatch("work/searchWorks", {
+        url: "works/search_works",
+        params: { query: self.searchQuery },
+        callback: function(data) {
+          console.log(JSON.parse(data));
+          // if (self.$store.getters["work/getSearchedWorks"].length == 0) {
+          //   self.searchMode = false;
+          // }
+
+          // push founded works data to setSearchedWorks array
+          self.$store.getters["work/setSearchedWorks"](JSON.parse(data));
+        }
+      });
+    },
+
+    orderByAsc() {
+      // get works order by ascending
+      let self = this;
+      this.worksOrder = "asc";
+      let asc = document.querySelector(".asc-icon");
+      asc.style.display = "none";
+      document.querySelector(".desc-icon").style.display = "inline-flex";
+      self.getPaginatedWorks();
+    },
+
+    orderByDesc() {
+      // get works order by
+      let self = this;
+      this.worksOrder = "desc";
+      document.querySelector(".desc-icon").style.display = "none";
+      document.querySelector(".asc-icon").style.display = "block";
+      self.getPaginatedWorks();
+    }
+  }
 };
 </script>
 
@@ -142,10 +481,13 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-top: 70px;
+  padding-bottom: 30px;
 }
 .works-layout {
   width: 100%;
   height: auto;
+  justify-content: center;
 }
 .filter-flex {
   width: 100%;
@@ -163,12 +505,44 @@ export default {
   align-items: center;
 }
 .works-titel {
-  width: 50%;
+  width: 70%;
   height: auto;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: flex-end;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.input-container {
+  border-radius: 50px;
+  width: 60%;
+  height: 45px;
+  /* border: 1px solid #e0e0e0; */
+  background-color: #e0e0e0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.search-project {
+  border-radius: 50px;
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
+  width: 93%;
+  height: 100%;
+  padding-left: 20px;
+  text-align: left;
+  font-size: 16px;
+  font-weight: bold;
+  color: #16032c;
+}
+.question-icon-container {
+  width: 7%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.question-icon-container .v-icon:hover {
+  color: #54bf8e;
 }
 .filter {
   width: 50%;
@@ -178,13 +552,16 @@ export default {
   justify-content: flex-start;
   align-items: center;
 }
+.desc-icon {
+  display: none;
+}
 .pl-flex {
-  width: 100%;
+  width: 70%;
   height: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 }
 .pl-container {
   width: auto;
@@ -192,56 +569,155 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: flex-start;
-  border: 1px solid red;
-}
-.works-flex {
-  width: 80%;
-  height: auto;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-around;
   align-items: center;
 }
-.works-container {
-  width: 30%;
-  height: 400px;
+.pl-container .v-radio {
+  margin-right: 0px;
+}
+.nothing-founded-container {
+  width: 100%;
+  height: 75vh;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  /* flex-direction: row; */
+  justify-content: center;
   align-items: center;
-  border: 2px solid #16032c;
-  background-color: #16032c;
-  border-radius: 5px;
-  margin-bottom: 45px;
 }
-.works-img {
+.nothing-founded,
+.focus-in {
   width: 100%;
-  height: 320px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  border-radius: 3px;
-}
-.works-name {
-  width: 100%;
-  height: 80px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
-.works-name h3 {
-  text-align: center;
-  color: white;
+.nothing-founded img {
+  width: 70px;
+  height: 70px;
 }
-.type-icon {
-  width: 100%;
+.focus-in h2 {
+  position: relative;
+  bottom: -40px;
+}
+/*.works-flex {*/
+/*  width: 80%;*/
+/*  height: auto;*/
+/*  display: flex;*/
+/*  flex-direction: row;*/
+/*  flex-wrap: wrap;*/
+/*  justify-content: space-around;*/
+/*  align-items: center;*/
+/*  margin-top: 80px;*/
+/*}*/
+/*.works-container {*/
+/*  width: 300px;*/
+/*  height: 300px;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: flex-start;*/
+/*  align-items: center;*/
+/*  border: 2px solid #16032c;*/
+/*  background-color: #16032c;*/
+/*  border-radius: 5px;*/
+/*  margin-bottom: 45px;*/
+/*  cursor: pointer;*/
+/*}*/
+/*.works-container:hover {*/
+/*  transition: transform 0.2s linear 0s;*/
+/*  transform: scale(0.9, 0.9);*/
+/*}*/
+/*.works-img {*/
+/*  width: 100%;*/
+/*  height: 80%;*/
+/*  background-repeat: no-repeat;*/
+/*  background-position: center;*/
+/*  background-size: cover;*/
+/*  border-radius: 3px;*/
+/*}*/
+/*.prog-langs-container {*/
+/*  width: 95%;*/
+/*  height: auto;*/
+/*  display: flex;*/
+/*  flex-direction: row;*/
+/*  justify-content: flex-end;*/
+/*  align-items: center;*/
+/*}*/
+/*.prog-langs {*/
+/*  width: 30px;*/
+/*  height: 30px;*/
+/*  !* background-repeat: no-repeat;*/
+/*  background-position: center;*/
+/*  background-size: cover; *!*/
+/*}*/
+/*.works-name {*/
+/*  width: 100%;*/
+/*  height: 20%;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*}*/
+/*.works-name h4 {*/
+/*  text-align: center;*/
+/*  color: white;*/
+/*}*/
+/*.type-icon {*/
+/*  width: 100%;*/
+/*  height: auto;*/
+/*  display: flex;*/
+/*  flex-direction: row;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*}*/
+.pagination-flex {
   height: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+.o-container {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.o-container .os {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.o-container .os:hover {
+  transition: transform 0.2s linear 0s;
+  transform: scale(1.1, 1.1);
+}
+.page-number {
+  font-size: 10px;
+  margin-top: -17px;
+  position: relative;
+  top: 10px;
+}
+@media only screen and (max-width: 500px) {
+  .works-core {
+    padding-top: 40px;
+  }
+  .works-titel {
+    width: 100%;
+  }
+  .input-container {
+    width: 90%;
+  }
+  .search-project {
+    width: 90%;
+  }
+  .question-icon-container {
+    width: 10%;
+  }
 }
 </style>
