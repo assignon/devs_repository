@@ -263,7 +263,7 @@
           </div>
         </router-link>
         <div class="filters" v-if="$router.currentRoute.name == 'Works'">
-          <v-tooltip bottom>
+          <!-- <v-tooltip bottom>
             <template v-slot:activator="{ on, attrs }">
               <v-icon
                 medium
@@ -303,7 +303,7 @@
               >
             </template>
             <span>filter</span>
-          </v-tooltip>
+          </v-tooltip> -->
         </div>
       </v-flex>
     </v-layout>

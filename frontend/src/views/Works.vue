@@ -176,17 +176,13 @@
           :total-visible="limitOnScreenWidth()"
           @input="getPaginatedWorks()"
         ></v-pagination> -->
-        <h1
-          class="ml-3 animated fadeInUp"
-
-        >
+        <h1 class="ml-3 animated fadeInUp">
           W
         </h1>
         <div class="o-container">
           <h1
             v-for="(item, i) in paginationPages"
             :key="i"
-
             :id="i + 1"
             class="ml-2 os"
             @click="getPaginatedWorks()"
@@ -195,10 +191,7 @@
             <span class="page-number"></span>
           </h1>
         </div>
-        <h1
-          class="ml-3 aimated fadeInUp"
-
-        >
+        <h1 class="ml-3 aimated fadeInUp">
           rks
         </h1>
       </v-flex>
@@ -236,30 +229,30 @@ export default {
         { icon: "fab fa-python", color: "black" },
         { icon: "fab fa-php", color: "black" },
         { icon: "fab fa-vuejs", color: "black" },
-        { icon: "fas fa-terminal", color: "black" }
+        { icon: "fas fa-terminal", color: "black" },
       ],
       searchQueries: [
         [`website or website+app+...`],
         ["pwa>2020 or webapp,cli,...<2020/09"],
-        [">2020 or <2020/09 or >2020/09/14"]
+        [">2020 or <2020/09 or >2020/09/14"],
       ],
       offset: 0, // get works query offset(start)
       limit: this.limitOnScreenWidth(), // get works query limit(end)
-      worksOrder: "default" // works ordering
+      worksOrder: "default", // works ordering
     };
   },
 
   components: {
     WorksTemp: WorksTemp,
     SearchDoc: SearchDoc,
-    WaitingLoader: WaitingLoader
+    WaitingLoader: WaitingLoader,
     // TextAnimation: TextAnimation,
   },
 
   computed: {
     ...mapGetters({
       works: "work/getWorks",
-      foundedWorks: "work/getSearchedWorks"
+      foundedWorks: "work/getSearchedWorks",
     }),
 
     worksCount: function() {
@@ -274,7 +267,7 @@ export default {
 
     randClr() {
       return this.$store.getters["randomColor"];
-    }
+    },
   },
 
   created() {
@@ -283,7 +276,7 @@ export default {
     this.$store.getters["work/getSearchedWorks"].length = 0;
     this.screenWidthChange();
     self.$store.dispatch("workscount", {
-      params: {}
+      params: {},
     });
   },
 
@@ -402,7 +395,7 @@ export default {
         callback: function(data) {
           console.log(JSON.parse(data));
           self.$store.getters["work/setWorks"](JSON.parse(data));
-        }
+        },
       });
     },
 
@@ -446,7 +439,7 @@ export default {
 
           // push founded works data to setSearchedWorks array
           self.$store.getters["work/setSearchedWorks"](JSON.parse(data));
-        }
+        },
       });
     },
 
@@ -467,8 +460,8 @@ export default {
       document.querySelector(".desc-icon").style.display = "none";
       document.querySelector(".asc-icon").style.display = "block";
       self.getPaginatedWorks();
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -482,6 +475,7 @@ export default {
   align-items: center;
   padding-top: 70px;
   padding-bottom: 30px;
+  /* background-color: #f5fffa; */
 }
 .works-layout {
   width: 100%;
