@@ -11,7 +11,8 @@
                 class="font-weight-bold mb-5 animated fadeInUp"
                 style="animation-delay: 0.2s"
               >
-                Welcome in my world
+                <!-- Welcome in my world -->
+                {{ $store.state.work.workName }}
               </h1>
               <RandomWork class="hidden-sm-and-down" />
               <!-- <p class="mb-5 animated fadeInUp" style="animation-delay: 0.6s">
@@ -197,12 +198,12 @@ export default {
     About: About,
     Contact: Contact,
     TextAnimation: TextAnimation,
-    RandomWork: RandomWork
+    RandomWork: RandomWork,
   },
 
   data() {
     return {
-      fontSize: "18px",
+      fontSize: "17px",
       width: "50%",
       height: "100%",
       expertises: [
@@ -210,20 +211,20 @@ export default {
           name: "Web Development",
           imge: require("../assets/home/wd.svg"),
           content:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. "
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. ",
         },
         {
           name: "Scripting/CLI",
           imge: require("../assets/home/cmdline.svg"),
           content:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression."
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.",
         },
         {
           name: "Api",
           imge: require("../assets/home/api.svg"),
           content:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression."
-        }
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.",
+        },
       ],
       technics: [
         "fa-python",
@@ -233,7 +234,7 @@ export default {
         "fa-html5",
         "fa-html5",
         "fa-css3-alt",
-        "fa-php"
+        "fa-php",
       ],
       codes: [
         // [
@@ -266,8 +267,8 @@ export default {
                   return adress_dict|?
               else:|??
                   return {'place_id': False}
-          `
-        ]
+          `,
+        ],
         // [
         //   `function%0Pf javascript(str){?
         //   let% userInput = document.getElementById('input');?
@@ -300,7 +301,7 @@ export default {
         //     return Response(serializers.serialize('json', works))
         // `
         // ]
-      ]
+      ],
     };
   },
 
@@ -330,7 +331,7 @@ export default {
         this.width = "80%";
         this.height = "80%";
       }
-    }
+    },
     // animateText() {
     //   let textContainer = document.querySelector(".container-two");
     //   // let counter = 0;
@@ -363,7 +364,7 @@ export default {
     //     console.log(p);
     //   });
     // }
-  }
+  },
 };
 </script>
 
@@ -391,8 +392,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("../assets/home/homeBackground.jpg");
-  background-position: cente;
+  background-image: url("../assets/home/tech.jpg");
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }
@@ -461,10 +462,6 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  /* background-image: url("../assets/home/homeBackground.jpg");
-  background-position: cente;
-  background-size: cover;
-  background-repeat: no-repeat; */
 }
 .text-animation-container {
   width: 100%;
@@ -521,9 +518,9 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
-  margin-bottom: 100px;
-  /*background-color: lightgray;*/
+  padding-top: 100px;
+  padding-bottom: 100px;
+  background-color: #fffaf0;
 }
 
 .landing-last {
@@ -610,7 +607,7 @@ export default {
 .about-overlay {
   width: 100%;
   height: 450px;
-  background-image: url("../assets/home/about.jpg");
+  /* background-image: url("../assets/home/about.jpg"); */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -629,7 +626,7 @@ export default {
 .contact-flex {
   width: 100%;
   height: 100vh;
-  /*background-color: #FAFAFA;*/
+  background-color: #f5fffa;
   display: flex;
   flex-direction: column;
   justify-content: center;
