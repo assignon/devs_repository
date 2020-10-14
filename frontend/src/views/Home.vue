@@ -393,7 +393,7 @@ export default {
   justify-content: center;
   align-items: center;
   background-image: url("../assets/home/tech.jpg");
-  background-position: cente;
+  background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
 }

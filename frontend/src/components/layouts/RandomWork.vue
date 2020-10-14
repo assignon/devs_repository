@@ -23,28 +23,31 @@ export default {
 
   created() {
     // let self = this;
+    this.allWorks("default", 0, 0);
+    // this.$store.dispatch("work/allWorks", {
+    //   url: "works/all_works",
+    //   params: { order_by: "default", limit: 0, offset: 0 },
+    //   callback: async function(data) {
+    //     await self.$store.getters["work/setWorks"](JSON.parse(data));
+    //     self.getRandomWork();
+    //   },
+    // });
+
+    // setInterval(() => {
+    //   self.getRandomWork();
+    // }, 10000);
+  },
+
+  mounted() {
+    let self = this;
     // this.$store.dispatch("work/allWorks", {
     //   url: "works/all_works",
     //   params: { order_by: "default", limit: 0, offset: 0 },
     //   callback: function(data) {
     //     self.$store.getters["work/setWorks"](JSON.parse(data));
+    //     self.getRandomWork();
     //   },
     // });
-    // console.log(this.desc);
-    // this.getRandomWork();
-  },
-
-  mounted() {
-    let self = this;
-    this.$store.dispatch("work/allWorks", {
-      url: "works/all_works",
-      params: { order_by: "default", limit: 0, offset: 0 },
-      callback: function(data) {
-        self.$store.getters["work/setWorks"](JSON.parse(data));
-        self.getRandomWork();
-      },
-    });
-
     setInterval(() => {
       self.getRandomWork();
     }, 10000);
@@ -130,6 +133,25 @@ export default {
           descContainer.appendChild(descriptionContainer);
         }
       }, 10);
+    },
+
+    allWorks(orderBy, offset, limit) {
+      /*
+        get all works from the DB
+        params:
+          orderBy: [str]: [define the order of the data (ex: default=desc, desc, asc)]
+          limit: [int]: [pagination integer]
+      */
+      let self = this;
+      this.$store.dispatch("work/allWorks", {
+        url: "works/all_works",
+        params: { order_by: orderBy, limit: limit, offset: offset },
+        callback: async function(data) {
+          console.log(JSON.parse(data));
+          await self.$store.getters["work/setWorks"](JSON.parse(data));
+          self.getRandomWork();
+        },
+      });
     },
 
     workDescription(workName) {
