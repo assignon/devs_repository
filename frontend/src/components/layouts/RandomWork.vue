@@ -1,7 +1,18 @@
 <template>
   <div class="random-core animated fadeIn">
-    <div class="work-container animated flipInX"></div>
-    <div class="desc-container animated fadeInUp"></div>
+    <div class="work-container animated flipIntX"></div>
+    <div class="desc-link">
+      <div
+        class="desc-container animated fadeInUp"
+        style="color: white"
+        v-html="desc[0].description.substr(0, 250)"
+      ></div>
+      <a
+        :href="`/work/${$store.state.work.workName}`"
+        style="text-decoration: none;color: #00ff8e"
+        >read more...</a
+      >
+    </div>
   </div>
 </template>
 
@@ -17,45 +28,45 @@ export default {
   computed: {
     ...mapGetters({
       works: "work/getWorks",
-      desc: "description/getDesc"
-    })
+      desc: "description/getDesc",
+    }),
   },
 
   created() {
-    let self = this;
-    this.$store.dispatch("work/allWorks", {
-      url: "works/all_works",
-      params: { order_by: "default", limit: 0, offset: 0 },
-      callback: function(data) {
-        self.$store.getters["work/setWorks"](JSON.parse(data));
-      }
-    });
+    // let self = this;
+    this.allWorks("default", 0, 0);
+    // this.$store.dispatch("work/allWorks", {
+    //   url: "works/all_works",
+    //   params: { order_by: "default", limit: 0, offset: 0 },
+    //   callback: async function(data) {
+    //     await self.$store.getters["work/setWorks"](JSON.parse(data));
+    //     self.getRandomWork();
+    //   },
+    // });
 
-    // console.log(this.desc);
-
-    // this.getRandomWork();
+    // setInterval(() => {
+    //   self.getRandomWork();
+    // }, 10000);
   },
 
   mounted() {
     let self = this;
-    // setInterval(() => {
-    //   //   document.querySelector(".work-container").innerHTML = "";
-    //   //   document.querySelector(".desc-container").innerHTML = "";
-    //   self.getRandomWork();
-    // }, 10000);
-    self.getRandomWork();
+    setInterval(() => {
+      self.getRandomWork();
+    }, 10000);
   },
 
   methods: {
-    getRandomWork() {
+    async getRandomWork() {
       // return a random work from works array
       let self = this;
-      let randomCore = document.querySelector(".random-core");
       let workContainer = document.querySelector(".work-container");
-      let descContainer = document.querySelector(".desc-container");
+      // let descContainer = document.querySelector(".desc-container");
       let randIndex = Math.floor(
         Math.random() * self.$store.getters["work/getWorks"].length
       );
+      // get work description
+      await self.workDescription(self.works[randIndex].fields.name);
 
       // create html element
       setTimeout(() => {
@@ -70,51 +81,41 @@ export default {
         workImg.style.backgroundPosition = "center";
         workImg.style.backgroundSize = "cover";
         workImg.style.borderRadius = "3px";
-
-        let workName = document.createElement("h4");
-        workName.className = "work-name";
-        workName.textContent = name;
-        workName.style.textAlign = "center";
-        workName.style.color = "white";
-        workName.style.position = "relative";
-        workName.style.top = "10px";
-        // work decsription
-        let descriptionContainer = document.createElement("p");
-        descriptionContainer.style.width = "90%";
-        descriptionContainer.style.height = "auto";
-        descriptionContainer.style.fontSize = "15px";
-        descriptionContainer.style.color = "white";
-
-        self.workDescription(name);
-        let descriptionObj = self.desc;
-
-        descriptionObj.forEach(data => {
-          let descPart = data.description.substr(0, 250);
-          console.log(descPart);
-          descriptionContainer.innerHTML += descPart + "...";
-        });
-        // add animation
-        // randomCore.classList.add("fadeIn");
-        // workContainer.classList.add("zoomIn");
-        // descContainer.classList.add("fadeInUp");
-        // append work html element
-        workContainer.appendChild(workImg);
-        workContainer.appendChild(workName);
+        self.$store.state.work.workName = name;
+        // check if workContainer already have a child
+        if (workContainer.childNodes.length == 0) {
+          //add child if there is no child yet
+          workContainer.appendChild(workImg);
+        } else {
+          // remove child
+          workContainer.removeChild(workContainer.childNodes[0]);
+          //add child
+          workContainer.appendChild(workImg);
+        }
+        // workContainer.appendChild(workName);
         workContainer.addEventListener("click", function() {
           self.$router.push(`/work/${randomWork.fields.name}`);
         });
-        // append work description
-        descContainer.appendChild(descriptionContainer);
-        // append html elements to the dom
-        randomCore.appendChild(workContainer);
-        randomCore.appendChild(descContainer);
-      }, 1000);
-      //
-      //   setTimeout(() => {
-      //     // randomCore.classList.remove("fadeIn");
-      //     // workContainer.classList.remove("zoomIn");
-      //     // descContainer.classList.remove("fadeInUp");
-      //   }, 8000);
+      }, 10);
+    },
+
+    allWorks(orderBy, offset, limit) {
+      /*
+        get all works from the DB
+        params:
+          orderBy: [str]: [define the order of the data (ex: default=desc, desc, asc)]
+          limit: [int]: [pagination integer]
+      */
+      let self = this;
+      this.$store.dispatch("work/allWorks", {
+        url: "works/all_works",
+        params: { order_by: orderBy, limit: limit, offset: offset },
+        callback: async function(data) {
+          console.log(JSON.parse(data));
+          await self.$store.getters["work/setWorks"](JSON.parse(data));
+          self.getRandomWork();
+        },
+      });
     },
 
     workDescription(workName) {
@@ -124,12 +125,12 @@ export default {
         url: "description/work_desc",
         params: { work_name: workName },
         callback: function(data) {
-          console.log(data);
+          // console.log(data);
           self.$store.getters["description/setDesc"](data);
-        }
+        },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -170,12 +171,21 @@ export default {
   text-align: center;
   color: white;
 }
+.desc-link {
+  display: flex;
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 20px;
+}
 .desc-container {
   width: 100%;
   height: auto;
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-top: 20px;
 }
 </style>
