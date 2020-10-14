@@ -248,7 +248,7 @@ export default {
         [
           `
           def google_api(request, site):|?
-              API_KEY = "AIzaSyDQDsq1Blbm9UZuRGBC93IYKES5Oheplt0"|?
+              API_KEY = "AIzaSyC93IYKES5OhepltjsdfloihksjP"|?
               SITE = site|?
               gmaps = googlemaps.Client(key=API_KEY)|?
 
