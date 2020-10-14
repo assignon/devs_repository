@@ -22,7 +22,7 @@ export default {
   name: "App",
 
   components: {
-    Nav
+    Nav,
   },
 
   data: () => ({
@@ -50,8 +50,8 @@ export default {
       while (scrollValue > 0) {
         document.documentElement.scrollTop--;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -66,6 +66,7 @@ body {
   margin: 0px;
   padding: 0px;
   font-family: "Arbutus Slab", Helvetica, Arial, sans-serif;
+  background-color: #f5fffa;
 }
 #app {
   /* scroll-behavior: smooth; */
@@ -76,6 +77,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #fffafa;
   /* overflow-x: hidden; */
 }
 </style>

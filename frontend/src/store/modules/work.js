@@ -6,6 +6,7 @@ export default {
     worksArr: [], // array contains all works get from the DB
     searchArr: [], // array content founded works on search
     relatedWorksArr: [], // array contains related works
+    workName: null,
   },
 
   getters: {

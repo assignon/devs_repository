@@ -1,6 +1,6 @@
 <template>
   <div class="random-core animated fadeIn">
-    <div class="work-container animated flipInX"></div>
+    <div class="work-container animated flipIntX"></div>
     <div class="desc-container animated fadeInUp"></div>
   </div>
 </template>
@@ -17,45 +17,51 @@ export default {
   computed: {
     ...mapGetters({
       works: "work/getWorks",
-      desc: "description/getDesc"
-    })
+      desc: "description/getDesc",
+    }),
   },
 
   created() {
+    // let self = this;
+    // this.$store.dispatch("work/allWorks", {
+    //   url: "works/all_works",
+    //   params: { order_by: "default", limit: 0, offset: 0 },
+    //   callback: function(data) {
+    //     self.$store.getters["work/setWorks"](JSON.parse(data));
+    //   },
+    // });
+    // console.log(this.desc);
+    // this.getRandomWork();
+  },
+
+  mounted() {
     let self = this;
     this.$store.dispatch("work/allWorks", {
       url: "works/all_works",
       params: { order_by: "default", limit: 0, offset: 0 },
       callback: function(data) {
         self.$store.getters["work/setWorks"](JSON.parse(data));
-      }
+        self.getRandomWork();
+      },
     });
 
-    // console.log(this.desc);
-
-    // this.getRandomWork();
-  },
-
-  mounted() {
-    let self = this;
-    // setInterval(() => {
-    //   //   document.querySelector(".work-container").innerHTML = "";
-    //   //   document.querySelector(".desc-container").innerHTML = "";
-    //   self.getRandomWork();
-    // }, 10000);
-    self.getRandomWork();
+    setInterval(() => {
+      self.getRandomWork();
+    }, 10000);
   },
 
   methods: {
-    getRandomWork() {
+    async getRandomWork() {
       // return a random work from works array
       let self = this;
-      let randomCore = document.querySelector(".random-core");
+      // let randomCore = document.querySelector(".random-core");
       let workContainer = document.querySelector(".work-container");
       let descContainer = document.querySelector(".desc-container");
       let randIndex = Math.floor(
         Math.random() * self.$store.getters["work/getWorks"].length
       );
+      // get work description
+      await self.workDescription(self.works[randIndex].fields.name);
 
       // create html element
       setTimeout(() => {
@@ -70,14 +76,14 @@ export default {
         workImg.style.backgroundPosition = "center";
         workImg.style.backgroundSize = "cover";
         workImg.style.borderRadius = "3px";
-
-        let workName = document.createElement("h4");
-        workName.className = "work-name";
-        workName.textContent = name;
-        workName.style.textAlign = "center";
-        workName.style.color = "white";
-        workName.style.position = "relative";
-        workName.style.top = "10px";
+        self.$store.state.work.workName = name;
+        // let workName = document.createElement("h4");
+        // workName.className = "work-name";
+        // workName.textContent = name;
+        // workName.style.textAlign = "center";
+        // workName.style.color = "white";
+        // workName.style.position = "relative";
+        // workName.style.top = "10px";
         // work decsription
         let descriptionContainer = document.createElement("p");
         descriptionContainer.style.width = "90%";
@@ -85,36 +91,45 @@ export default {
         descriptionContainer.style.fontSize = "15px";
         descriptionContainer.style.color = "white";
 
-        self.workDescription(name);
         let descriptionObj = self.desc;
 
-        descriptionObj.forEach(data => {
+        descriptionObj.forEach((data) => {
           let descPart = data.description.substr(0, 250);
-          console.log(descPart);
-          descriptionContainer.innerHTML += descPart + "...";
+          // console.log(descPart);
+          descriptionContainer.innerHTML +=
+            descPart +
+            ` <a href='/work/${randomWork.fields.name}' style="text-decoration: none;color: #00ff8e">read more</a> ` +
+            "...";
         });
-        // add animation
-        // randomCore.classList.add("fadeIn");
-        // workContainer.classList.add("zoomIn");
-        // descContainer.classList.add("fadeInUp");
-        // append work html element
-        workContainer.appendChild(workImg);
-        workContainer.appendChild(workName);
+
+        // check if workContainer already have a child
+        if (workContainer.childNodes.length == 0) {
+          //add child if there is no child yet
+          workContainer.appendChild(workImg);
+        } else {
+          // remove child
+          workContainer.removeChild(workContainer.childNodes[0]);
+          //add child
+          workContainer.appendChild(workImg);
+        }
+        // workContainer.appendChild(workName);
         workContainer.addEventListener("click", function() {
           self.$router.push(`/work/${randomWork.fields.name}`);
         });
+
         // append work description
-        descContainer.appendChild(descriptionContainer);
-        // append html elements to the dom
-        randomCore.appendChild(workContainer);
-        randomCore.appendChild(descContainer);
-      }, 1000);
-      //
-      //   setTimeout(() => {
-      //     // randomCore.classList.remove("fadeIn");
-      //     // workContainer.classList.remove("zoomIn");
-      //     // descContainer.classList.remove("fadeInUp");
-      //   }, 8000);
+
+        // check if workContainer already have a child
+        if (descContainer.childNodes.length == 0) {
+          //add child if there is no child yet
+          descContainer.appendChild(descriptionContainer);
+        } else {
+          // remove child
+          descContainer.removeChild(descContainer.childNodes[0]);
+          //add child
+          descContainer.appendChild(descriptionContainer);
+        }
+      }, 10);
     },
 
     workDescription(workName) {
@@ -124,12 +139,12 @@ export default {
         url: "description/work_desc",
         params: { work_name: workName },
         callback: function(data) {
-          console.log(data);
+          // console.log(data);
           self.$store.getters["description/setDesc"](data);
-        }
+        },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
