@@ -263,7 +263,7 @@ export default {
                   adress_dict = {'place_id': True}|??
                   for a in adress:|???
                       adress_dict[a['types'][0]] = a['long_name']||??
-              
+
                   return adress_dict|?
               else:|??
                   return {'place_id': False}
