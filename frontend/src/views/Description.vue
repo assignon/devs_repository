@@ -91,7 +91,7 @@
             </v-list-item-group>
           </v-list>
 
-          <!-- <div
+          <div
             class="related-works animated fadeInUp"
             @click.stop="(drawer = !drawer), worksRelated()"
           >
@@ -105,7 +105,7 @@
             >
               Related Works
             </v-btn>
-          </div> -->
+          </div>
         </div>
       </v-flex>
 
@@ -115,7 +115,7 @@
           class="desc-content-header animated fadeInUp"
           style="animation-delay: 0.4s"
         >
-          <h2>
+          <h2 class="work-name">
             <span style="color: #54bf8e;">{{ workName }}</span> Work Description
           </h2>
           <v-divider width="5%" color="#16032c" style></v-divider>
@@ -131,7 +131,13 @@
         right
         class="related-works-drawer"
         :width="rwdw"
+        touchless
       >
+        <div class="close-icon-container">
+          <v-icon small class="pa-3" @click="drawer = false"
+            >fas fa-times</v-icon
+          >
+        </div>
         <div v-if="relatedWorks.length == 0" class="nothing-founded-container">
           <div class="nothing-founded">
             <img
@@ -145,7 +151,7 @@
           </div>
         </div>
 
-        <div class="related-works" v-else>
+        <div class="related-works-container" v-else>
           <WorksTemp :works="relatedWorks" h="250px" w="250px" :reload="true" />
         </div>
       </v-navigation-drawer>
@@ -171,18 +177,18 @@ export default {
       easings: Object.keys(easings),
       drawer: false, // related works drawer model
       active: false, // click outside model(refere to vuetify click outside directive)
-      rwdw: "50%" // related works drawer width
+      rwdw: "50%", // related works drawer width
     };
   },
 
   components: {
-    WorksTemp: WorksTemp
+    WorksTemp: WorksTemp,
   },
 
   computed: {
     ...mapGetters({
       desc: "description/getDesc",
-      relatedWorks: "work/getRelatedWorks"
+      relatedWorks: "work/getRelatedWorks",
     }),
 
     target() {
@@ -195,9 +201,9 @@ export default {
       return {
         duration: this.duration,
         offset: this.offset,
-        easing: this.easing
+        easing: this.easing,
       };
-    }
+    },
   },
 
   created() {
@@ -311,7 +317,7 @@ export default {
         callback: function(data) {
           console.log(data);
           self.$store.getters["description/setDesc"](data);
-        }
+        },
       });
     },
 
@@ -322,7 +328,7 @@ export default {
       */
       let descContent = this.desc; // get descriptiom obj array
       let descContainer = document.querySelector(".desc-container");
-      descContent.forEach(data => {
+      descContent.forEach((data) => {
         descContainer.innerHTML += data.description;
       });
     },
@@ -336,10 +342,10 @@ export default {
           console.log(data);
           self.$store.getters["work/setRelatedWorks"](JSON.parse(data));
           console.log(self.$store.getters["work/getRelatedWorks"]);
-        }
+        },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
@@ -425,9 +431,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  align-items: center;
-  /* position: relative;
-  top: 100px; */
+  align-items: flex-start;
   margin-left: 20px;
   cursor: pointer;
 }
@@ -496,19 +500,24 @@ export default {
   /* margin: 0px;
   padding: 0px; */
 }
-.related-works {
-  width: 100%;
+.close-icon-container {
+  width: 55%;
   height: auto;
   display: flex;
-  /* flex-direction: row;
-  flex-wrap: wrap; */
+  justify-content: flex-end;
+  align-items: center;
+}
+.related-works-container {
+  width: 2000px;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
 }
-.related-works .works-flex {
-  width: 100%;
-  justify-content: center;
-  border: 1px solid green;
+::-webkit-scrollbar {
+  width: 0px;
 }
 .nothing-founded-container {
   width: 100%;
@@ -537,8 +546,8 @@ export default {
   .desc-container {
     width: 100%;
   }
-  .desc-container h2 {
-    font-size: 15px;
+  .work-name {
+    font-size: 18px;
   }
   .desc-content-flex .desc-content-header {
     height: 70px;

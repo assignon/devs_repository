@@ -1,7 +1,18 @@
 <template>
   <div class="random-core animated fadeIn">
     <div class="work-container animated flipIntX"></div>
-    <div class="desc-container animated fadeInUp"></div>
+    <div class="desc-link">
+      <div
+        class="desc-container animated fadeInUp"
+        style="color: white"
+        v-html="desc[0].description.substr(0, 250)"
+      ></div>
+      <a
+        :href="`/work/${$store.state.work.workName}`"
+        style="text-decoration: none;color: #00ff8e"
+        >read more...</a
+      >
+    </div>
   </div>
 </template>
 
@@ -54,9 +65,8 @@ export default {
     async getRandomWork() {
       // return a random work from works array
       let self = this;
-      // let randomCore = document.querySelector(".random-core");
       let workContainer = document.querySelector(".work-container");
-      let descContainer = document.querySelector(".desc-container");
+      // let descContainer = document.querySelector(".desc-container");
       let randIndex = Math.floor(
         Math.random() * self.$store.getters["work/getWorks"].length
       );
@@ -94,12 +104,11 @@ export default {
         let descriptionObj = self.desc;
 
         descriptionObj.forEach((data) => {
-          let descPart = data.description.substr(0, 250);
-          // console.log(descPart);
+          // let descPart = data.description.substr(0, 250);
+          console.log(data);
           descriptionContainer.innerHTML +=
-            descPart +
-            ` <a href='/work/${randomWork.fields.name}' style="text-decoration: none;color: #00ff8e">read more</a> ` +
-            "...";
+            // descPart +
+            ` <a href='/work/${randomWork.fields.name}' style="text-decoration: none;color: #00ff8e">read more ...</a> `;
         });
 
         // check if workContainer already have a child
@@ -120,15 +129,15 @@ export default {
         // append work description
 
         // check if workContainer already have a child
-        if (descContainer.childNodes.length == 0) {
-          //add child if there is no child yet
-          descContainer.appendChild(descriptionContainer);
-        } else {
-          // remove child
-          descContainer.removeChild(descContainer.childNodes[0]);
-          //add child
-          descContainer.appendChild(descriptionContainer);
-        }
+        // if (descContainer.childNodes.length == 0) {
+        //   //add child if there is no child yet
+        //   descContainer.appendChild(descriptionContainer);
+        // } else {
+        //   // remove child
+        //   descContainer.removeChild(descContainer.childNodes[0]);
+        //   //add child
+        //   descContainer.appendChild(descriptionContainer);
+        // }
       }, 10);
     },
 
@@ -185,12 +194,21 @@ export default {
   text-align: center;
   color: white;
 }
+.desc-link {
+  display: flex;
+  width: 100%;
+  height: auto;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 20px;
+}
 .desc-container {
   width: 100%;
   height: auto;
   display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-top: 20px;
 }
 </style>
