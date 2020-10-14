@@ -1,17 +1,17 @@
 from django.shortcuts import render
 
 
-def home(request):
+def index(request):
     return render(request, template_name='index.html')
 
 
-def works(request):
+def about(request):
     return render(request, template_name='index.html')
 
 
-def description(request, name):
+def contact(request):
     return render(request, template_name='index.html')
 
 
-def skills(request):
+def signup(request):
     return render(request, template_name='index.html')
