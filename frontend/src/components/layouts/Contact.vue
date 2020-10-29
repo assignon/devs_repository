@@ -147,6 +147,7 @@ export default {
               // }
             }
           });
+          self.msgReceive();
         }else{
           this.contactFormErr = true;
           formErrMsg.innerHTML = validationErrMsg.textContent;
