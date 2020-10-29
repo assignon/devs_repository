@@ -142,9 +142,9 @@ export default {
             },
             callback: function(data) {
               console.log(data);
-              if(data.sended){
+              // if(data.sended){
                 self.msgReceive();
-              }
+              // }
             }
           });
         }else{
