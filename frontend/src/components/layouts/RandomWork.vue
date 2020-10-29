@@ -33,7 +33,7 @@ export default {
   },
 
   created() {
-    // let self = this;
+    let self = this;
     this.allWorks("default", 0, 0);
     // this.$store.dispatch("work/allWorks", {
     //   url: "works/all_works",
@@ -44,18 +44,18 @@ export default {
     //   },
     // });
 
-    // setInterval(() => {
-    //   self.getRandomWork();
-    // }, 10000);
+     // force getRandomWork() to run only on the home page
+      setInterval(() => {
+        if(self.$router.history.current.name == 'Home'){
+          self.getRandomWork();
+        }else{
+          clearInterval(self.getRandomWork)
+        }
+      }, 15000);
   },
 
   mounted() {
-    let self = this;
-   if(self.$router.history.current.name == 'Home'){
-      setInterval(() => {
-      self.getRandomWork();
-    }, 30000);
-   }
+ 
   },
 
   methods: {
