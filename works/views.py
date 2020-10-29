@@ -450,7 +450,8 @@ class Works_view(viewsets.ModelViewSet):
     @action(methods=['post'], detail=False)
     def sendmail(self, request):
         name = request.data['body']['name']
-        sender_email = request.data['body']['email']
+        # sender_email = request.data['body']['email']
+        sender_email = 'k.asky@aol.com'
         user_message = request.data['body']['message']
         # get email data
         # email_user = User.objects.get(username='kevEmail')
@@ -487,7 +488,7 @@ class Works_view(viewsets.ModelViewSet):
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
             server.login('kevineasky@gmail.com', password)
             server.sendmail(
-                sender_email, receiver_email, message.as_string()
+                receiver_email, sender_email, message.as_string()
             )
 
         return Response({'sended': True})
