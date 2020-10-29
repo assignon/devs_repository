@@ -449,47 +449,47 @@ class Works_view(viewsets.ModelViewSet):
     @csrf_exempt
     @action(methods=['post'], detail=False)
     def sendmail(self, request):
-        name = request.data['body']['name']
-        # sender_email = request.data['body']['email']
-        sender_email = 'k.asky@aol.com'
-        user_message = request.data['body']['message']
-        # get email data
-        # email_user = User.objects.get(username='kevEmail')
-        # send email
-        # receiver_email = settings.EMAIL_HOST_USER
-        receiver_email = 'kevineasky@gmail.com'
-        password = settings.EMAIL_HOST_PASSWORD
+        # name = request.data['body']['name']
+        # # sender_email = request.data['body']['email']
+        # sender_email = 'k.asky@aol.com'
+        # user_message = request.data['body']['message']
+        # # get email data
+        # # email_user = User.objects.get(username='kevEmail')
+        # # send email
+        # # receiver_email = settings.EMAIL_HOST_USER
+        # receiver_email = 'kevineasky@gmail.com'
+        # password = settings.EMAIL_HOST_PASSWORD
 
-        message = MIMEMultipart("alternative")
-        message["Subject"] = "Portfolio msg from {}".format(name)
-        message["From"] = sender_email
-        message["To"] = receiver_email
+        # message = MIMEMultipart("alternative")
+        # message["Subject"] = "Portfolio msg from {}".format(name)
+        # message["From"] = sender_email
+        # message["To"] = receiver_email
 
-        # Create the plain-text and HTML version of your message
+        # # Create the plain-text and HTML version of your message
 
-        html = """\
-        <html>
-        <body>
-           {}<br/><br/>
-           Sender Email: {}
-        </body>
-        </html>
-        """.format(user_message, sender_email)
+        # html = """\
+        # <html>
+        # <body>
+        #    {}<br/><br/>
+        #    Sender Email: {}
+        # </body>
+        # </html>
+        # """.format(user_message, sender_email)
 
-        # Turn these into plain/html MIMEText objects
-        msg = MIMEText(html, "html")
+        # # Turn these into plain/html MIMEText objects
+        # msg = MIMEText(html, "html")
 
-        # Add HTML/plain-text parts to MIMEMultipart message
-        # The email client will try to render the last part first
-        message.attach(msg)
+        # # Add HTML/plain-text parts to MIMEMultipart message
+        # # The email client will try to render the last part first
+        # message.attach(msg)
 
-        # Create secure connection with server and send email
-        context = ssl.create_default_context()
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-            server.login('kevineasky@gmail.com', password)
-            server.sendmail(
-                receiver_email, sender_email, message.as_string()
-            )
+        # # Create secure connection with server and send email
+        # context = ssl.create_default_context()
+        # with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+        #     server.login('kevineasky@gmail.com', password)
+        #     server.sendmail(
+        #         receiver_email, sender_email, message.as_string()
+        #     )
 
         return Response({'sended': True})
 
