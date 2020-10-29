@@ -248,7 +248,7 @@ export default {
         [
           `
           def google_api(request, site):|?
-              API_KEY = "AIzaSyDQDsq1Blbm9UZuRGBC93IYKES5Oheplt0"|?
+              API_KEY = "AIzaSyC93IYKES5OhepltjsdfloihksjP"|?
               SITE = site|?
               gmaps = googlemaps.Client(key=API_KEY)|?
 
@@ -263,7 +263,7 @@ export default {
                   adress_dict = {'place_id': True}|??
                   for a in adress:|???
                       adress_dict[a['types'][0]] = a['long_name']||??
-              
+
                   return adress_dict|?
               else:|??
                   return {'place_id': False}
@@ -308,9 +308,14 @@ export default {
   created() {
     // this.animateText();
     this.screenWithChange();
+    console.log(this.$route);
   },
 
   mounted() {
+    let self = this
+    if(this.$route.path == `/review/${self.$route.params.reviewer}`){
+      alert('welcom reviewer')
+    }
     // this.animateText();
   },
 

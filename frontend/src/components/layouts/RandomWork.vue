@@ -19,7 +19,7 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "RAndomWork",
+  name: "RandomWork",
 
   data() {
     return {};
@@ -51,17 +51,11 @@ export default {
 
   mounted() {
     let self = this;
-    // this.$store.dispatch("work/allWorks", {
-    //   url: "works/all_works",
-    //   params: { order_by: "default", limit: 0, offset: 0 },
-    //   callback: function(data) {
-    //     self.$store.getters["work/setWorks"](JSON.parse(data));
-    //     self.getRandomWork();
-    //   },
-    // });
-    setInterval(() => {
+   if(self.$router.history.current.name == 'Home'){
+      setInterval(() => {
       self.getRandomWork();
-    }, 10000);
+    }, 30000);
+   }
   },
 
   methods: {
@@ -90,30 +84,6 @@ export default {
         workImg.style.backgroundSize = "cover";
         workImg.style.borderRadius = "3px";
         self.$store.state.work.workName = name;
-        // let workName = document.createElement("h4");
-        // workName.className = "work-name";
-        // workName.textContent = name;
-        // workName.style.textAlign = "center";
-        // workName.style.color = "white";
-        // workName.style.position = "relative";
-        // workName.style.top = "10px";
-        // work decsription
-        let descriptionContainer = document.createElement("p");
-        descriptionContainer.style.width = "90%";
-        descriptionContainer.style.height = "auto";
-        descriptionContainer.style.fontSize = "15px";
-        descriptionContainer.style.color = "white";
-
-        let descriptionObj = self.desc;
-
-        descriptionObj.forEach((data) => {
-          // let descPart = data.description.substr(0, 250);
-          console.log(data);
-          descriptionContainer.innerHTML +=
-            // descPart +
-            ` <a href='/work/${randomWork.fields.name}' style="text-decoration: none;color: #00ff8e">read more ...</a> `;
-        });
-
         // check if workContainer already have a child
         if (workContainer.childNodes.length == 0) {
           //add child if there is no child yet
@@ -128,19 +98,6 @@ export default {
         workContainer.addEventListener("click", function() {
           self.$router.push(`/work/${randomWork.fields.name}`);
         });
-
-        // append work description
-
-        // check if workContainer already have a child
-        // if (descContainer.childNodes.length == 0) {
-        //   //add child if there is no child yet
-        //   descContainer.appendChild(descriptionContainer);
-        // } else {
-        //   // remove child
-        //   descContainer.removeChild(descContainer.childNodes[0]);
-        //   //add child
-        //   descContainer.appendChild(descriptionContainer);
-        // }
       }, 10);
     },
 

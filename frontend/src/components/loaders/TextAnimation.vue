@@ -17,12 +17,12 @@ export default {
     "random",
     "interval",
     "timeout",
-    "display"
+    "display",
   ], //ta=textAlign, fz=fontsize
 
   data() {
     return {
-      totalDelay: 0 // time the text animation take to finish
+      totalDelay: 0, // time the text animation take to finish
     };
   },
 
@@ -79,7 +79,7 @@ export default {
 
       let colors = [
         {
-          P: [
+          P: [ // python
             {
               k: "blue",
               f: "green",
@@ -87,11 +87,11 @@ export default {
               v: "white",
               p: "orange",
               s: "yellow",
-              o: "red"
-            }
-          ]
+              o: "red",
+            },
+          ],
         },
-        {}
+        {},
       ];
 
       return colors[index][progIndex][0][keywordsIndex];
@@ -167,7 +167,7 @@ export default {
             // }
 
             console.log(self.syntaxHighlighting(index, progIndex, kwIndex));
-            spanArray.forEach(s => {
+            spanArray.forEach((s) => {
               // s.style.color = "green";
               s.style.color = self.syntaxHighlighting(
                 index,
@@ -191,8 +191,8 @@ export default {
         callback(p);
         // console.log(p);
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
