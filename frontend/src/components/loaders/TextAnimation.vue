@@ -36,7 +36,7 @@ export default {
       let randomNumber = Math.floor(Math.random() * textArrayLen);
       this.animateText(randomNumber, function(el) {
         // el: <p>
-        // console.log(el);
+        console.log(el);
         // setTimeout(() => {
         //   el.style.display = "none";
         // }, self.totalDelay);
@@ -79,7 +79,7 @@ export default {
 
       let colors = [
         {
-          P: [
+          P: [ // python
             {
               k: "blue",
               f: "green",

@@ -1,3 +1,6 @@
+import ssl
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.http import HttpResponse, JsonResponse
@@ -26,6 +29,11 @@ from datetime import datetime
 import codecs
 from django.core.files import File
 from django.core.mail import send_mail
+import smtplib
+import ssl
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from django.conf import settings
 
 
 class SearchPattern():
@@ -442,17 +450,46 @@ class Works_view(viewsets.ModelViewSet):
     @action(methods=['post'], detail=False)
     def sendmail(self, request):
         name = request.data['body']['name']
-        email = request.data['body']['email']
-        message = request.data['body']['message']
+        sender_email = request.data['body']['email']
+        user_message = request.data['body']['message']
+        # get email data
+        email_user = User.objects.get(username='kevEmail')
         # send email
-        send_mail(
-            f'Portfolio mail van {name}',
-            message,
-            email,
-            ['yanick007.dev@gmail.com']
-        )
+        receiver_email = email_user.email
+        password = settings.EMAIL_HOST_PASSWORD
 
-        return Response(request.data)
+        message = MIMEMultipart("alternative")
+        message["Subject"] = "Portfolio msg from {}".format(name)
+        message["From"] = sender_email
+        message["To"] = receiver_email
+
+        # Create the plain-text and HTML version of your message
+
+        html = """\
+        <html>
+        <body>
+           {}<br/><br/>
+           Sender Email: {}
+        </body>
+        </html>
+        """.format(user_message, sender_email)
+
+        # Turn these into plain/html MIMEText objects
+        msg = MIMEText(html, "html")
+
+        # Add HTML/plain-text parts to MIMEMultipart message
+        # The email client will try to render the last part first
+        message.attach(msg)
+
+        # Create secure connection with server and send email
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
+            server.login(receiver_email, password)
+            server.sendmail(
+                sender_email, receiver_email, message.as_string()
+            )
+
+        return Response({'sended': True})
 
 
 class Description_view(viewsets.ModelViewSet):

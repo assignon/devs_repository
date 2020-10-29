@@ -19,7 +19,7 @@
 <script>
 import { mapGetters } from "vuex";
 export default {
-  name: "RAndomWork",
+  name: "RandomWork",
 
   data() {
     return {};
@@ -51,9 +51,11 @@ export default {
 
   mounted() {
     let self = this;
-    setInterval(() => {
+   if(self.$router.history.current.name == 'Home'){
+      setInterval(() => {
       self.getRandomWork();
-    }, 10000);
+    }, 30000);
+   }
   },
 
   methods: {

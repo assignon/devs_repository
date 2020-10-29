@@ -308,9 +308,14 @@ export default {
   created() {
     // this.animateText();
     this.screenWithChange();
+    console.log(this.$route);
   },
 
   mounted() {
+    let self = this
+    if(this.$route.path == `/review/${self.$route.params.reviewer}`){
+      alert('welcom reviewer')
+    }
     // this.animateText();
   },
 
