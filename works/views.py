@@ -453,9 +453,9 @@ class Works_view(viewsets.ModelViewSet):
         sender_email = request.data['body']['email']
         user_message = request.data['body']['message']
         # get email data
-        email_user = User.objects.get(username='kevEmail')
+        # email_user = User.objects.get(username='kevEmail')
         # send email
-        receiver_email = email_user.email
+        receiver_email = settings.EMAIL_HOST_USER
         password = settings.EMAIL_HOST_PASSWORD
 
         message = MIMEMultipart("alternative")
