@@ -53,6 +53,7 @@
         ></v-text-field>
         <v-text-field
           v-model="email"
+          type='email'
           :rules="emailRules"
           label="Email*"
           required
@@ -89,9 +90,9 @@
         </div>
       </v-form>
       <div class="email-sended animated fadeIn" v-if="emailSended">
-        <h3 class="animated fadeInUp">Thanks {{ name }}</h3>
+        <v-icon style='font-size:50px;' color='#54bf8e' class='mb-3'>fas fa-check-circle</v-icon>
         <p class="animated fadeInUp">
-          I receive your email and i will response shortly...
+          <strong>Thanks {{ name }},</strong> I receive your email and i will response shortly...
         </p>
       </div>
     </v-flex>
@@ -127,20 +128,29 @@ export default {
     sendMail() {
       let self = this;
       let formErrMsg = document.querySelector(".form-err-msg");
+      let validationErrMsg = document.querySelector('.v-messages__message');
+
       if (self.name != "" && self.email != "" && self.messageValue != "") {
-        self.contactFormErr = false;
-        this.$store.dispatch("sendmail", {
-          url: "works/sendmail",
-          params: {
-            name: self.name,
-            email: self.email,
-            message: self.messageValue
-          },
-          callback: function(data) {
-            console.log(data);
-            self.msgReceive();
-          }
-        });
+        if(!document.body.contains(validationErrMsg)){
+          self.contactFormErr = false;
+          this.$store.dispatch("sendmail", {
+            url: "works/sendmail",
+            params: {
+              name: self.name,
+              email: self.email,
+              message: self.messageValue
+            },
+            callback: function(data) {
+              console.log(data);
+              if(data.sended){
+                self.msgReceive();
+              }
+            }
+          });
+        }else{
+          this.contactFormErr = true;
+          formErrMsg.innerHTML = validationErrMsg.textContent;
+        }
       } else {
         this.contactFormErr = true;
         formErrMsg.innerHTML = "Fields are empty";
@@ -152,7 +162,7 @@ export default {
       this.emailSended = true;
       setTimeout(function() {
         self.emailSended = false;
-      }, 2000);
+      }, 7000);
       self.$refs.form.reset();
     }
   }
