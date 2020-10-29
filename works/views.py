@@ -455,7 +455,8 @@ class Works_view(viewsets.ModelViewSet):
         # get email data
         # email_user = User.objects.get(username='kevEmail')
         # send email
-        receiver_email = settings.EMAIL_HOST_USER
+        # receiver_email = settings.EMAIL_HOST_USER
+        receiver_email = 'kevineasky@gmail.com'
         password = settings.EMAIL_HOST_PASSWORD
 
         message = MIMEMultipart("alternative")
@@ -484,7 +485,7 @@ class Works_view(viewsets.ModelViewSet):
         # Create secure connection with server and send email
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL("smtp.gmail.com", 465, context=context) as server:
-            server.login(receiver_email, password)
+            server.login('kevineasky@gmail.com', password)
             server.sendmail(
                 sender_email, receiver_email, message.as_string()
             )
