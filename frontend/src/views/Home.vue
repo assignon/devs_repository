@@ -85,14 +85,14 @@
           My Expertise
         </h1>
         <p
-          class="skill-subtext"
+          class="skill-subtext mb-5"
           data-aos="fade-up"
           data-aos-delay="100"
           data-aos-duration="500"
         >
           The areas in which I excel
         </p>
-        <div class="skills-container hidden-sm-and-down">
+        <div class="skills-container hidden-sm-and-down mt-5">
           <div class="skills" v-for="(skill, i) in expertises" :key="i">
             <!-- <v-img
               alt
@@ -111,7 +111,7 @@
               data-aos="zoom-in"
               :data-aos-delay="i * 250"
               data-aos-duration="500"
-              class="expertise-img"
+              class="expertise-img mb-3"
             />
             <h3
               data-aos="fade-up"
@@ -120,13 +120,13 @@
             >
               {{ skill.name }}
             </h3>
-            <p
+            <!-- <p
               data-aos="fade-up"
               :data-aos-delay="i * (170 * 4)"
               data-aos-duration="500"
             >
               {{ skill.content }}
-            </p>
+            </p> -->
           </div>
         </div>
         <!------------------------------------------ Mobile  ---------------------------------------------------------->
@@ -152,13 +152,13 @@
                   :data-aos-delay="i * 150"
                   data-aos-duration="500"
                 /> -->
-                <img :src="item.imge" alt="" class="expertise-img" />
+                <img :src="item.imge" alt="" class="expertise-img mb-3" />
                 <h3>
                   {{ item.name }}
                 </h3>
-                <p>
+                <!-- <p>
                   {{ item.content }}
-                </p>
+                </p> -->
               </div>
             </div>
           </v-carousel-item>

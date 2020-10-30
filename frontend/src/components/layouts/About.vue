@@ -20,7 +20,7 @@
       <!-- <v-icon medium>{{ name.icon }}</v-icon> -->
     </v-tab>
 
-    <v-tab-item
+    <!-- <v-tab-item
       class="tab-item interess-tab tabs"
       style="background-color: #FAFAFA;box-shadow: none;"
       v-for="(content, c) in about"
@@ -29,12 +29,41 @@
       <p class="animated fadeInUp">
         {{ content.fields.content }}
       </p>
+    </v-tab-item> -->
+
+    <!-- interes tab content -->
+    <v-tab-item
+      class="tab-item interess-tab tabs"
+      style="background-color: #FAFAFA;box-shadow: none;"
+    >
+      <p class="animated fadeInUp">
+        {{about[0].fields.content}}
+      </p>
+    </v-tab-item>
+    <!-- study tab content -->
+    <v-tab-item
+      class="tab-item interess-tab tabs"
+      style="background-color: #FAFAFA;box-shadow: none;"
+    >
+      <p class="animated fadeInUp">
+        <Timeline />
+      </p>
+    </v-tab-item>
+    <!-- hobby tab content -->
+    <v-tab-item
+      class="tab-item interess-tab tabs"
+      style="background-color: #FAFAFA;box-shadow: none;"
+    >
+      <p class="animated fadeInUp">
+        {{about[2].fields.content}}
+      </p>
     </v-tab-item>
   </v-tabs>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
+import Timeline from "@/components/layouts/Timeline.vue";
 export default {
   name: "About",
 
@@ -42,6 +71,10 @@ export default {
     return {
       tab: null
     };
+  },
+
+  components:{
+    Timeline: Timeline
   },
 
   computed: {
