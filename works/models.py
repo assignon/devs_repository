@@ -106,6 +106,7 @@ class Works(models.Model):
         primary_key=True,
     )
     tags = models.CharField(max_length=200)  # []
+    publish = models.BooleanField(default=False)
     # tags = models.ManyToManyField(Tags, blank=True)
     added_on = models.DateTimeField(auto_now_add=True)
     # user = models.ForeignKey(User, on_delete=models.CASCADE)

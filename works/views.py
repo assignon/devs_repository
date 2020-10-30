@@ -169,7 +169,8 @@ class SearchPattern():
         Args:
             query (string): user search query or queries]
         """
-        works = Works.objects.filter(tags__icontains=query)
+        works = Works.objects.filter(
+            Q(tags__icontains=query) & Q(publish=1))
         return serializers.serialize('json', works)
 
     def search_by_words(self, words):
@@ -215,7 +216,7 @@ class SearchPattern():
         # else:  # month date format
         #     works = Works.objects.filter(added_on__month=date)
         works = Works.objects.filter(
-            added_on__year=date)
+            Q(added_on__year=date) & Q(publish=1))
         print(date)
         return serializers.serialize('json', works)
         # return date_regex
@@ -232,15 +233,17 @@ class SearchPattern():
         date_regex = self.date_re(date)
         if date_regex == 'ymd':  # year-month-day date format
             works = Works.objects.filter(
-                added_on__date__gt=datetime.date(date))
+                Q(added_on__date__gt=datetime.date(date)) & Q(publish=1))
         elif date_regex == 'ym':  # year-month date format
             year, month = date.split("-")
             works = Works.objects.filter(
-                Q(added_on__year__gt=year) & Q(added_on__month__gt=month))
+                Q(added_on__year__gt=year) & Q(added_on__month__gt=month) & Q(publish=1))
         elif date_regex == "y":  # year date format
-            works = Works.objects.filter(added_on__year__gt=date)
+            works = Works.objects.filter(
+                Q(added_on__year__gt=date) & Q(publish=1))
         else:  # month date format
-            works = Works.objects.filter(added_on__month__gt=date)
+            works = Works.objects.filter(
+                Q(added_on__month__gt=date) & Q(publish=1))
 
         return serializers.serialize('json', works)
 
@@ -256,15 +259,17 @@ class SearchPattern():
         date_regex = self.date_re(date)
         if date_regex == 'ymd':  # year-month-day date format
             works = Works.objects.filter(
-                added_on__date__lt=datetime.date(date))
+                Q(added_on__date__lt=datetime.date(date)) & Q(publish=1))
         elif date_regex == 'ym':  # year-month date format
             year, month = date.split("-")
             works = Works.objects.filter(
-                Q(added_on__year__lt=year) & Q(added_on__month__lt=month))
+                Q(added_on__year__lt=year) & Q(added_on__month__lt=month) & Q(publish=1))
         elif date_regex == "y":  # year date format
-            works = Works.objects.filter(added_on__year__lt=date)
+            works = Works.objects.filter(
+                Q(added_on__year__lt=date) & Q(publish=1))
         else:  # month date format
-            works = Works.objects.filter(added_on__month__lt=date)
+            works = Works.objects.filter(
+                Q(added_on__month__lt=date) & Q(publish=1))
         # pub_date__gte=datetime.date(2005, 1, 30)
         return serializers.serialize('json', works)
 
@@ -283,7 +288,8 @@ class SearchPattern():
         date_regex = self.date_re(date)
         if date_regex == 'ymd':  # year-month-day date format
             works = Works.objects.filter(
-                Q(added_on__date=datetime.date(date)) & Q(tags__in=words)
+                Q(added_on__date=datetime.date(date)) & Q(
+                    tags__in=words) & Q(publish=1)
             )
         elif date_regex == 'ym':  # year-month date format
             year, month = date.split("-")
@@ -293,10 +299,10 @@ class SearchPattern():
             )
         elif date_regex == "y":  # year date format
             works = Works.objects.filter(
-                Q(added_on__year=date) & Q(tags__in=words))
+                Q(added_on__year=date) & Q(tags__in=words) & Q(publish=1))
         else:  # month date format
             works = Works.objects.filter(
-                Q(added_on__month=date) & Q(tags__in=words))
+                Q(added_on__month=date) & Q(tags__in=words) & Q(publish=1))
         # pub_date__gte=datetime.date(2005, 1, 30)
         return serializers.serialize('json', works)
 
@@ -316,20 +322,21 @@ class SearchPattern():
         date_regex = self.date_re(date)
         if date_regex == 'ymd':  # year-month-day date format
             works = Works.objects.filter(
-                Q(added_on__date__gt=datetime.date(date)) & Q(tags__in=words)
+                Q(added_on__date__gt=datetime.date(date)) & Q(
+                    tags__in=words) & Q(publish=1)
             )
         elif date_regex == 'ym':  # year-month date format
             year, month = date.split("-")
             works = Works.objects.filter(
                 Q(added_on__year__gt=year) & Q(
-                    added_on__month__gt=month) & Q(tags__in=words)
+                    added_on__month__gt=month) & Q(tags__in=words) & Q(publish=1)
             )
         elif date_regex == "y":  # year date format
             works = Works.objects.filter(
-                Q(added_on__year__gt=date) & Q(tags__in=words))
+                Q(added_on__year__gt=date) & Q(tags__in=words) & Q(publish=1))
         else:  # month date format
             works = Works.objects.filter(
-                Q(added_on__month__gt=date) & Q(tags__in=words))
+                Q(added_on__month__gt=date) & Q(tags__in=words) & Q(publish=1))
 
         return serializers.serialize('json', works)
 
@@ -349,20 +356,21 @@ class SearchPattern():
         date_regex = self.date_re(date)
         if date_regex == 'ymd':  # year-month-day date format
             works = Works.objects.filter(
-                Q(added_on__date__lt=datetime.date(date)) & Q(tags__in=words)
+                Q(added_on__date__lt=datetime.date(date)) & Q(
+                    tags__in=words) & Q(publish=1)
             )
         elif date_regex == 'ym':  # year-month date format
             year, month = date.split("-")
             works = Works.objects.filter(
                 Q(added_on__year__lt=year) & Q(
-                    added_on__month__lt=month) & Q(tags__in=words)
+                    added_on__month__lt=month) & Q(tags__in=words) & Q(publish=1)
             )
         elif date_regex == "y":  # year date format
             works = Works.objects.filter(
-                Q(added_on__year__lt=date) & Q(tags__in=words))
+                Q(added_on__year__lt=date) & Q(tags__in=words) & Q(publish=1))
         else:  # month date format
             works = Works.objects.filter(
-                Q(added_on__month__lt=date) & Q(tags__in=words))
+                Q(added_on__month__lt=date) & Q(tags__in=words) & Q(publish=1))
         # pub_date__gte=datetime.date(2005, 1, 30)
         return serializers.serialize('json', works)
 
@@ -385,17 +393,17 @@ class Works_view(viewsets.ModelViewSet):
         offset = request.query_params.get('offset')
         limit = request.query_params.get('limit')
         if order_by == 'default':
-            works = Works.objects.all().order_by('-pk')[int(offset):int(limit)] \
+            works = Works.objects.filter(publish=1).order_by('-pk')[int(offset):int(limit)] \
                 if int(limit) != 0 \
-                else Works.objects.all().order_by('-pk')
+                else Works.objects.filter(publish=1).order_by('-pk')
         elif order_by == 'asc':
-            works = Works.objects.all().order_by('pk')[int(offset):int(limit)] \
+            works = Works.objects.filter(publish=1).order_by('pk')[int(offset):int(limit)] \
                 if int(limit) != 0 \
-                else Works.objects.all().order_by('pk')
+                else Works.objects.filter(publish=1).order_by('pk')
         else:
-            works = Works.objects.all().order_by('-pk')[int(offset):int(limit)] \
+            works = Works.objects.filter(publish=1).order_by('-pk')[int(offset):int(limit)] \
                 if int(limit) != 0 \
-                else Works.objects.all().order_by('-pk')
+                else Works.objects.filter(publish=1).order_by('-pk')
         # works = self.get_queryset()
 
         # serializer = self.get_serializer_class()(works)
@@ -406,7 +414,7 @@ class Works_view(viewsets.ModelViewSet):
     @action(methods=['get'], detail=False)
     def works_count(self, request):
         # get number of works in DB
-        works_count = Works.objects.all().count()
+        works_count = Works.objects.filter(publish=1).count()
         return Response(works_count)
 
     @csrf_exempt
@@ -432,13 +440,14 @@ class Works_view(viewsets.ModelViewSet):
         work_name = request.query_params.get('work_name')  # current work name
         related_works_data = []
         # get current work tags
-        current_work_tags = Works.objects.get(name=work_name).work_type
+        current_work_tags = Works.objects.get(
+            Q(name=work_name) & Q(publish=1)).work_type
         work_types = current_work_tags.split(",")  # split tags into array
 
         for wtype in work_types:
             # filter works on tags and exclude the current work
             works_related = Works.objects.exclude(name=work_name).filter(
-                tags__icontains=wtype)
+                Q(tags__icontains=wtype) & Q(publish=1))
             related_works_data.extend(works_related)
 
         # remove duplcated works
@@ -509,7 +518,8 @@ class Description_view(viewsets.ModelViewSet):
         """
         work_name = request.query_params.get('work_name')
         # get description id with work name
-        description_id = Works.objects.get(name=work_name).description_id
+        description_id = Works.objects.get(
+            Q(name=work_name) & Q(publish=1)).description_id
         # get description by id
         description = Description.objects.get(id=description_id)
         # description_file = codecs.open(
