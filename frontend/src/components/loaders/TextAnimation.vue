@@ -129,7 +129,7 @@ export default {
           spans.textContent = t[i];
           spans.classList.remove("bounceOut");
           spans.className = `animated ${self.animation}`;
-          spans.style.animationDelay = `${i / 10}s`;
+          spans.style.animationDelay = `${i / 30}s`;
           spanArray.push(spans);
           p.appendChild(spans);
 

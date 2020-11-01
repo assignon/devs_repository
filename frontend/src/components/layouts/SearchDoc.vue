@@ -30,7 +30,7 @@
               </p>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item>
+          <!-- <v-list-item>
             <v-list-item-content>
               <p>
                 Search projects
@@ -52,7 +52,7 @@
                 <kbd>website+pwa=2020,09</kbd>
               </p>
             </v-list-item-content>
-          </v-list-item>
+          </v-list-item> -->
           <v-list-item>
             <v-list-item-content>
               <p>
@@ -63,7 +63,7 @@
               </p>
             </v-list-item-content>
           </v-list-item>
-          <v-list-item>
+          <!-- <v-list-item>
             <v-list-item-content>
               <p>
                 <strong>built-in</strong> key words <br />e.g.
@@ -72,7 +72,7 @@
                 <kbd>oldest</kbd>
               </p>
             </v-list-item-content>
-          </v-list-item>
+          </v-list-item> -->
         </v-list-item-group>
       </v-list>
       <p>

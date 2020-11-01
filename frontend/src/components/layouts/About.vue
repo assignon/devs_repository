@@ -36,9 +36,21 @@
       class="tab-item interess-tab tabs"
       style="background-color: #FAFAFA;box-shadow: none;"
     >
-      <p class="animated fadeInUp">
+      <p class='mb-5 interess-intro'>
+          After going through all the things I could do and realize with the programming languages,
+          two things caught my curiosity and interest. These two things that I spend most of my time
+          to learn more about and become a specialist.
+        </p>
+      <div class='interess-container mt-5'>
+        <div v-for='(interess, i) in interesses' :key='i' class='interesses'>
+          <v-icon style='font-size: 50px;color:#16032c' class='mb-3'> fas fa-{{interess.icon}}</v-icon>
+          <h4 class='mb-5'>{{interess.titel}}</h4>
+          <p>{{interess.content}}</p>
+        </div>
+      </div>
+      <!-- <p class="animated fadeInUp">
         {{about[0].fields.content}}
-      </p>
+      </p> -->
     </v-tab-item>
     <!-- study tab content -->
     <v-tab-item
@@ -51,12 +63,16 @@
     </v-tab-item>
     <!-- hobby tab content -->
     <v-tab-item
-      class="tab-item interess-tab tabs"
+      class="tab-item hobby-tab tabs"
       style="background-color: #FAFAFA;box-shadow: none;"
     >
-      <p class="animated fadeInUp">
+      <!-- <p class="animated fadeInUp">
         {{about[2].fields.content}}
-      </p>
+      </p> -->
+      <div v-for="(hobby, i) in hobbies" :key='i' class='hobby-container'>
+        <v-icon style='font-size: 50px' class='mb-3'>fas fa-{{hobby.icon}}</v-icon>
+        <h4>{{hobby.name}}</h4>
+      </div>
     </v-tab-item>
   </v-tabs>
 </template>
@@ -69,7 +85,31 @@ export default {
 
   data() {
     return {
-      tab: null
+      tab: null,
+      interesses: [
+        {
+          icon: 'brain',
+          titel: 'AI',
+          content: ''
+        },
+        {
+          icon: 'robot',
+          titel: 'Robotic',
+          content: ''
+        }
+      ],
+      hobbies:[
+        {
+          icon: 'futbol',
+          name: 'Footbal',
+          content: ''
+        },
+        {
+          icon: 'pencil-ruler',
+          name: 'Drawing',
+          content: ''
+        },
+      ]
     };
   },
 
@@ -122,6 +162,41 @@ export default {
   font-size: 16px;
   margin: auto;
 }
+.interess-tab{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.hobby-tab{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.interess-container{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.interesses{
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.interess-intro{
+width:70%;
+}
+.interesses p{
+  font-size: 16px;
+  text-align: center;
+}
 @media only screen and (max-width: 500px) {
   .about-tab {
     width: 100%;
@@ -129,6 +204,9 @@ export default {
   .tabs p {
     width: 80%;
     text-align: left;
+  }
+  .interess-intro{
+    width: 100%;
   }
 }
 </style>

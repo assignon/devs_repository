@@ -25,7 +25,7 @@
           {{item.title}}
         </v-card-title>
         <v-card-text class="white text--primary">
-          <p>{{item.content}}</p>
+          <p class='hidden-md-and-up'>{{item.year}}</p>
         </v-card-text>
       </v-card>
     </v-timeline-item>
@@ -43,28 +43,28 @@ export default {
         {
           color: 'red',
           icon: 'mdi-star',
-          title: 'MBO-2 ICT beheer op ROC zuid-oost',
+          title: 'MBO-2 ICT beheer (ROC zuid-oost)',
           year: '09/2015 - 07/2016',
           content: ''
         },
         {
-          color: 'purple',
+          color: '#ff00ff',
           icon: 'mdi-book-variant',
-          title: 'MBO-4 Média Development op Media College',
+          title: 'MBO-4 Média Development (Media College)',
           year: ' 09/2016 - 07/2020',
           content: ''
         },
         {
-          color: 'green',
+          color: '#183153',
           icon: 'mdi-airballoon',
-          title: 'HBO Technisch Informatica op HvA',
-          year: '010/2019 - 07/2020',
+          title: 'HBO Technisch Informatica (HvA)',
+          year: '10/2019 - 07/2020',
           content: ''
         },
         {
-          color: 'indigo',
+          color: '#00a1e1',
           icon: 'mdi-buffer',
-          title: 'HBO Open-ICT(AI) op HU',
+          title: 'HBO Open-ICT(AI) (HU)',
           year: '10/2020 - nog bezig',
           content: ''
         },
