@@ -161,7 +161,7 @@
               :key="i"
             >
               <h3>{{ item.prog_lang }}</h3>
-              <p>{{ item.content }}</p>
+              <p v-html='item.content'></p>
             </div>
           </div>
         </div>
