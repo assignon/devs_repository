@@ -30,39 +30,40 @@ export default {
 
   mounted() {
     let self = this;
-    if (self.random) {
-      // console.log(randomNumber);
-      let textArrayLen = this.textArray.length;
-      let randomNumber = Math.floor(Math.random() * textArrayLen);
-      this.animateText(randomNumber, function(el) {
-        // el: <p>
-        console.log(el);
-        // setTimeout(() => {
-        //   el.style.display = "none";
-        // }, self.totalDelay);
-      });
+    self.animateBlock();
+    // if (self.random) {
+    //   // console.log(randomNumber);
+    //   let textArrayLen = this.textArray.length;
+    //   let randomNumber = Math.floor(Math.random() * textArrayLen);
+    //   this.animateText(randomNumber, function(el) {
+    //     // el: <p>
+    //     console.log(el);
+    //     // setTimeout(() => {
+    //     //   el.style.display = "none";
+    //     // }, self.totalDelay);
+    //   });
 
-      //   setInterval(() => {
-      //     let textArrayLen = this.textArray.length;
-      //     let randomNumber = Math.floor(Math.random() * textArrayLen);
-      //     this.animateText(randomNumber, function(el) {
-      //       setTimeout(() => {
-      //         let childs = el.children;
-      //         childs.forEach((child) => {
-      //           child.classList.remove(self.animation);
-      //           child.classList.add("bounceOut");
-      //           setTimeout(() => {
-      //             el.style.display = "none";
-      //           }, 3000);
-      //         });
-      //       }, self.totalDelay);
-      //     });
-      //   }, self.totalDelay * 2);
-      // } else {
-      //   setInterval(() => {
-      //     this.animateText();
-      //   }, 2000);
-    }
+    //   //   setInterval(() => {
+    //   //     let textArrayLen = this.textArray.length;
+    //   //     let randomNumber = Math.floor(Math.random() * textArrayLen);
+    //   //     this.animateText(randomNumber, function(el) {
+    //   //       setTimeout(() => {
+    //   //         let childs = el.children;
+    //   //         childs.forEach((child) => {
+    //   //           child.classList.remove(self.animation);
+    //   //           child.classList.add("bounceOut");
+    //   //           setTimeout(() => {
+    //   //             el.style.display = "none";
+    //   //           }, 3000);
+    //   //         });
+    //   //       }, self.totalDelay);
+    //   //     });
+    //   //   }, self.totalDelay * 2);
+    //   // } else {
+    //   //   setInterval(() => {
+    //   //     this.animateText();
+    //   //   }, 2000);
+    // }
   },
 
   methods: {
@@ -95,6 +96,47 @@ export default {
       ];
 
       return colors[index][progIndex][0][keywordsIndex];
+    },
+
+    animateBlock(){
+      let textContainer = document.querySelector(".textanimation-core");
+      let self = this;
+      // let indentArr = ['?', '|', '#'];
+      let colors = ['#E65100', 'white', 'orange', 'purple', '#009688', '#00BCD4', '#29B6F6', '#00E676']
+      // block9divs) width ad margin left
+      let blockOpts = [
+        // 1 indent = 20px
+        {w: '30%', ml: '0px'}, //def
+        {w: '55%', ml: '40px'}, //var
+        {w: '50%', ml: '40px'}, //if
+        {w: '60%', ml: '80px'}, //code
+        {w: '55%', ml: '80px'}, //code
+        {w: '70%', ml: '80px'}, //code
+        {w: '35%', ml: '40px'}, //else
+        {w: '65%', ml: '80px'}, //code
+        {w: '45%', ml: '80px'}, //code
+        {w: '60%', ml: '80px'}, //code
+        {w: '50%', ml: '40px'}, // code
+        {w: '40%', ml: '40px'}, // return
+      ]
+
+      let colorArrayLen = colors.length;
+
+      for (let index = 0; index < 12; index++) {
+        const blocks = document.createElement("div");
+        let randomNumber = Math.floor(Math.random() * colorArrayLen);
+
+        blocks.style.width = blockOpts[index].w;
+        blocks.style.height = "25px";
+        blocks.style.marginLeft = blockOpts[index].ml;
+        blocks.style.borderRadius = "3px";
+        blocks.style.marginBottom = "15px";
+        blocks.style.backgroundColor = colors[randomNumber]
+        blocks.className = `animated ${self.animation}`;
+        // blocks.style.animationDuration = `${index / 10}s`;
+        blocks.style.animationDelay = `${index / 3}s`;
+        textContainer.appendChild(blocks);
+      }
     },
 
     animateText(randomIndex = 0, callback) {
@@ -213,8 +255,8 @@ export default {
   /* border: 1px solid whitesmoke; */
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
+  justify-content: center;
+  align-items: flex-start;
   overflow: hidden;
 }
 @media only screen and (max-width: 500px) {

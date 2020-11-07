@@ -48,13 +48,11 @@
             :textArray="codes"
             :w="width"
             :h="height"
-            animation="bounceIn"
+            animation="bounceInLeft"
             color="white"
             :fs="fontSize"
             ta="left"
             :random="true"
-            interval="60000"
-            timeout="90000"
             display="inline-block"
           />
           <!-- </div> -->
