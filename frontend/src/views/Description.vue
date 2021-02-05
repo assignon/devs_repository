@@ -304,7 +304,12 @@ export default {
         icon = str.replace(str, "fab fa-github");
       } else if (str == "url") {
         icon = str.replace(str, "fas fa-link");
-      } else {
+      }else if(str == 'researches'){
+        icon = str.replace(str, "fas fa-search");
+      }else if(str == 'planning'){
+        icon = str.replace(str, "fas fa-calendar-alt");
+      }
+       else {
         icon = str.replace(str, str);
       }
       return icon;

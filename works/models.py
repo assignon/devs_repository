@@ -21,8 +21,9 @@ class Description(models.Model):
     repository = models.CharField(max_length=255)
 
     def __str__(self):
-        work_name = Works.objects.get(description=self.pk)
-        return str(work_name)
+        # work_name = Works.objects.get(description=self.pk)
+        # return str(work_name)
+        return str(self.url)
 
 
 class Tags(models.Model):

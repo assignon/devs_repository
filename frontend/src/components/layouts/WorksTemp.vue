@@ -16,17 +16,12 @@
         <div class="prog-langs-container pt-3">
           <img
             class="prog-langs"
-            :src="require(`../../../../media/prog_langs/${progicon}.svg`)"
             v-for="(progicon, pi) in splitToArray(project.fields.prog_lang)"
             :key="pi"
+            :src="require(`../../../../media/prog_langs/${progicon}.svg`)"
             alt
           />
-          <!-- <div
-                class="prog-langs"
-                v-for="(progicon, pi) in splitToArray(project.fields.prog_lang)"
-                :key="pi"
-                :style="{ backgroundImage: `url(${require(`../../../media/prog_langs/${progicon}.svg`)})` }"
-          ></div>-->
+         
         </div>
       </div>
       <div class="works-name">

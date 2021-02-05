@@ -524,7 +524,7 @@ class Description_view(viewsets.ModelViewSet):
         description = Description.objects.get(id=description_id)
         # description_file = codecs.open(
         #     description.description, "r", "utf-8").read()
-        f = open(f'{os.getcwd()}/devs_repository/media/{description.description.name}',
+        f = open(f'{os.getcwd()}/media/{description.description.name}',
                  mode='r', encoding='utf8')
         myfile = File(f)
 
