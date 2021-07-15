@@ -232,50 +232,48 @@ export default {
         "fa-css3-alt",
         "fa-php"
       ],
-      codes: [
-        [
-          `
-        def%0Pk python(str):?
-          if  "name"  ==  "__main__":|
-            user_input  =  input("give your name")|
-            print(user_input)
-        `
-<<<<<<< HEAD
-=======
-        ],
-        [
-          `function% javascript(str){?
-          let% userInput = document.getElementById('input');?
-          if%(userInput != ''){|
-            console.log(userInput.value);?
-          }else{|
-            alert('field is empty')?
-          }#
-        }
-        `
-        ],
-        [
-          ` @csrf_exempt%0Pf#
-            @action%(methods=['get'], detail=False)#
-            def all_works(self, request):#
-            """?
-            get all works from DB?#
+      // codes: [
+      //   [
+      //     `
+      //   def%0Pk python(str):?
+      //     if  "name"  ==  "__main__":|
+      //       user_input  =  input("give your name")|
+      //       print(user_input)
+      //   `
 
-            Args:|
-                request ([get]): [get works]#
-            """?
-            order_by = request.query_params.get('order_by')?
-            if order_by == 'default':|
-                works = Works.objects.all().order_by('-pk')?
-            elif order_by == 'asc':|
-                works = Works.objects.all().order_by('pk')?
-            else:|
-                works = Works.objects.all().order_by('-pk'))#?
+      //   ],
+      //   [
+      //     `function% javascript(str){?
+      //     let% userInput = document.getElementById('input');?
+      //     if%(userInput != ''){|
+      //       console.log(userInput.value);?
+      //     }else{|
+      //       alert('field is empty')?
+      //     }#
+      //   }
+      //   `
+      //   ],
+      //   [
+      //     ` @csrf_exempt%0Pf#
+      //       @action%(methods=['get'], detail=False)#
+      //       def all_works(self, request):#
+      //       """?
+      //       get all works from DB?#
 
-            return Response(serializers.serialize('json', works))
-        `
->>>>>>> 20be5a5a6adeabae8260271198df4ca6c507c720
-        ]
+      //       Args:|
+      //           request ([get]): [get works]#
+      //       """?
+      //       order_by = request.query_params.get('order_by')?
+      //       if order_by == 'default':|
+      //           works = Works.objects.all().order_by('-pk')?
+      //       elif order_by == 'asc':|
+      //           works = Works.objects.all().order_by('pk')?
+      //       else:|
+      //           works = Works.objects.all().order_by('-pk'))#?
+
+      //       return Response(serializers.serialize('json', works))
+      //   `
+      //   ]
         // [
         //   `function%0Pf javascript(str){?
         //   let% userInput = document.getElementById('input');?
@@ -308,7 +306,7 @@ export default {
         //     return Response(serializers.serialize('json', works))
         // `
         // ]
-      ]
+      // ]
     };
   },
 
