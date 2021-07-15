@@ -399,11 +399,12 @@ export default {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
+  border: 1px solid red;
 }
 
 .landing-cover {
   width: 100%;
-  height: 95vh;
+  height: 50%;
   display: flex;
   background-color: #16032c;
   opacity: 0.8;
