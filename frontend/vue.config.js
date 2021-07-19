@@ -2,7 +2,7 @@ module.exports = {
   devServer: {
     proxy: {
       "^/": {
-        target: "http://yanick007.pythonanywhere.com/",
+        target: "https://yanick007.pythonanywhere.com/",
         // target: "http://127.0.0.1:8000/",
         ws: false,
       },
