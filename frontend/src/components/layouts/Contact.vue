@@ -173,7 +173,7 @@ export default {
 <style scoped>
 .contact-layout {
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -181,26 +181,27 @@ export default {
 }
 
 .map-flex {
-  height: 100%;
+  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 
 .map-container {
   width: 51%;
-  height: 100vh;
+  height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
   bottom: 0px;
+  padding-bottom: 30px;
 }
 
 .map-overlay {
   width: 90%;
-  height: 90%;
+  height: 100%;
   border-radius: 5px;
   background-color: #16032c;
   /*opacity: 0.6;*/

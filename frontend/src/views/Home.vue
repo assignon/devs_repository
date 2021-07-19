@@ -1,12 +1,12 @@
 <template>
   <div class="home-core">
-    <v-layout class="home-layout">
+    <!-- <v-layout class="home-layout"> -->
       <v-flex xs12 sm12 md12 xl12 class="landing-flex" id="homeTop">
         <div class="landing-cover"></div>
 
         <div class="landing-container">
           <div class="container-one hidden-sm-and-down">
-            <div class="container-one-content">
+          <div class="container-one-content">
               <h1
                 class="font-weight-bold mb-5 animated fadeInUp"
                 style="animation-delay: 0.2s"
@@ -30,6 +30,30 @@
                 >
               </router-link>
             </div>
+
+            <!-- <div>
+              <h1
+                class="font-weight-bold mb-5 animated fadeInUp"
+                style="animation-delay: 0.2s"
+              >
+                Welcome in my world
+              </h1>
+              <p class="mb-5 animated fadeInUp" style="animation-delay: 0.6s">
+                Le Lorem Ipsum est simplement du faux texte employé dans la
+                composition et la mise en page avant impression. texte employé
+                dans la composition et la mise en page avant impression.
+              </p>
+              <router-link to="works" style="text-decoration:none">
+                <v-btn
+                  class="works-btn animated bounceIn"
+                  style="animation-delay: 1s"
+                  large
+                  color="#00FF8E"
+                  >My Works</v-btn
+                >
+              </router-link>
+            </div> -->
+
             <!-- <div class="prog-langs">
               <v-icon
                 v-for="(tech, i) in technics"
@@ -53,6 +77,8 @@
             :fs="fontSize"
             ta="left"
             :random="true"
+            interval="60000"
+            timeout="90000"
             display="inline-block"
           />
           <!-- </div> -->
@@ -83,14 +109,14 @@
           My Expertise
         </h1>
         <p
-          class="skill-subtext mb-5"
+          class="skill-subtext"
           data-aos="fade-up"
           data-aos-delay="100"
           data-aos-duration="500"
         >
           The areas in which I excel
         </p>
-        <div class="skills-container hidden-sm-and-down mt-5">
+        <div class="skills-container hidden-sm-and-down">
           <div class="skills" v-for="(skill, i) in expertises" :key="i">
             <!-- <v-img
               alt
@@ -109,12 +135,13 @@
               data-aos="zoom-in"
               :data-aos-delay="i * 250"
               data-aos-duration="500"
-              class="expertise-img mb-3"
+              class="expertise-img"
             />
             <h3
               data-aos="fade-up"
               :data-aos-delay="i * (160 * 4)"
               data-aos-duration="500"
+              class='mt-3'
             >
               {{ skill.name }}
             </h3>
@@ -150,8 +177,8 @@
                   :data-aos-delay="i * 150"
                   data-aos-duration="500"
                 /> -->
-                <img :src="item.imge" alt="" class="expertise-img mb-3" />
-                <h3>
+                <img :src="item.imge" alt="" class="expertise-img" />
+                <h3 class='mt-3'>
                   {{ item.name }}
                 </h3>
                 <!-- <p>
@@ -178,7 +205,7 @@
         <!--          <h3>Contact Me</h3>-->
         <Contact />
       </v-flex>
-    </v-layout>
+    <!-- </v-layout> -->
   </div>
 </template>
 
@@ -201,7 +228,7 @@ export default {
 
   data() {
     return {
-      fontSize: "17px",
+      fontSize: "25px",
       width: "50%",
       height: "100%",
       expertises: [
@@ -209,20 +236,20 @@ export default {
           name: "Web Development",
           imge: require("../assets/home/wd.svg"),
           content:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. ",
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. "
         },
         {
           name: "Scripting/CLI",
           imge: require("../assets/home/cmdline.svg"),
           content:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.",
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression."
         },
         {
           name: "Api",
           imge: require("../assets/home/api.svg"),
           content:
-            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.",
-        },
+            "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression."
+        }
       ],
       technics: [
         "fa-python",
@@ -232,41 +259,50 @@ export default {
         "fa-html5",
         "fa-html5",
         "fa-css3-alt",
-        "fa-php",
+        "fa-php"
       ],
-      codes: [
-        // [
-        //   `
-        // def%0Pk python(str):?
-        //   if  "name"  ==  "__main__":|
-        //     user_input  =  input("give your name")|
-        //     print(user_input)
-        // `,
-        // ],
-        [
-          `
-          def google_api(request, site):|?
-              API_KEY = "AIzaSyC93IYKES5OhepltjsdfloihksjP"|?
-              SITE = site|?
-              gmaps = googlemaps.Client(key=API_KEY)|?
+      // codes: [
+      //   [
+      //     `
+      //   def%0Pk python(str):?
+      //     if  "name"  ==  "__main__":|
+      //       user_input  =  input("give your name")|
+      //       print(user_input)
+      //   `
 
-              # eerst place_id vinden|?
-              g_query = gmaps.find_place(SITE, 'textquery')|?
-              if g_query['status'] == 'OK':|??
-                  # I'm always feeling lucky|??
-                  place_id = g_query['candidates'][0]['place_id']||??
+      //   ],
+      //   [
+      //     `function% javascript(str){?
+      //     let% userInput = document.getElementById('input');?
+      //     if%(userInput != ''){|
+      //       console.log(userInput.value);?
+      //     }else{|
+      //       alert('field is empty')?
+      //     }#
+      //   }
+      //   `
+      //   ],
+      //   [
+      //     ` @csrf_exempt%0Pf#
+      //       @action%(methods=['get'], detail=False)#
+      //       def all_works(self, request):#
+      //       """?
+      //       get all works from DB?#
 
-                  # get address data|??
-                  adress = gmaps.place(place_id)['result']['address_components']|??
-                  adress_dict = {'place_id': True}|??
-                  for a in adress:|???
-                      adress_dict[a['types'][0]] = a['long_name']||??
+      //       Args:|
+      //           request ([get]): [get works]#
+      //       """?
+      //       order_by = request.query_params.get('order_by')?
+      //       if order_by == 'default':|
+      //           works = Works.objects.all().order_by('-pk')?
+      //       elif order_by == 'asc':|
+      //           works = Works.objects.all().order_by('pk')?
+      //       else:|
+      //           works = Works.objects.all().order_by('-pk'))#?
 
-                  return adress_dict|?
-              else:|??
-                  return {'place_id': False}
-          `,
-        ],
+      //       return Response(serializers.serialize('json', works))
+      //   `
+      //   ]
         // [
         //   `function%0Pf javascript(str){?
         //   let% userInput = document.getElementById('input');?
@@ -299,21 +335,16 @@ export default {
         //     return Response(serializers.serialize('json', works))
         // `
         // ]
-      ],
+      // ]
     };
   },
 
   created() {
     // this.animateText();
     this.screenWithChange();
-    console.log(this.$route);
   },
 
   mounted() {
-    let self = this
-    if(this.$route.path == `/review/${self.$route.params.reviewer}`){
-      alert('welcom reviewer')
-    }
     // this.animateText();
   },
 
@@ -334,7 +365,7 @@ export default {
         this.width = "80%";
         this.height = "80%";
       }
-    },
+    }
     // animateText() {
     //   let textContainer = document.querySelector(".container-two");
     //   // let counter = 0;
@@ -367,7 +398,7 @@ export default {
     //     console.log(p);
     //   });
     // }
-  },
+  }
 };
 </script>
 
@@ -376,6 +407,7 @@ export default {
   width: 100%;
   height: auto;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
@@ -385,8 +417,8 @@ export default {
   height: auto;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-content: center;
+ justify-content: space-around;
+ align-items: center;
 }
 
 .landing-flex {
@@ -399,12 +431,11 @@ export default {
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  border: 1px solid red;
 }
 
 .landing-cover {
   width: 100%;
-  height: 50%;
+  height: 95vh;
   display: flex;
   background-color: #16032c;
   opacity: 0.8;
@@ -414,7 +445,7 @@ export default {
 
 .landing-container {
   width: 100%;
-  height: 100%;
+  height: 95vh;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -429,9 +460,9 @@ export default {
   align-items: center;
 }
 
-.container-one .container-one-content {
+.container-one div {
   width: 70%;
-  height: 100%;
+  height: 75%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -466,6 +497,10 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  /* background-image: url("../assets/home/homeBackground.jpg");
+  background-position: cente;
+  background-size: cover;
+  background-repeat: no-repeat; */
 }
 .text-animation-container {
   width: 100%;
@@ -522,9 +557,9 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding-top: 100px;
-  padding-bottom: 100px;
-  background-color: #fffaf0;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  /*background-color: lightgray;*/
 }
 
 .landing-last {
@@ -596,7 +631,7 @@ export default {
 
 .about-flex {
   width: 100%;
-  height: 500px;
+  height: auto;
   /*min-height: 100vh;*/
   background-color: #fafafa;
   display: flex;
@@ -629,12 +664,14 @@ export default {
 
 .contact-flex {
   width: 100%;
-  height: 100vh;
-  background-color: #f5fffa;
+  height: auto;
+  /*background-color: #FAFAFA;*/
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: center;
   align-items: center;
+  padding-bottom: 50px;
+  padding-top: 20px;
 }
 @media only screen and (max-width: 500px) {
   .landing-container {

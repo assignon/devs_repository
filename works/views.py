@@ -170,7 +170,7 @@ class SearchPattern():
             query (string): user search query or queries]
         """
         works = Works.objects.filter(
-            Q(tags__icontains=query) & Q(publish=1))
+             Q(publish=1) & Q(tags__icontains=query))
         return serializers.serialize('json', works)
 
     def search_by_words(self, words):
@@ -187,7 +187,7 @@ class SearchPattern():
         works_data = []
         for word in words:
             works = Works.objects.all().filter(
-                tags__icontains=word)
+               Q(publish=1) & Q(tags__icontains=word))
             works_data.extend(works)
         # remove duplcated works
         rm_duplicate = list(dict.fromkeys(works_data))
@@ -295,7 +295,7 @@ class SearchPattern():
             year, month = date.split("-")
             works = Works.objects.filter(
                 Q(added_on__year=year) & Q(
-                    added_on__month=month) & Q(tags__in=words)
+                    added_on__month=month) & Q(tags__in=words) & Q(publish=1)
             )
         elif date_regex == "y":  # year date format
             works = Works.objects.filter(

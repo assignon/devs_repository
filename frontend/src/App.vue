@@ -61,7 +61,7 @@ export default {
 html,
 body {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   width: 100%;
   margin: 0px;
   padding: 0px;
